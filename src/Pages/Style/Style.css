@@ -1,0 +1,99 @@
+.header-container {
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    background: rgba(221, 218, 218, 0.856);
+    z-index: 100;
+}
+
+.header-container nav {
+}
+
+
+.header-container nav ul {
+    border-radius: 5px;
+    
+}
+
+.header-container nav ul a {
+    display: inline-block;
+    font-size: 16px;
+    margin: 0 8px;
+    padding: 0 10px;
+}
+
+
+.activeLink {
+    border-bottom: 2px solid #f15048;
+}
+
+/* review */
+.reveiw {
+    width: 351px;
+    height: 277px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border-radius: 15px;
+    padding: 25px;
+    
+}
+
+.reveiw p {
+    color: rgba(108, 108, 108, 1);
+    letter-spacing: 0.2px;
+    line-height: 23px;
+    font-weight: 400;
+}
+
+.reveiw h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(12, 25, 32, 1);
+}
+
+.reveiw img {
+    width: 83px;
+    margin: 10px auto;
+    border-radius: 50%;
+    height: 83px;
+}
+
+.reveiw h4 {
+    color: #747474;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.profileModal{
+    /* z-index: 100; */
+
+}
+
+/* responsive  */
+@media (max-width:850px) {
+    .header-container nav ul a {
+        padding: 3px 0px;
+        width: 40%;
+        /* display: inline-block; */
+        margin: 0px auto;
+    }
+    .header-container nav ul {
+        background-color: #f15048;
+        color: white;
+    }
+    .activeLink {
+        border-bottom: 2px solid white;
+    }
+
+    .reveiw {
+        width: 300px;
+        height: auto;
+        border-radius: 11px;
+        padding: 18px;
+    }
+
+    .reveiw img {
+        width: 70px;
+        margin: 10px auto;
+        height: 70px;
+    }
+
+}
