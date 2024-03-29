@@ -155,6 +155,8 @@ export default function AddOrderInfo() {
       return;
     }
     console.log(sellerName)
+    const date = new Date()
+    console.log(date);
 
     let finalData = {
       sellerName: sellerName,
