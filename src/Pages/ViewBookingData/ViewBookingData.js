@@ -30,7 +30,7 @@ export default function ViewBookingData() {
         })
         setSellerNames(sName)
     }, [memo])
-    console.log(sellerNames);
+    // console.log(sellerNames);
     // useEffect(() => {
     // }, [])
     const [startDate, setStartDate] = useState(new Date());
@@ -38,6 +38,8 @@ export default function ViewBookingData() {
         e.preventDefault();
         // startDate.moment().format("MMM DD yyyy")
         console.log(moment(startDate).format('MMM DD yyyy'));
+
+
     }
 
     if (isLoading || isLoading2) {
@@ -67,7 +69,14 @@ export default function ViewBookingData() {
                     yearDropdownItemNumber={15}
                     scrollableYearDropdown
                 />
-                <form onSubmit={hangleSearch} id="external-form">
+                <form onSubmit={hangleSearch} id="external-form" className='text-center'>
+                    <select id="item" name="" autocomplete="item-name" class="bg-white block mx-auto my-1 text-center rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 capitalize" >
+                        {
+                            sellerNames.map((sellerName, i) => {
+                                return <option className='capitalize'>{sellerName}</option>
+                            })
+                        }
+                    </select>
                     <input className='bg-emerald-500 cursor-pointer mt-1 mb-4 text-white px-2 py-1 rounded-md pb-1' type="submit" value={"Search"} />
                 </form>
             </div>
