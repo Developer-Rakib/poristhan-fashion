@@ -1,16 +1,25 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { NavLink } from 'react-router-dom'
 import Loader from '../Shared/Loader'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { fn } from 'moment'
 
 export default function ViewBookingData() {
     const { isLoading, error, data: orders } = useQuery('orders', () =>
         axios.get('http://localhost:5000/orders')
     )
+
     // console.log(orders?.data);
     // useEffect(() => {
     // }, [])
+    const [startDate, setStartDate] = useState(new Date());
+    function hangleSearch(e) {
+        e.preventDefault();
+        console.log(startDate);
+    }
 
     if (isLoading) {
         return <Loader></Loader>
@@ -18,12 +27,36 @@ export default function ViewBookingData() {
 
     return (
         <div>
+            {/* <DatePicker
+                    showIcon
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                /> */}
             <div className='text-right'>
                 <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/"}>Home</NavLink>
             </div>
 
+            <div className='text-center w-[80%] mx-auto'>
+                <DatePicker
+                    className='border-2 rounded text-center py-1'
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    required
+                    form="external-form"
+                    showYearDropdown
+                    dateFormat="MMM d yyyy"
+                    yearDropdownItemNumber={15}
+                    scrollableYearDropdown
+                />
+                <form onSubmit={hangleSearch} id="external-form">
+                    <input className='bg-emerald-500 cursor-pointer mt-1 mb-4 text-white px-2 py-1 rounded-md pb-1' type="submit" value={"Search"} />
+                </form>
+            </div>
+
+
             <div className='sm:px-10 px-2 pb-5'>
-                <h5 className="text-lg text-center sm:text-left font-bold  mb-2 text-primary">Mange All Orders</h5>
+                {/* <h5 className="text-lg text-center sm:text-left font-bold  mb-2 text-primary">Mange All Orders</h5> */}
+
                 <div className="relative  overflow-x-auto shadow-md sm:rounded-lg">
                     <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

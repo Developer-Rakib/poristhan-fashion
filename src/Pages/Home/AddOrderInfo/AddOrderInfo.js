@@ -5,6 +5,8 @@ import { useQuery } from 'react-query';
 import { NavLink } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Loader from '../../Shared/Loader';
+import moment from 'moment';
+
 // import { HiMinusCircle } from "react-icons/hi";
 
 
@@ -146,7 +148,9 @@ export default function AddOrderInfo() {
         }
       }
     }
-    if (sellerName === (undefined || "_id")) {
+
+
+    if (sellerName === undefined || sellerName === "_id") {
       Swal.fire({
         icon: "error",
         title: "Opps...",
@@ -154,9 +158,8 @@ export default function AddOrderInfo() {
       });
       return;
     }
-    console.log(sellerName)
-    const date = new Date()
-    console.log(date);
+    // const date = Date()
+    // console.log(date);
 
     let finalData = {
       sellerName: sellerName,
@@ -168,7 +171,7 @@ export default function AddOrderInfo() {
       partial: { PAmount: null, PQty: null },
       exchange: false,
       status: "Pending",
-      bookingDate: "",
+      bookingDate: moment().format("MMM DD yyyy"),
       note: ""
     }
     console.log(finalData);
