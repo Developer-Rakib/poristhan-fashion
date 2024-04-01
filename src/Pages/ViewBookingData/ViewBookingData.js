@@ -5,23 +5,42 @@ import { NavLink } from 'react-router-dom'
 import Loader from '../Shared/Loader'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { fn } from 'moment'
+import moment, { fn } from 'moment'
 
 export default function ViewBookingData() {
-    const { isLoading, error, data: orders } = useQuery('orders', () =>
+    const { isLoading: isLoading2, error: err, data: orders } = useQuery('orders', () =>
         axios.get('http://localhost:5000/orders')
     )
+    const { isLoading, error, data: memo } = useQuery('memo', () =>
+        axios.get('http://localhost:5000/memo')
+    )
+    let [sellerNames, setSellerNames] = useState([])
 
-    // console.log(orders?.data);
+    useEffect(() => {
+        if (memo?.data) {
+            for (const [key, value] of Object.entries(memo?.data[0])) {
+                if (!sellerNames.includes(key)) {
+                    sellerNames.push(key)
+                }
+            }
+
+        }
+        const sName = sellerNames.filter((s) => {
+            return s !== "_id"
+        })
+        setSellerNames(sName)
+    }, [memo])
+    console.log(sellerNames);
     // useEffect(() => {
     // }, [])
     const [startDate, setStartDate] = useState(new Date());
     function hangleSearch(e) {
         e.preventDefault();
-        console.log(startDate);
+        // startDate.moment().format("MMM DD yyyy")
+        console.log(moment(startDate).format('MMM DD yyyy'));
     }
 
-    if (isLoading) {
+    if (isLoading || isLoading2) {
         return <Loader></Loader>
     }
 
@@ -96,7 +115,7 @@ export default function ViewBookingData() {
                                 orders.data?.map((order, i) => {
                                     let totalItemQty = 0;
                                     return (
-                                        <tr key={order.bookingID} className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
+                                        <tr key={order._id} className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
                                             <th scope="row" className="pl-2 pr-1 sm:pr-0 sm:pl-5 py-2  sm:py-4 font-medium text-gray-900 dark:text-white whitespace-nowraptext-[13px]">
                                                 {i + 1}
                                             </th>
@@ -110,12 +129,12 @@ export default function ViewBookingData() {
                                                 {order.bookingID}
                                             </td>
                                             <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
-                                                {order.item.map((item) => {
+                                                {order.item.map((item, b) => {
 
                                                     Object.values(item).map(i => {
-                                                        return totalItemQty = totalItemQty + i;
+                                                        totalItemQty = totalItemQty + i;
                                                     })
-                                                    return <p key={i}>{`${Object.keys(item)} ( ${Object.values(item)} )`}</p>
+                                                    return <p key={b}>{`${Object.keys(item)} ( ${Object.values(item)} )`}</p>
                                                 })}
                                             </td>
                                             <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
