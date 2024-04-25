@@ -203,11 +203,11 @@ export default function AddOrderInfo() {
          decoration-primary'>View Order</button> */}
       </div>
       <h1 className='mt-10 text-4xl text-[#f15048]'>Poristhan Fashion</h1>
-      <h1 className='mt-1 text-lg'>Booking Form</h1>
+      <h1 className='mt-1 text-lg'>Entry Form</h1>
       <form onSubmit={(e) => hangleSubmit(e)} className='w-4/6 mx-auto' >
         <div class="space-y-12">
 
-          <h2 class="text-base font-semibold leading-7 text-gray-900">Product Information</h2>
+          <h2 class="text-base font-semibold leading-7 text-gray-900">Booking Information</h2>
           {/* <p class="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p> */}
 
 

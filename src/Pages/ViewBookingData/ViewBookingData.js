@@ -7,6 +7,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment, { fn } from 'moment'
 import SingleBookingData from './SingleBookingData'
+import Swal from 'sweetalert2'
+import toast from 'react-hot-toast'
 
 export default function ViewBookingData() {
     // const { isLoading: isLoading2, error: err, data: orders } = useQuery('orders', () =>
@@ -16,7 +18,7 @@ export default function ViewBookingData() {
         axios.get('http://localhost:5000/memo')
     )
     let [sellerNames, setSellerNames] = useState([])
-    let [orders, setOrders] = useState([])
+    let [orders, setOrders] = useState(undefined)
 
     useEffect(() => {
         if (memo?.data) {
@@ -45,6 +47,38 @@ export default function ViewBookingData() {
         axios.get(`http://localhost:5000/orders/${sName}?bookingDate=${bookingDate}`).then(res => {
             // console.log(res.data);
             setOrders(res.data);
+        })
+    }
+    function handleDelete(order) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Do you want to delete ${order.memo} no. memo entry?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // console.log(order._id);
+                axios.delete(`http://localhost:5000/order/${order._id}`)
+                    .then(data => {
+                        // console.log(data);
+                        if (data.data.deletedCount > 0) {
+                            Swal.fire(
+                                'Deleted!',
+                                `${order.memo} no. memo entry has been deleted!`,
+                                'success'
+                            )
+                            const restOrders = orders.filter(o => order._id !== o._id);
+                            setOrders(restOrders)
+                        }
+                        else {
+                            toast.error('Somthing is wrong !')
+                        }
+                    })
+
+            }
         })
     }
     // console.log(orders);
@@ -90,64 +124,72 @@ export default function ViewBookingData() {
                 </form>
             </div>
 
+            {
+                orders === undefined ? <p className='text-gray-500'>Please pick a date and seller name and hit the Search Button.</p>
+                    :
+                    orders.length > 0 ?
+                        <div className='sm:px-10 px-2 pb-5'>
+                            {/* <h5 className="text-lg text-center sm:text-left font-bold  mb-2 text-primary">Mange All Orders</h5> */}
 
-            <div className='sm:px-10 px-2 pb-5'>
-                {/* <h5 className="text-lg text-center sm:text-left font-bold  mb-2 text-primary">Mange All Orders</h5> */}
+                            <div className="relative  overflow-x-auto shadow-md sm:rounded-lg">
+                                <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+                                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                        <tr>
+                                            <th scope="col" className="py-2  sm:py-3">
 
-                <div className="relative  overflow-x-auto shadow-md sm:rounded-lg">
-                    <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" className="py-2  sm:py-3">
+                                            </th>
+                                            <th scope="col" className="py-2 sm:py-3">
+                                                Seller Name
+                                            </th>
+                                            <th scope="col" className="py-2  sm:py-3">
+                                                Memo
+                                            </th>
+                                            <th scope="col" className="py-2 text-center sm:py-3">
+                                                ID
+                                            </th>
+                                            <th scope="col" className="py-2 text-center sm:py-3">
+                                                Item
+                                            </th>
+                                            <th scope="col" className="py-2 text-center sm:py-3">
+                                                QTY
+                                            </th>
+                                            <th scope="col" className="py-2 text-center sm:py-3">
+                                                D. CH.
+                                            </th>
+                                            <th scope="col" className="py-2 text-center sm:py-3">
+                                                Advance
+                                            </th>
+                                            <th scope="col" className="py-2 text-center sm:py-3">
+                                                Amount
+                                            </th>
+                                            <th scope="col" className="py-2 text-center sm:py-3">
+                                                Status
+                                            </th>
 
-                                </th>
-                                <th scope="col" className="py-2 sm:py-3">
-                                    Seller Name
-                                </th>
-                                <th scope="col" className="py-2  sm:py-3">
-                                    Memo
-                                </th>
-                                <th scope="col" className="py-2 text-center sm:py-3">
-                                    ID
-                                </th>
-                                <th scope="col" className="py-2 text-center sm:py-3">
-                                    Item
-                                </th>
-                                <th scope="col" className="py-2 text-center sm:py-3">
-                                    QTY
-                                </th>
-                                <th scope="col" className="py-2 text-center sm:py-3">
-                                    D. CH.
-                                </th>
-                                <th scope="col" className="py-2 text-center sm:py-3">
-                                    Advance
-                                </th>
-                                <th scope="col" className="py-2 text-center sm:py-3">
-                                    Amount
-                                </th>
-                                <th scope="col" className="py-2 text-center sm:py-3">
-                                    Status
-                                </th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                orders.map((order, i) =>
-                                    <SingleBookingData
-                                        order={order}
-                                        i={i}
-                                    />)
-                            }
-
-
-                        </tbody>
-                    </table>
-
-                </div>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            orders.map((order, i) =>
+                                                <SingleBookingData
+                                                    order={order}
+                                                    handleDelete={handleDelete}
+                                                    i={i}
+                                                />)
+                                        }
 
 
-            </div >
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+                        </div >
+                        :
+                        <p className='text-red-500'>Sorry ! no Entry in this date for this seller.</p>
+            }
+
         </div >
     )
 }

@@ -3,9 +3,8 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBack2Line } from "react-icons/ri";
-import Swal from 'sweetalert2';
 
-const SingleBookingData = ({ order, i }) => {
+const SingleBookingData = ({ order, handleDelete, i }) => {
     // states 
     const [status, setSatus] = useState(null)
     let totalItemQty = 0;
@@ -20,37 +19,7 @@ const SingleBookingData = ({ order, i }) => {
         const selectedItem = document.getElementById("status").value;
         setSatus(selectedItem)
     }
-    function handleDelete() {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // console.log(order._id);
-                axios.delete(`http://localhost:5000/order/${order._id}`)
-                    .then(data => {
-                        console.log(data);
-                        if (data.data.deletedCount > 0) {
-                            Swal.fire(
-                                'Deleted!',
-                                `${order.memo} has been deleted!`,
-                                'success'
-                            )
-                            // refetch()
-                        }
-                        else {
-                            toast.error('Somthing is wrong !')
-                        }
-                    })
 
-            }
-        })
-    }
 
 
     return (
@@ -212,7 +181,7 @@ const SingleBookingData = ({ order, i }) => {
         {
             order.shipped && <p className='text-green-700'>Paid</p>
         } */}
-                <span onClick={handleDelete} className='cursor-pointer'>
+                <span onClick={() => handleDelete(order)} className='cursor-pointer'>
                     <RiDeleteBack2Line className='text-red-600 absolute text-[15px] top-6  right-0' />
                 </span>
             </td>
