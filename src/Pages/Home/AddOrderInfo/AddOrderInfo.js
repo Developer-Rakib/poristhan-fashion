@@ -143,6 +143,7 @@ export default function AddOrderInfo() {
       }
     };
     let bookingMemo = parseInt(bookingData.memo);
+
     let sellerName = undefined;
     for (const [key, value] of Object.entries(memo.data[0])) {
       for (let i = 0; i < value.length; i++) {
@@ -187,7 +188,7 @@ export default function AddOrderInfo() {
         e.target.reset();
       }
       else {
-        toast.success(`${data.data.message}`)
+        toast.error(`${data.data.message}`)
       }
     })
 

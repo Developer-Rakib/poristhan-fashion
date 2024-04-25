@@ -1,6 +1,9 @@
+import axios from 'axios';
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
 import { FaRegEdit } from "react-icons/fa";
-
+import { RiDeleteBack2Line } from "react-icons/ri";
+import Swal from 'sweetalert2';
 
 const SingleBookingData = ({ order, i }) => {
     // states 
@@ -16,6 +19,37 @@ const SingleBookingData = ({ order, i }) => {
     function handleSelect(e) {
         const selectedItem = document.getElementById("status").value;
         setSatus(selectedItem)
+    }
+    function handleDelete() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // console.log(order._id);
+                axios.delete(`http://localhost:5000/order/${order._id}`)
+                    .then(data => {
+                        console.log(data);
+                        if (data.data.deletedCount > 0) {
+                            Swal.fire(
+                                'Deleted!',
+                                `${order.memo} has been deleted!`,
+                                'success'
+                            )
+                            // refetch()
+                        }
+                        else {
+                            toast.error('Somthing is wrong !')
+                        }
+                    })
+
+            }
+        })
     }
 
 
@@ -54,13 +88,13 @@ const SingleBookingData = ({ order, i }) => {
             <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
                 {order.amount}
             </td>
-            <td className="py-2 text-[12px] sm:text-[13px] text-center sm:py-4 relative">
+            <td className="py-2 text-[12px] sm:text-[13px] text-center sm:py-4 relative ">
 
 
                 {/* modal btn  */}
                 <label for="my-modal-4" class="">
                     <FaRegEdit
-                        className='absolute right-0 top-0 text-red-600 cursor-pointer'></FaRegEdit>
+                        className='absolute right-0 top-0 text-yellow-600 cursor-pointer'></FaRegEdit>
                 </label>
 
                 {/* modal  */}
@@ -167,6 +201,7 @@ const SingleBookingData = ({ order, i }) => {
 
                 <p className='text-green-500'>{order.status}</p>
 
+
                 {/* {!order.paid &&
 
             <p className='text-red-500'>Unpaid</p>
@@ -177,7 +212,9 @@ const SingleBookingData = ({ order, i }) => {
         {
             order.shipped && <p className='text-green-700'>Paid</p>
         } */}
-
+                <span onClick={handleDelete} className='cursor-pointer'>
+                    <RiDeleteBack2Line className='text-red-600 absolute text-[15px] top-6  right-0' />
+                </span>
             </td>
 
 

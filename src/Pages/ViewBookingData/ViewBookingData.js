@@ -42,14 +42,10 @@ export default function ViewBookingData() {
         // startDate.moment().format("MMM DD yyyy")
         let bookingDate = moment(startDate).format('MMM DD yyyy');
         let sName = e.target[1].value;
-
         axios.get(`http://localhost:5000/orders/${sName}?bookingDate=${bookingDate}`).then(res => {
             // console.log(res.data);
             setOrders(res.data);
         })
-
-        // console.log(`http://localhost:5000/orders/${sName}?bookingDate=${bookingDate}`)
-
     }
     // console.log(orders);
 
