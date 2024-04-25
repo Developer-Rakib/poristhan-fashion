@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Loader from '../../Shared/Loader';
 import moment from 'moment';
+import toast from 'react-hot-toast';
 
 // import { HiMinusCircle } from "react-icons/hi";
 
@@ -23,10 +24,10 @@ export default function AddOrderInfo() {
 
   let qtyCount = 1;
   let memoSerials = {
-    jakir: [1, 901],
-    alamgir: [2501, 2701, 3801, 2001, 401, 1001, 1601],
-    amir: [201, 1801, 2401, 701, 4401],
-    sohail: [3601, 3901, 1501, 2301],
+    jakir: [1, 901, 2101, 501],
+    alamgir: [2601, 4301, 2501, 2701, 3801, 2001, 401, 1001, 1601],
+    amir: [201, 1801, 2401, 4501, 701, 4401],
+    sohail: [3601, 3901, 1701, 1501, 2301],
     arafat: [1901, 1201],
     rakib: [1101],
 
@@ -85,7 +86,7 @@ export default function AddOrderInfo() {
                   <div class="w-full my-2 sm:w-[100px]  mx-2">
                     <label for="qty" class="block text-sm font-medium leading-6 text-gray-900">QTY</label>
                     <div class="flex items-center">
-                      <input type="number" name="qty${qtyCount}" id="qty" autocomplete="address-level2" class="block w-full sm:w-[80px] rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                      <input required type="number" name="qty${qtyCount}" id="qty" autocomplete="address-level2" class="block w-full sm:w-[80px] rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                       <button class="text-sm px-1 ml-1 bg-primary text-white rounded-md" id="deleteQty" type="button">
                       Delete
                       </button>
@@ -114,6 +115,8 @@ export default function AddOrderInfo() {
 
     const formData = new FormData(e.target);
     const formatedData = Array.from(formData.entries())
+    // console.log(formData);
+
 
     let bookingData = {}
     formatedData.map((data) => {
@@ -168,45 +171,26 @@ export default function AddOrderInfo() {
       d_ch: parseInt(bookingData.d_ch),
       item: itemQty,
       amount: parseInt(bookingData.amount),
-      partial: { PAmount: null, PQty: null },
-      exchange: false,
+      advance: parseInt(bookingData.advance),
+      partial: { PAmount: null, PQty: [] },
+      exchange: bookingData.exchange === "No" ? false : true,
       status: "Pending",
       bookingDate: moment().format("MMM DD yyyy"),
       note: ""
     }
-    console.log(finalData);
-    // sellerName: bookingData.sellerName,
-
-
-
-    // status: ["Pending", "Delivered", "Cancelled", "Returned"]
-
-    // finalData = [...finalData, { itemQty }]
-
     // console.log(finalData);
+    axios.post(`http://localhost:5000/orders`, finalData).then(data => {
+      // console.log(data.data.success);
+      // console.log(data.data);
+      if (data.data.success) {
+        toast.success(`${data.data.message}`)
+        e.target.reset();
+      }
+      else {
+        toast.success(`${data.data.message}`)
+      }
+    })
 
-
-
-
-    // 0: sellerName → "Alamgir Hossain"
-    // ​​
-    // 1: memo → "0555"
-    // ​​
-    // 2: bookingID → "25"
-    // ​​
-    // 3: item → "BLC"
-    // ​​
-    // 4: qty → "245"
-    // ​​
-    // 5: item → "BLC"
-    // ​​
-    // 6: qty → "555"
-    // ​​
-    // 7: d_ch → "5214"
-    // ​​
-    // 8: amount → "5541"
-
-    // const formProps = Object.fromEntries(formData);
 
   }
 
@@ -219,7 +203,7 @@ export default function AddOrderInfo() {
       </div>
       <h1 className='mt-10 text-4xl text-primary'>Poristhan Fashion</h1>
       <h1 className='mt-1 text-lg'>Booking Form</h1>
-      <form onSubmit={(e) => hangleSubmit(e)} className='w-4/6 mx-auto'>
+      <form onSubmit={(e) => hangleSubmit(e)} className='w-4/6 mx-auto' >
         <div class="space-y-12">
 
           <h2 class="text-base font-semibold leading-7 text-gray-900">Product Information</h2>
@@ -246,13 +230,13 @@ export default function AddOrderInfo() {
             <div class="w-full my-2 sm:w-[120px]  mx-2">
               <label for="memo" class="block text-sm font-medium leading-6 text-gray-900">Memo</label>
               <div class="mt-1">
-                <input type="number" id='memo' name="memo" class="block text-center w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input required type="number" id='memo' name="memo" class="block text-center w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
             <div class="w-full my-2 sm:w-[200px]  mx-2">
               <label for="bookingID" class="block text-sm font-medium leading-6 text-gray-900">ID NO</label>
               <div class="mt-1">
-                <input type="number" name="bookingID" id="bookingID" min={7} class="block w-full text-center rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input required type="number" name="bookingID" id="bookingID" min={7} class="block w-full text-center rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
 
@@ -287,7 +271,7 @@ export default function AddOrderInfo() {
                   <div class="w-full my-2 sm:w-[100px]  mx-2">
                     <label for="qty" class="block text-sm font-medium leading-6 text-gray-900">QTY</label>
                     <div class="flex items-center">
-                      <input type="number" name="qty1" id="qty" autocomplete="address-level2" class="block w-full sm:w-[80px] rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                      <input required type="number" name="qty1" id="qty" autocomplete="address-level2" class="block w-full sm:w-[80px] rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                       <button onClick={addMoreFunction} className='ml-1 addMore' type='button'><FaPlusCircle className='text-xl'></FaPlusCircle></button>
 
                     </div>
@@ -308,24 +292,45 @@ export default function AddOrderInfo() {
             <div class="w-full my-2 sm:w-[120px]  mx-2">
               <label for="d_ch" class="block text-sm font-medium leading-6 text-gray-900">D. CH.</label>
               <div class="">
-                <input type="number" name="d_ch" id="d_ch" autocomplete="address-level2" class="block w-full rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input required type="number" name="d_ch" id="d_ch" autocomplete="address-level2" class="block w-full rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
+
+            <div class="w-full my-2 sm:w-[120px]  mx-2">
+              <label for="advance" class="block text-sm font-medium leading-6 text-gray-900">Advance</label>
+              <div class="">
+                <input required type="number" name="advance" id="advance" autocomplete="address-level2" class="block w-full rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+              </div>
+            </div>
+
+
             <div class="w-full my-2 sm:w-[120px]  mx-2">
               <label for="amount" class="block text-sm font-medium leading-6 text-gray-900">Amount</label>
               <div class="">
-                <input type="number" name="amount" id="amount" autocomplete="address-level2" class="block w-full rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input required type="number" name="amount" id="amount" autocomplete="address-level2" class="block w-full rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+              </div>
+            </div>
+
+            <div class="w-full my-2 sm:w-[100px]  mx-2">
+              <label for="exchange" class="block text-sm font-medium leading-6 text-gray-900">Exchange</label>
+              <div class="">
+                <select id="exchange" name="exchange" autocomplete="exchange" class="bg-white block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                  <option>No</option>
+                  <option>Yes</option>
+
+                </select>
               </div>
             </div>
 
 
           </div>
 
+
         </div>
 
         <div class="mt-6 flex items-center justify-center gap-x-6">
+          <button id='submitBtn' type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Submit</button>
           <button onClick={(e) => handleClear(e)} type="button" class="text-sm font-semibold leading-6 text-gray-900">Clear</button>
-          <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
         </div>
       </form>
     </div>

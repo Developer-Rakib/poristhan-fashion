@@ -6,15 +6,18 @@ import Loader from '../Shared/Loader'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment, { fn } from 'moment'
+import { FaRegEdit } from "react-icons/fa";
 
 export default function ViewBookingData() {
-    const { isLoading: isLoading2, error: err, data: orders } = useQuery('orders', () =>
-        axios.get('http://localhost:5000/orders')
-    )
+    // const { isLoading: isLoading2, error: err, data: orders } = useQuery('orders', () =>
+    //     axios.get('http://localhost:5000/orders')
+    // )
     const { isLoading, error, data: memo } = useQuery('memo', () =>
         axios.get('http://localhost:5000/memo')
     )
     let [sellerNames, setSellerNames] = useState([])
+    let [orders, setOrders] = useState([])
+    const [status, setSatus] = useState(null)
 
     useEffect(() => {
         if (memo?.data) {
@@ -34,15 +37,29 @@ export default function ViewBookingData() {
     // useEffect(() => {
     // }, [])
     const [startDate, setStartDate] = useState(new Date());
+    function handleInfoSave() {
+        console.log("hi");
+    }
+    function handleSelect(e) {
+        // console.log(e);
+    }
     function hangleSearch(e) {
         e.preventDefault();
         // startDate.moment().format("MMM DD yyyy")
-        console.log(moment(startDate).format('MMM DD yyyy'));
+        let bookingDate = moment(startDate).format('MMM DD yyyy');
+        let sName = e.target[1].value;
 
+        axios.get(`http://localhost:5000/orders/${sName}?bookingDate=${bookingDate}`).then(res => {
+            // console.log(res.data);
+            setOrders(res.data);
+        })
+
+        // console.log(`http://localhost:5000/orders/${sName}?bookingDate=${bookingDate}`)
 
     }
+    // console.log(orders);
 
-    if (isLoading || isLoading2) {
+    if (isLoading) {
         return <Loader></Loader>
     }
 
@@ -53,6 +70,8 @@ export default function ViewBookingData() {
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
                 /> */}
+
+
             <div className='text-right'>
                 <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/"}>Home</NavLink>
             </div>
@@ -69,8 +88,8 @@ export default function ViewBookingData() {
                     yearDropdownItemNumber={15}
                     scrollableYearDropdown
                 />
-                <form onSubmit={hangleSearch} id="external-form" className='text-center'>
-                    <select id="item" name="" autocomplete="item-name" class="bg-white block mx-auto my-1 text-center rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 capitalize" >
+                <form onSubmit={(e) => hangleSearch(e)} id="external-form" className='text-center'>
+                    <select id="sellerName" name="" autocomplete="item-name" class="bg-white block mx-auto my-1 text-center rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 capitalize" >
                         {
                             sellerNames.map((sellerName, i) => {
                                 return <option className='capitalize'>{sellerName}</option>
@@ -121,7 +140,7 @@ export default function ViewBookingData() {
                         </thead>
                         <tbody>
                             {
-                                orders.data?.map((order, i) => {
+                                orders.map((order, i) => {
                                     let totalItemQty = 0;
                                     return (
                                         <tr key={order._id} className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
@@ -149,13 +168,94 @@ export default function ViewBookingData() {
                                             <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
                                                 {totalItemQty}
                                             </td>
-                                            <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
+                                            <td className="py-2 text-[12px] sm:text-F[13px]  text-center sm:py-4">
                                                 {order.d_ch}
                                             </td>
                                             <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
                                                 {order.amount}
                                             </td>
-                                            <td className="py-2 text-[12px] sm:text-[13px] text-center sm:py-4">
+                                            <td className="py-2 text-[12px] sm:text-[13px] text-center sm:py-4 relative">
+
+
+                                                {/* modal btn  */}
+                                                <label for="my-modal-4" class="">
+                                                    <FaRegEdit
+                                                        className='absolute right-0 top-0 text-red-600 cursor-pointer'></FaRegEdit>
+                                                </label>
+
+                                                {/* modal  */}
+                                                <input type="checkbox" id="my-modal-4" class="modal-toggle" />
+                                                <label for="my-modal-4" class="modal cursor-pointer">
+                                                    <label class="modal-box relative" for="">
+                                                        <label htmlFor="my-modal-4" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                                                        <form onSubmit={handleInfoSave}>
+                                                            <div className="shadow  overflow-hidden sm:rounded-md">
+                                                                <div className="px-4 py-4 bg-gray-50 sm:px-6">
+                                                                    <h3 className="text-lg leading-6 font-medium text-gray-900">Update Information</h3>
+                                                                </div>
+                                                                <div className="px-4 py-5 bg-white sm:p-6">
+                                                                    <div className="grid grid-cols-6 gap-3">
+
+                                                                        <div className="col-span-6 sm:col-span-2">
+                                                                            <label htmlFor="memo" className="block text-sm font-medium text-gray-700">Memo</label>
+                                                                            <input id="memo" name="memo"
+                                                                                type="text" autocomplete="country-name" className="text-center mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+
+                                                                            />
+                                                                        </div>
+                                                                        <div className="col-span-6 sm:col-span-4 ">
+                                                                            <label htmlFor="bookingID" className="block text-sm font-medium text-gray-700">ID NO</label>
+                                                                            <input type={"number"} id="bookingID" name="bookingID" autocomplete="country-name" className="text-center mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                            />
+                                                                        </div>
+                                                                        <div className="col-span-6 sm:col-span-2">
+                                                                            <label htmlFor="d_ch" className="block text-sm font-medium text-gray-700">D. CH.</label>
+                                                                            <input id="d_ch" name="d_ch"
+                                                                                type="text" autocomplete="d_ch" className="text-center mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+
+                                                                            />
+                                                                        </div>
+                                                                        <div className="col-span-6 sm:col-span-2">
+                                                                            <label htmlFor="advance" className="block text-sm font-medium text-gray-700">Advance</label>
+                                                                            <input type={"number"} id="advance" name="advance" autocomplete="country-name" className="text-center mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                            />
+                                                                        </div>
+                                                                        <div className="col-span-6 sm:col-span-2">
+                                                                            <label htmlFor="amount" className="block text-sm font-medium text-gray-700">Amount</label>
+                                                                            <input type={"number"} id="amount" name="amount" autocomplete="country-name" className="text-center mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                            />
+                                                                        </div>
+                                                                        <div className="col-span-6 sm:col-span-2">
+                                                                            <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status</label>
+                                                                            <div class="">
+                                                                                <select id="status" name={`status`} autocomplete="status" class="bg-white text-center block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                                                                    <option>Pending</option>
+                                                                                    <option>Cancel</option>
+                                                                                    <option>Return</option>
+                                                                                    <option>Pertial Return</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+
+
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                                                                    <button
+
+                                                                        type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </label>
+                                                </label>
+
+
+
+
+
                                                 <p className='text-green-500'>{order.status}</p>
 
                                                 {/* {!order.paid &&
@@ -170,32 +270,20 @@ export default function ViewBookingData() {
                                             } */}
 
                                             </td>
-                                            {/* <td className="py-2 text-[12px] sm:text-[13px] text-center sm:py-4">
-                                            {!order.paid &&
-
-                                                <button
-                                                    onClick={() => hnadleDelete(order._id, order.name)}
-                                                    className='btn mr-1 btn-xs bg-red-500 text-white border-none'>Cancel</button>}
 
 
-
-                                            {(!order.shipped && order.paid) && <button
-                                                onClick={() => handleShip(order._id, order.name)}
-                                                className='btn mr-1 btn-xs bg-red-500 text-white border-none'>Ship</button>
-                                            }
-                                            {
-                                                order.shipped && <p className='text-green-700'>Sipped</p>
-                                            }
-
-                                        </td> */}
                                         </tr>
+
                                     )
                                 })
                             }
 
+
                         </tbody>
                     </table>
+
                 </div>
+
 
             </div >
         </div>
