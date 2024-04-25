@@ -2,20 +2,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 body {
   margin: 0;
   font-family: 'Roboto Slab', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.Container{
+
+.Container {
   width: 82%;
   margin: auto auto;
+
 }
+
 @media (max-width:600px) {
-  .Container{
+  .Container {
     width: 90%;
   }
+
 }
-
-

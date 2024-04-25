@@ -87,7 +87,7 @@ export default function AddOrderInfo() {
                     <label for="qty" class="block text-sm font-medium leading-6 text-gray-900">QTY</label>
                     <div class="flex items-center">
                       <input required type="number" name="qty${qtyCount}" id="qty" autocomplete="address-level2" class="block w-full sm:w-[80px] rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                      <button class="text-sm px-1 ml-1 bg-primary text-white rounded-md" id="deleteQty" type="button">
+                      <button class="text-sm px-1 ml-1 bg-[#f15048] text-white rounded-md" id="deleteQty" type="button">
                       Delete
                       </button>
                     </div>
@@ -172,7 +172,7 @@ export default function AddOrderInfo() {
       item: itemQty,
       amount: parseInt(bookingData.amount),
       advance: parseInt(bookingData.advance),
-      partial: { PAmount: null, PQty: [] },
+      partial: { PAmount: null, PItem: [] },
       exchange: bookingData.exchange === "No" ? false : true,
       status: "Pending",
       bookingDate: moment().format("MMM DD yyyy"),
@@ -201,7 +201,7 @@ export default function AddOrderInfo() {
         {/* <button className='underline
          decoration-primary'>View Order</button> */}
       </div>
-      <h1 className='mt-10 text-4xl text-primary'>Poristhan Fashion</h1>
+      <h1 className='mt-10 text-4xl text-[#f15048]'>Poristhan Fashion</h1>
       <h1 className='mt-1 text-lg'>Booking Form</h1>
       <form onSubmit={(e) => hangleSubmit(e)} className='w-4/6 mx-auto' >
         <div class="space-y-12">
