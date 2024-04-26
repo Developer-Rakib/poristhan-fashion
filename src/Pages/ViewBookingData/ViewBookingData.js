@@ -88,21 +88,12 @@ export default function ViewBookingData() {
     }
 
     return (
-        <div>
-            {/* <DatePicker
-                    showIcon
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                /> */}
-
-
-            <div className='text-right'>
-                <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/"}>Home</NavLink>
-            </div>
+        <div className='mt-[65px]'>
 
             <div className='text-center w-[80%] mx-auto'>
+
                 <DatePicker
-                    className='border-2 rounded text-center py-1'
+                    className='border-2 rounded-md w-32 text-center py-1.5'
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
                     required
@@ -113,10 +104,10 @@ export default function ViewBookingData() {
                     scrollableYearDropdown
                 />
                 <form onSubmit={(e) => hangleSearch(e)} id="external-form" className='text-center'>
-                    <select id="sellerName" name="" autocomplete="item-name" class="bg-white block mx-auto my-1 text-center rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 capitalize" >
+                    <select id="sellerName" name="" autocomplete="item-name" class="bg-white  block mx-auto my-1 text-center rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-base  sm:leading-6 capitalize" >
                         {
                             sellerNames.map((sellerName, i) => {
-                                return <option className='capitalize'>{sellerName}</option>
+                                return <option className='capitalize '>{sellerName}</option>
                             })
                         }
                     </select>

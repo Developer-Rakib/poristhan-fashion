@@ -9,7 +9,7 @@ import AddOrderInfo from './AddOrderInfo/AddOrderInfo';
 
 const Home = () => {
     return (
-        <div className=''>
+        <div className='mt-[70px]'>
             <AddOrderInfo />
             {/* <Banner></Banner>
             <Parts></Parts>

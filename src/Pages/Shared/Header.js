@@ -33,7 +33,7 @@ const Header = () => {
         return <Loader></Loader>
     }
     return (
-        <div className='header-container fixed top-0 w-full '>
+        <div className='header-container py-[12px] fixed top-0 w-full'>
             <nav
                 className='flex justify-center items-start  md:justify-between md:px-32 px-5 md:items-center'
             >
@@ -43,7 +43,8 @@ const Header = () => {
                         <MdDashboardCustomize className='h-5 w-5'></MdDashboardCustomize>
                     </label>
                 }
-                <img className='sm:w-52 w-48' src={logo} alt="" />
+                {/* <img className='sm:w-52 w-48' src={logo} alt="" /> */}
+                <h2 className='w-[150px] text-[#f15048] tracking-wide'>Poristhan Fashion</h2>
                 <span onClick={navBtnHndle} className='md:hidden absolute right-6  top-[22px]'>{toggle ? <MdOutlineClose></MdOutlineClose> : <GoThreeBars></GoThreeBars>}</span>
                 <ul onClick={navBtnHndle} className={`flex flex-col text-center md:justify-end z-10  md:flex-row md:top-0 left-0 w-full md:relative md:opacity-100  absolute  py-4 md:py-0 duration-500 ${toggle ? " opacity-100  top-14" : " top-[-250px] opacity-0"}`}>
                     <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/"}>Home</NavLink>
@@ -53,8 +54,8 @@ const Header = () => {
 
                         </>
                     }
-                    <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/myPortfolio"}>My Portfolio</NavLink>
-                    <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/blogs"}>Blogs</NavLink>
+                    <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/searchByDate"}>Search by Date</NavLink>
+                    <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/singleSearch"}>Single Search</NavLink>
 
                     {user ?
                         <button onClick={handleLogout} className='uppercase my-0.5 md:my-0 text-left   mx-auto md:mx-0 md:pb-0.5' >LogOut</button>

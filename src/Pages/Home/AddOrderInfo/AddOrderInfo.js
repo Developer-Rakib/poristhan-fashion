@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import Loader from '../../Shared/Loader';
 import moment from 'moment';
 import toast from 'react-hot-toast';
+import DatePicker from "react-datepicker";
 
 // import { HiMinusCircle } from "react-icons/hi";
 
@@ -16,6 +17,8 @@ export default function AddOrderInfo() {
   const { isLoading, error, data: memo } = useQuery('memo', () =>
     axios.get('http://localhost:5000/memo')
   )
+  const [startDate, setStartDate] = useState(new Date());
+
 
   if (isLoading) {
     return <Loader></Loader>
@@ -176,7 +179,8 @@ export default function AddOrderInfo() {
       partial: { PAmount: null, PItem: [] },
       exchange: bookingData.exchange === "No" ? false : true,
       status: "Pending",
-      bookingDate: moment().format("MMM DD yyyy"),
+      bookingDate: moment(startDate).format('MMM DD yyyy'),
+      // bookingDate: moment().format("MMM DD yyyy"),
       note: ""
     }
     // console.log(finalData);
@@ -188,7 +192,12 @@ export default function AddOrderInfo() {
         e.target.reset();
       }
       else {
-        toast.error(`${data.data.message}`)
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${data.data.message}`,
+        });
+        // toast.error(`${data.data.message}`)
       }
     })
 
@@ -197,20 +206,28 @@ export default function AddOrderInfo() {
 
   return (
     <div>
-      <div className='text-right'>
+      {/* <div className='text-right'>
         <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/viewOrder"}>View Order</NavLink>
-        {/* <button className='underline
-         decoration-primary'>View Order</button> */}
-      </div>
+      </div> */}
       <h1 className='mt-10 text-4xl text-[#f15048]'>Poristhan Fashion</h1>
       <h1 className='mt-1 text-lg'>Entry Form</h1>
       <form onSubmit={(e) => hangleSubmit(e)} className='w-4/6 mx-auto' >
-        <div class="space-y-12">
+        <div class="">
 
-          <h2 class="text-base font-semibold leading-7 text-gray-900">Booking Information</h2>
+          <h2 class="text-base font-semibold leading-7 text-gray-900 mb-12">Booking Information</h2>
           {/* <p class="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p> */}
 
-
+          <DatePicker
+            className='border-2 rounded-md w-32 text-center py-1.5'
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            required
+            form="external-form"
+            showYearDropdown
+            dateFormat="MMM d yyyy"
+            yearDropdownItemNumber={15}
+            scrollableYearDropdown
+          />
 
           <div className='flex  justify-center  flex-col sm:flex-row sm:justify-around'>
 
@@ -228,15 +245,16 @@ export default function AddOrderInfo() {
               </div>
             </div> */}
 
+
             <div class="w-full my-2 sm:w-[120px]  mx-2">
               <label for="memo" class="block text-sm font-medium leading-6 text-gray-900">Memo</label>
-              <div class="mt-1">
+              <div class="">
                 <input required type="number" id='memo' name="memo" class="block text-center w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
-            <div class="w-full my-2 sm:w-[200px]  mx-2">
+            <div class="w-full my-2 sm:w-[120px]  mx-2">
               <label for="bookingID" class="block text-sm font-medium leading-6 text-gray-900">ID NO</label>
-              <div class="mt-1">
+              <div class="">
                 <input required type="number" name="bookingID" id="bookingID" min={7} class="block w-full text-center rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>

@@ -24,22 +24,24 @@ import Payment from './Pages/Dashboard/Payment';
 import NotFound from './Pages/NotFound/NotFound';
 import AddOrderInfo from './Pages/Home/AddOrderInfo/AddOrderInfo';
 import ViewBookingData from './Pages/ViewBookingData/ViewBookingData';
+import SingleSearch from './Pages/SingleSearch/SingleSearch';
 
 
 function App() {
 
   return (
-    <div className="px-10 text-center">
-
-
-      {/* <Header></Header> */}
+    <div className=" text-center">
 
 
 
+
+
+      <Header></Header>
       <Toaster></Toaster>
       <Routes>
         <Route path='/' element={<Home></Home>} ></Route>
-        <Route path='/viewOrder' element={<ViewBookingData />}></Route>
+        <Route path='/searchByDate' element={<ViewBookingData />}></Route>
+        <Route path='/singleSearch' element={<SingleSearch />}></Route>
         {/* <Route path='/purchase/:id' element={<RequireAuth><Purchase></Purchase></RequireAuth>} ></Route>
         <Route path='/payment/:id' element={<RequireAuth><Payment></Payment></RequireAuth>} ></Route>
         <Route path='/dashboard' element={<RequireAuth><Dashboard></Dashboard></RequireAuth>}>
