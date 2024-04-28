@@ -92,7 +92,37 @@ export default function ViewBookingData() {
 
             <div className='text-center w-[80%] mx-auto'>
 
-                <DatePicker
+                <div className="join mb-5">
+                    <div>
+                        <div>
+                            <DatePicker
+                                className=' rounded-l-md w-32 text-center h-[3rem] border-[1px] select-bordered'
+                                selected={startDate}
+                                onChange={(date) => setStartDate(date)}
+                                required
+                                form="external-form"
+                                showYearDropdown
+                                dateFormat="MMM d yyyy"
+                                yearDropdownItemNumber={15}
+                                scrollableYearDropdown
+                            />
+                        </div>
+                    </div>
+                    <form onSubmit={(e) => hangleSearch(e)} id="external-form">
+                        <select className="select select-bordered join-item capitalize">
+                            {
+                                sellerNames.map((sellerName, i) => {
+                                    return <option className='capitalize'>{sellerName}</option>
+                                })
+                            }
+                        </select>
+                        <div className="indicator">
+                            <button className="btn join-item">Search</button>
+                        </div>
+                    </form>
+
+                </div>
+                {/* <DatePicker
                     className='border-2 rounded-md w-32 text-center py-1.5'
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
@@ -102,8 +132,8 @@ export default function ViewBookingData() {
                     dateFormat="MMM d yyyy"
                     yearDropdownItemNumber={15}
                     scrollableYearDropdown
-                />
-                <form onSubmit={(e) => hangleSearch(e)} id="external-form" className='text-center'>
+                /> */}
+                {/* <form onSubmit={(e) => hangleSearch(e)} id="external-form" className='text-center'>
                     <select id="sellerName" name="" autocomplete="item-name" class="bg-white  block mx-auto my-1 text-center rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-base  sm:leading-6 capitalize" >
                         {
                             sellerNames.map((sellerName, i) => {
@@ -112,7 +142,7 @@ export default function ViewBookingData() {
                         }
                     </select>
                     <input className='bg-emerald-500 cursor-pointer mt-1 mb-4 text-white px-2 py-1 rounded-md pb-1' type="submit" value={"Search"} />
-                </form>
+                </form> */}
             </div>
 
             {

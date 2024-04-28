@@ -25,6 +25,7 @@ import NotFound from './Pages/NotFound/NotFound';
 import AddOrderInfo from './Pages/Home/AddOrderInfo/AddOrderInfo';
 import ViewBookingData from './Pages/ViewBookingData/ViewBookingData';
 import SingleSearch from './Pages/SingleSearch/SingleSearch';
+import AddMemo from './Pages/AddMemo/AddMemo';
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path='/' element={<Home></Home>} ></Route>
         <Route path='/searchByDate' element={<ViewBookingData />}></Route>
         <Route path='/singleSearch' element={<SingleSearch />}></Route>
+        <Route path='/addMemo' element={<AddMemo />}></Route>
         {/* <Route path='/purchase/:id' element={<RequireAuth><Purchase></Purchase></RequireAuth>} ></Route>
         <Route path='/payment/:id' element={<RequireAuth><Payment></Payment></RequireAuth>} ></Route>
         <Route path='/dashboard' element={<RequireAuth><Dashboard></Dashboard></RequireAuth>}>
