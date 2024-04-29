@@ -4,25 +4,15 @@ import toast from 'react-hot-toast';
 import { FaRegEdit } from 'react-icons/fa';
 import { RiDeleteBack2Line } from 'react-icons/ri';
 import Swal from 'sweetalert2';
+import EditEntryModal from '../Shared/EditEntryModal';
 
 function SingleSearch() {
     const [singleEntry, setSingleEntry] = useState(undefined)
     // states 
-    const [status, setSatus] = useState(null)
-    let totalItemQty = 0;
+    // let totalItemQty = 0;
 
 
     // function
-    function handleInfoSave(e) {
-        e.preventDefault();
-        console.log("saved");
-    }
-    function handleSelect(e) {
-        const selectedItem = document.getElementById("status").value;
-        setSatus(selectedItem)
-    }
-
-
 
     function hangleSearch(e) {
         e.preventDefault();
@@ -67,7 +57,8 @@ function SingleSearch() {
                                 'success'
                             )
                             // const restOrders = orders.filter(o => order._id !== o._id);
-                            // setOrders(restOrders)
+                            setSingleEntry(undefined)
+                            document.getElementById('searcheForm').reset()
                         }
                         else {
                             toast.error('Somthing is wrong !')
@@ -80,7 +71,7 @@ function SingleSearch() {
     return (
         <div className='mt-[65px]'>
 
-            <form onSubmit={hangleSearch} className="join mb-6">
+            <form onSubmit={hangleSearch} className="join mb-6" id='searcheForm'>
                 <input type='number' required className="input h-[40px] input-bordered join-item" placeholder="Memo No / ID" />
                 <button type='submit' className="btn  h-[40px] min-h-[40px] px-6 join-item rounded-r-full border-[1px]">Search</button>
             </form>
@@ -94,20 +85,31 @@ function SingleSearch() {
                                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
 
                                     <div className="rounded-t bg-white mb-0 px-6 pt-2">
-                                        <div className="text-center flex justify-end">
+                                        <div className="text-center flex justify-between">
+                                            <p>{singleEntry.bookingDate}</p>
+                                            {/* <h6 className="text-blueGray-700 text-2xl">
+                                                Entry Details
+                                            </h6> */}
+                                            <div>
+                                                <button onClick={() => handleDelete(singleEntry)} className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                                                    Delete
+                                                </button>
+                                                {/* modal  */}
+                                                <label for="my-modal-4" className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 cursor-pointer">
+                                                    Edit
+                                                </label>
 
-                                            <button className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
-                                                Edit
-                                            </button>
-                                            <button className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
-                                                Delete
-                                            </button>
+                                                {/* modal  */}
+                                                <EditEntryModal
+                                                    order={singleEntry}
+                                                />
+
+
+                                            </div>
                                         </div>
                                     </div>
-                                    <h6 className="text-blueGray-700 text-2xl">
-                                        Entry Details
-                                    </h6>
-                                    <div className="flex-auto px-4 lg:px-10 py-10 pt-2">
+
+                                    <div className="flex-auto px-4 lg:px-10 py-10 pt-6">
                                         <form>
 
                                             <div className="flex flex-wrap justify-center">
@@ -192,6 +194,7 @@ function SingleSearch() {
                                                                         <input defaultValue={Object.keys(item)} type="text" id="item" name={`item${index}`} disabled className="text-center mt-1 block w-[100px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                                                         />
                                                                         <input defaultValue={Object.values(item)} type="text" id="item" name={`qty${index}`} className="text-center mt-1 block w-[60px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                            disabled
                                                                         />
                                                                     </div>
                                                                 })}
@@ -207,7 +210,7 @@ function SingleSearch() {
                                             <div className="flex flex-wrap">
                                                 <div className="w-full lg:w-12/12 px-4 mt-2">
                                                     <div className="relative w-full mb-3 text-left">
-                                                        <textarea type="text" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" rows="4">{singleEntry.note ? singleEntry.note : "No note..."}</textarea>
+                                                        <textarea type="text" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled rows="4">{singleEntry.note ? singleEntry.note : "No note..."}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
