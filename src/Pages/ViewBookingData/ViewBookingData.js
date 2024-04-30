@@ -20,6 +20,7 @@ export default function ViewBookingData() {
     let [sellerNames, setSellerNames] = useState([])
     let [orders, setOrders] = useState(undefined)
 
+
     useEffect(() => {
         if (memo?.data) {
             for (const [key, value] of Object.entries(memo?.data[0])) {

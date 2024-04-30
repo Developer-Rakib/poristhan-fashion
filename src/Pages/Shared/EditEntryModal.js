@@ -3,8 +3,9 @@ import Swal from 'sweetalert2';
 import SingleSearch from '../SingleSearch/SingleSearch';
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import toast from 'react-hot-toast';
 
-function EditEntryModal({ order }) {
+function EditEntryModal({ order, setEditModal, setOrder }) {
     const { isLoading, error, data: memo } = useQuery('memo', () =>
         axios.get('http://localhost:5000/memo')
     )
@@ -67,20 +68,40 @@ function EditEntryModal({ order }) {
             });
             return;
         }
-        let EditedData = {
+        let editedData = {
             sellerName: sellerName,
             memo: bookingMemo,
             bookingID: bookingData.bookingID,
             d_ch: parseInt(bookingData.d_ch),
+            item: order.item,
             amount: parseInt(bookingData.amount),
             advance: parseInt(bookingData.advance),
-            partial: { PAmount: bookingData.partial_amount, PItem: partialItem },
+            partial: { PAmount: bookingData.partial_amount || null, PItem: partialItem },
+            exchange: order.exchange,
             status: bookingData.status,
-            // bookingDate: moment().format("MMM DD yyyy"),
+            bookingDate: order.bookingDate,
             note: bookingData.note || order.note
         }
-        console.log(EditedData);
+
+        // console.log(EditedData);
+
+
+        axios.put(`http://localhost:5000/order/update/${order._id}`, editedData)
+            .then(data => {
+                console.log(data.data);
+                if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
+                    toast.success("Entry updated")
+                    document.getElementById('my-modal-4').checked = false;
+                    setOrder(editedData)
+                    setEditModal(false)
+                }
+                else {
+                    toast.error("Something is wrong, please try again")
+                }
+            })
     }
+    // console.log(document.getElementById('my-modal-4').checked);
+
     function handleSelect(e) {
         const selectedItem = document.getElementById("status").value;
         setSatus(selectedItem)
@@ -90,7 +111,7 @@ function EditEntryModal({ order }) {
             <input type="checkbox" id="my-modal-4" class="modal-toggle" />
             <label for="my-modal-4" class="modal cursor-pointer">
                 <label class="modal-box relative" for="">
-                    <label htmlFor="my-modal-4" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                    <label onClick={() => setEditModal(false)} htmlFor="my-modal-4" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <form onSubmit={handleInfoSave}>
                         <div className="shadow  overflow-hidden sm:rounded-md">
                             <div className="px-4 py-4 bg-gray-50 sm:px-6">

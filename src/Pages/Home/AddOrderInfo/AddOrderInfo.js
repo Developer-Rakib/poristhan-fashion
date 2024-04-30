@@ -176,11 +176,10 @@ export default function AddOrderInfo() {
       item: itemQty,
       amount: parseInt(bookingData.amount),
       advance: parseInt(bookingData.advance),
-      partial: { PAmount: undefined, PItem: [] },
+      partial: { PAmount: null, PItem: [] },
       exchange: bookingData.exchange === "No" ? false : true,
       status: "Pending",
       bookingDate: moment(startDate).format('MMM DD yyyy'),
-      // bookingDate: moment().format("MMM DD yyyy"),
       note: ""
     }
     // console.log(finalData);
