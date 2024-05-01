@@ -89,20 +89,6 @@ function SingleSearch() {
                                         <div className="text-center flex justify-between">
 
                                             <p>{singleEntry.bookingDate}</p>
-                                            {/* <h6 className="text-blueGray-700 text-2xl">
-                                                Entry Details
-                                            </h6> */}
-
-
-                                            {/* <div className="w-full lg:w-2/12 px-4">
-                                                    <div className="relative w-full mb-3">
-                                                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                                            Status
-                                                        </label>
-                                                        <input type="text" className={`font-semibold ${singleEntry.status === "Pending" ? "bg-yellow-600" : singleEntry.status === "Deliverd" ? "bg-green-600" : singleEntry.status === "Cancel" ? "bg-red-600" : singleEntry.status === "Return" ? "bg-red-600" : singleEntry.status === "Pertial Return" ? "bg-green-600" : "bg-green-600"
-                                                            } border-0 text-white text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150`} disabled value={singleEntry.status} />
-                                                    </div>
-                                                </div> */}
                                             <div>
                                                 <div>
                                                     <button onClick={() => handleDelete(singleEntry)} className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
