@@ -5,9 +5,9 @@ function AddMemoModal({ sellerNames, memo, addMemoFanction, modalError }) {
     const [newSeller, setNewSeller] = useState(false)
     // console.log(newSeller);
     return (
-        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle z-30">
+        <dialog id="my_modal_5" className="modal text-center modal-bottom sm:modal-middle z-30">
             <div className="modal-box relative ">
-                <h3 className="font-bold text-lg">Add a new memo</h3>
+                <h3 className="font-bold  text-lg">Add a new memo</h3>
                 <div className="form-control w-36  mx-auto">
                     <label className="cursor-pointer label">
                         <span className="label-text">New Seller</span>
@@ -30,7 +30,7 @@ function AddMemoModal({ sellerNames, memo, addMemoFanction, modalError }) {
                                         </div>
                                     </div>
                                     :
-                                    <div class="w-full my-2 sm:w-[100px]  mx-2">
+                                    <div class="w-full my-2 sm:w-[120px]  mx-2">
                                         <label for="sellerName" class="block text-sm font-medium leading-6 text-gray-900">Seller Name</label>
                                         <div class="">
                                             <select id="sellerName" name="sellerName" autocomplete="sellerName" class="bg-white block w-full capitalize rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">

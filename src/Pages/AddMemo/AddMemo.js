@@ -61,9 +61,25 @@ function AddMemo() {
     });
     let sellerNames = selllerArr.filter(sName => sName !== "_id");
 
+
+
+
     return (
-        <div className='mt-[65px] w-8/12 mx-auto'>
+        <div className='mt-[65px] w-6/12 mx-auto'>
             <h1 className='text-xl mb-6'>All Memos</h1>
+            <div className='text-center sm:text-right'>
+                <button onClick={() => document.getElementById('my_modal_5').showModal()} className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                    Add Memo
+                </button>
+                {/* add memo modal  */}
+                <AddMemoModal
+                    sellerNames={sellerNames}
+                    memo={memos.data[0]}
+                    addMemoFanction={addMemoFanction}
+                    modalError={modalError}
+                />
+
+            </div>
             <div className='flex flex-row items-start justify-between flex-wrap  mx-auto'>
                 <div>
                     {
@@ -78,9 +94,9 @@ function AddMemo() {
                             return (
                                 <div className='text-gray-600'>
                                     {sellerName !== "_id" &&
-                                        <div className='flex sm:items-center my-4'>
-                                            <h1 className='text-xl text-left capitalize min-w-[8rem] text-green-700'>{sellerName} :</h1>
-                                            <p className='flex flex-wrap '>{memoArr} </p>
+                                        <div className='flex  flex-col sm:flex-row sm:items-center my-4'>
+                                            <h1 className='text-xl sm:text-left capitalize min-w-[8rem] text-green-700'>{sellerName} :</h1>
+                                            <p className='flex flex-wrap justify-center sm:justify-start'>{memoArr} </p>
                                         </div>
                                     }
                                 </div>
@@ -89,23 +105,6 @@ function AddMemo() {
                     }
                 </div>
                 <div className=' '>
-                    {/* modal  */}
-                    <button className="bg-cyan-500 text-white active:bg-cyan-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 cursor-pointer">
-                        Add Seller
-                    </button>
-
-                    <button onClick={() => document.getElementById('my_modal_5').showModal()} className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
-                        Add Memo
-                    </button>
-
-                    {/* add memo modal  */}
-                    <AddMemoModal
-                        sellerNames={sellerNames}
-                        memo={memos.data[0]}
-                        addMemoFanction={addMemoFanction}
-                        modalError={modalError}
-                    />
-
 
 
                 </div>
