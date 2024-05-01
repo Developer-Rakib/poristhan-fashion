@@ -14,7 +14,7 @@ function SingleSearch() {
 
 
     // function
-    console.log(singleEntry?.status);
+    // console.log(singleEntry?.status);
     function hangleSearch(e) {
         e.preventDefault();
         let value = e.target[0].value;
