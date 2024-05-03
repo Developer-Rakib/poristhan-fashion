@@ -18,6 +18,11 @@ function SingleSearch() {
     function hangleSearch(e) {
         e.preventDefault();
         let value = e.target[0].value;
+        if (document.getElementById('dataForm')) {
+            document.getElementById('dataForm').reset()
+        }
+
+
         // console.log(value);
         axios.get(`http://localhost:5000/order/${value}`).then(res => {
             // console.log(res);
@@ -117,7 +122,7 @@ function SingleSearch() {
                                     </div>
 
                                     <div className="flex-auto px-4 lg:px-10 py-10 pt-6">
-                                        <form>
+                                        <form id='dataForm'>
 
                                             <div className="flex flex-wrap justify-center">
                                                 <div className="w-full lg:w-3/12 px-4">

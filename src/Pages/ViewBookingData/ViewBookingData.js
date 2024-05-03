@@ -19,6 +19,9 @@ export default function ViewBookingData() {
     )
     let [sellerNames, setSellerNames] = useState([])
     let [orders, setOrders] = useState(undefined)
+    let [loading, setLoading] = useState(null)
+    let [pItem, setPItem] = useState([])
+    // let pItem = {}
 
 
     useEffect(() => {
@@ -42,14 +45,37 @@ export default function ViewBookingData() {
 
     function hangleSearch(e) {
         e.preventDefault();
+        setLoading(true);
+        // setOrders([]);
+
         // startDate.moment().format("MMM DD yyyy")
         let bookingDate = moment(startDate).format('MMM DD yyyy');
         let sName = e.target[1].value;
+        pItem = {}
         axios.get(`http://localhost:5000/orders/${sName}?bookingDate=${bookingDate}`).then(res => {
             // console.log(res.data);
             setOrders(res.data);
+            setLoading(false)
+            res.data.forEach(order => {
+                if (order.status === "Deliverd") {
+                    order?.item.forEach(itm => {
+                        if (pItem[Object.keys(itm)[0]]) {
+                            pItem[Object.keys(itm)[0]] = pItem[Object.keys(itm)[0]] + Object.values(itm)[0];
+                        }
+                        else {
+                            pItem[Object.keys(itm)[0]] = Object.values(itm)[0];
+                        }
+                    });
+                }
+                else if (order.status === "Deliverd") {
+
+                }
+            })
+            setPItem(pItem);
         })
     }
+    console.log(Object.keys(pItem));
+
     function handleDelete(order) {
         Swal.fire({
             title: 'Are you sure?',
@@ -123,94 +149,126 @@ export default function ViewBookingData() {
                     </form>
 
                 </div>
-                {/* <DatePicker
-                    className='border-2 rounded-md w-32 text-center py-1.5'
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    required
-                    form="external-form"
-                    showYearDropdown
-                    dateFormat="MMM d yyyy"
-                    yearDropdownItemNumber={15}
-                    scrollableYearDropdown
-                /> */}
-                {/* <form onSubmit={(e) => hangleSearch(e)} id="external-form" className='text-center'>
-                    <select id="sellerName" name="" autocomplete="item-name" class="bg-white  block mx-auto my-1 text-center rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-base  sm:leading-6 capitalize" >
-                        {
-                            sellerNames.map((sellerName, i) => {
-                                return <option className='capitalize '>{sellerName}</option>
-                            })
-                        }
-                    </select>
-                    <input className='bg-emerald-500 cursor-pointer mt-1 mb-4 text-white px-2 py-1 rounded-md pb-1' type="submit" value={"Search"} />
-                </form> */}
             </div>
 
-            {
-                orders === undefined ? <p className='text-gray-500'>Please pick a date and seller name and hit the Search Button.</p>
-                    :
-                    orders.length > 0 ?
-                        <div className='sm:px-10 px-2 pb-5'>
-                            {/* <h5 className="text-lg text-center sm:text-left font-bold  mb-2 text-primary">Mange All Orders</h5> */}
-
-                            <div className="relative  overflow-x-auto shadow-md sm:rounded-lg">
-                                <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
-                                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                        <tr>
-                                            <th scope="col" className="py-2  sm:py-3">
-
-                                            </th>
-                                            <th scope="col" className="py-2 sm:py-3">
-                                                Seller Name
-                                            </th>
-                                            <th scope="col" className="py-2  sm:py-3">
-                                                Memo
-                                            </th>
-                                            <th scope="col" className="py-2 text-center sm:py-3">
-                                                ID
-                                            </th>
-                                            <th scope="col" className="py-2 text-center sm:py-3">
-                                                Item
-                                            </th>
-                                            <th scope="col" className="py-2 text-center sm:py-3">
-                                                QTY
-                                            </th>
-                                            <th scope="col" className="py-2 text-center sm:py-3">
-                                                D. CH.
-                                            </th>
-                                            <th scope="col" className="py-2 text-center sm:py-3">
-                                                Advance
-                                            </th>
-                                            <th scope="col" className="py-2 text-center sm:py-3">
-                                                Amount
-                                            </th>
-                                            <th scope="col" className="py-2 text-center sm:py-3">
-                                                Status
-                                            </th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            orders.map((order, i) =>
-                                                <SingleBookingData
-                                                    order={order}
-                                                    handleDelete={handleDelete}
-                                                    i={i}
-                                                />)
-                                        }
-
-
-                                    </tbody>
-                                </table>
-
-                            </div>
-
-
-                        </div >
+            <div className=''>
+                {
+                    orders === undefined ? <p className='text-gray-500'>Please pick a date and seller name and hit the Search Button.</p>
                         :
-                        <p className='text-red-500'>Sorry ! no Entry in this date for this seller.</p>
-            }
+                        orders.length > 0 ?
+                            loading ? <Loader />
+                                :
+                                <div className='flex'>
+                                    <div className='w-[85%] sm:px-6 px-2 pb-5'>
+
+                                        <div className="relative  overflow-x-auto shadow-md sm:rounded-lg">
+                                            <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+                                                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                    <tr>
+                                                        <th scope="col" className="py-2  sm:py-3">
+
+                                                        </th>
+                                                        <th scope="col" className="py-2 sm:py-3">
+                                                            Seller Name
+                                                        </th>
+                                                        <th scope="col" className="py-2  sm:py-3">
+                                                            Memo
+                                                        </th>
+                                                        <th scope="col" className="py-2 text-center sm:py-3">
+                                                            ID
+                                                        </th>
+                                                        <th scope="col" className="py-2 text-center sm:py-3">
+                                                            Item
+                                                        </th>
+                                                        <th scope="col" className="py-2 text-center sm:py-3">
+                                                            QTY
+                                                        </th>
+                                                        <th scope="col" className="py-2 text-center sm:py-3">
+                                                            D. CH.
+                                                        </th>
+                                                        <th scope="col" className="py-2 text-center sm:py-3">
+                                                            Advance
+                                                        </th>
+                                                        <th scope="col" className="py-2 text-center sm:py-3">
+                                                            Amount
+                                                        </th>
+                                                        <th scope="col" className="py-2 sm:pr-4 text-center sm:py-3">
+                                                            Status
+                                                        </th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        orders.map((order, i) => {
+
+                                                            // console.log(order.status);
+                                                            // pItem = { selname: "rakiv" }
+
+                                                            // if (order.status === "Deliverd") {
+
+                                                            // }
+                                                            return <SingleBookingData
+                                                                order={order}
+                                                                handleDelete={handleDelete}
+                                                                i={i}
+                                                            />
+                                                        }
+                                                        )
+                                                    }
+
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+
+                                    </div >
+
+                                    <div className='mr-1'>
+                                        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
+                                                    <tr>
+                                                        <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                                            P name
+                                                        </th>
+                                                        <th scope="col" className="px-6 py-3">
+                                                            QTY
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    {
+                                                        Object.keys(pItem).map(pi => {
+
+                                                            return (
+                                                                <tr>
+                                                                    <th scope="row" className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                                        {pi}
+                                                                    </th>
+                                                                    <td className="px-6 py-2">
+                                                                        {pItem[`${pi}`]}
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        }
+
+                                                        )
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            :
+                            <p className='text-red-500'>Sorry ! no Entry in this date for this seller.</p>
+                }
+            </div>
+
 
         </div >
     )

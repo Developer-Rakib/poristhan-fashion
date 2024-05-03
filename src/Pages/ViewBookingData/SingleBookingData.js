@@ -22,7 +22,7 @@ const SingleBookingData = ({ order, handleDelete, i }) => {
 
     return (
         <tr key={singleEntry._id} className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
-            <th scope="row" className="pl-2 pr-1 sm:pr-0 sm:pl-5 py-2  sm:py-4 font-medium text-gray-900 dark:text-white whitespace-nowraptext-[13px]">
+            <th scope="row" className="pl-2 pr-1 sm:pr-0 sm:pl-5 py-2  sm:py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-[13px]">
                 {i + 1}
             </th>
             <td className="py-2 text-[12px] sm:text-[13px] sm:py-4 capitalize">
