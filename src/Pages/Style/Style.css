@@ -5,13 +5,12 @@
     z-index: 100;
 }
 
-.header-container nav {
-}
+.header-container nav {}
 
 
 .header-container nav ul {
     border-radius: 5px;
-    
+
 }
 
 .header-container nav ul a {
@@ -26,6 +25,18 @@
     border-bottom: 2px solid #f15048;
 }
 
+.strikethrough {
+    position: relative;
+}
+
+.strikethrough:before {
+    border-bottom: 1px solid red;
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 50%;
+}
+
 /* review */
 .reveiw {
     width: 351px;
@@ -33,7 +44,7 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     border-radius: 15px;
     padding: 25px;
-    
+
 }
 
 .reveiw p {
@@ -62,7 +73,7 @@
     font-weight: 700;
 }
 
-.profileModal{
+.profileModal {
     /* z-index: 100; */
 
 }
@@ -75,10 +86,12 @@
         /* display: inline-block; */
         margin: 0px auto;
     }
+
     .header-container nav ul {
         background-color: #f15048;
         color: white;
     }
+
     .activeLink {
         border-bottom: 2px solid white;
     }

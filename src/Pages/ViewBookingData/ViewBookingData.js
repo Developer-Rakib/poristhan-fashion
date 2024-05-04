@@ -67,14 +67,21 @@ export default function ViewBookingData() {
                         }
                     });
                 }
-                else if (order.status === "Deliverd") {
-
+                else if (order.status === "Pertial Return") {
+                    order?.partial.PItem.forEach(itm => {
+                        if (pItem[Object.keys(itm)[0]]) {
+                            pItem[Object.keys(itm)[0]] = pItem[Object.keys(itm)[0]] + Object.values(itm)[0];
+                        }
+                        else {
+                            pItem[Object.keys(itm)[0]] = Object.values(itm)[0];
+                        }
+                    });
                 }
             })
             setPItem(pItem);
         })
     }
-    console.log(Object.keys(pItem));
+    // console.log(Object.keys(pItem));
 
     function handleDelete(order) {
         Swal.fire({
@@ -107,6 +114,33 @@ export default function ViewBookingData() {
 
             }
         })
+    }
+    function handleReceive() {
+        const updatedItems = orders.map(upItem => {
+            let allItem = []
+            if (upItem.status === "Pending") {
+                const editedData = {
+                    status: "Deliverd"
+                }
+                upItem.status = "Deliverd";
+                allItem.push(upItem)
+                axios.put(`http://localhost:5000/order/update/${upItem._id}`, editedData)
+                    .then(data => {
+                        if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
+                            upItem.status = "Deliverd";
+                            allItem.push(upItem)
+                        }
+                        else {
+                            allItem.push(upItem)
+                        }
+                    })
+            }
+            else {
+                allItem.push(upItem)
+            }
+            return upItem
+        })
+        setOrders(updatedItems);
     }
     // console.log(orders);
 
@@ -261,7 +295,9 @@ export default function ViewBookingData() {
                                                 </tbody>
                                             </table>
                                         </div>
-
+                                        <button onClick={handleReceive} className="mt-4 bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                                            Receive All
+                                        </button>
                                     </div>
                                 </div>
                             :

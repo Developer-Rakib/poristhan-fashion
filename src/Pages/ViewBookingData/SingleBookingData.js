@@ -35,13 +35,31 @@ const SingleBookingData = ({ order, handleDelete, i }) => {
                 {singleEntry.bookingID}
             </td>
             <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
-                {singleEntry.item.map((item, b) => {
+                <div className={`${singleEntry.status === "Pertial Return" && "border-b"}`}>
+                    {singleEntry.item.map((item, b) => {
 
-                    Object.values(item).map(i => {
-                        totalItemQty = totalItemQty + i;
+                        Object.values(item).map(i => {
+                            totalItemQty = totalItemQty + i;
+                        })
+                        return <p className={`${singleEntry.status === "Pertial Return" && "line-through"}`} key={b}>
+                            {Object.keys(item)}
+                            <span >{` ( ${Object.values(item)} )`}</span>
+                        </p>
+                    })}
+                </div>
+                {
+                    singleEntry.status === "Pertial Return" &&
+                    singleEntry.partial.PItem.map((item, b) => {
+
+                        // Object.values(item).map(i => {
+                        //     totalItemQty = totalItemQty + i;
+                        // })
+                        return <p className='text-green-600' key={b}>
+                            {Object.keys(item)}
+                            <span>{`( ${Object.values(item)} )`}</span>
+                        </p>
                     })
-                    return <p key={b}>{`${Object.keys(item)} ( ${Object.values(item)} )`}</p>
-                })}
+                }
             </td>
             <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
                 {totalItemQty}
@@ -53,7 +71,13 @@ const SingleBookingData = ({ order, handleDelete, i }) => {
                 {singleEntry.advance}
             </td>
             <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
-                {singleEntry.amount}
+                <p className={`${singleEntry.status === "Pertial Return" && "line-through border-b"}`}>{singleEntry.amount}</p>
+                {
+                    singleEntry.status === "Pertial Return" &&
+                    <p className='text-green-600'>
+                        {singleEntry.partial.PAmount}
+                    </p>
+                }
             </td>
             <td className="py-2 text-[12px] sm:text-[13px] text-center sm:py-4 relative ">
 
