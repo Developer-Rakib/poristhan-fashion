@@ -37,12 +37,12 @@ const Header = () => {
             <nav
                 className='flex justify-center items-start  md:justify-between md:px-32 px-5 md:items-center'
             >
-                {
+                {/* {
                     user &&
                     <label htmlFor="dashboard-drower" tabIndex="1" className="md:hidden absolute left-6  top-[22px]">
                         <MdDashboardCustomize className='h-5 w-5'></MdDashboardCustomize>
                     </label>
-                }
+                } */}
                 {/* <img className='sm:w-52 w-48' src={logo} alt="" /> */}
                 <h2 className='w-[150px] text-[#f15048] tracking-wide'>Poristhan Fashion</h2>
                 <span onClick={navBtnHndle} className='md:hidden absolute right-6  top-[22px]'>{toggle ? <MdOutlineClose></MdOutlineClose> : <GoThreeBars></GoThreeBars>}</span>

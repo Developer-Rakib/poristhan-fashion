@@ -191,7 +191,7 @@ function SingleSearch() {
                                                             Item
                                                         </label>
 
-                                                        <div className='flex'>
+                                                        <div className='flex justify-center sm:justify-start'>
                                                             <div className=" flex justify-center">
                                                                 <div className='flex flex-col'>
                                                                     {singleEntry.item.map((item, index) => {
