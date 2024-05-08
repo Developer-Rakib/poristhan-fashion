@@ -9,13 +9,13 @@ import moment, { fn } from 'moment'
 import SingleBookingData from './SingleBookingData'
 import Swal from 'sweetalert2'
 import toast from 'react-hot-toast'
-
+// let key = process.env.REACT_APP_MF_Api_Key
 export default function ViewBookingData() {
     // const { isLoading: isLoading2, error: err, data: orders } = useQuery('orders', () =>
-    //     axios.get('http://localhost:5000/orders')
+    //     axios.get('https://poristhan-fashion-server.onrender.com/orders')
     // )
     const { isLoading, error, data: memo } = useQuery('memo', () =>
-        axios.get('http://localhost:5000/memo')
+        axios.get('https://poristhan-fashion-server.onrender.com/memo')
     )
     let [sellerNames, setSellerNames] = useState([])
     let [orders, setOrders] = useState(undefined)
@@ -52,7 +52,7 @@ export default function ViewBookingData() {
         let bookingDate = moment(startDate).format('MMM DD yyyy');
         let sName = e.target[1].value;
         pItem = {}
-        axios.get(`http://localhost:5000/orders/${sName}?bookingDate=${bookingDate}`).then(res => {
+        axios.get(`https://poristhan-fashion-server.onrender.com/orders/${sName}?bookingDate=${bookingDate}`).then(res => {
             // console.log(res.data);
             setOrders(res.data);
             setLoading(false)
@@ -95,7 +95,7 @@ export default function ViewBookingData() {
         }).then((result) => {
             if (result.isConfirmed) {
                 // console.log(order._id);
-                axios.delete(`http://localhost:5000/order/${order._id}`)
+                axios.delete(`https://poristhan-fashion-server.onrender.com/order/${order._id}`)
                     .then(data => {
                         // console.log(data);
                         if (data.data.deletedCount > 0) {
@@ -115,25 +115,74 @@ export default function ViewBookingData() {
             }
         })
     }
+
+
     function handleReceive() {
+        // console.log(key);
+
         const updatedItems = orders.map(upItem => {
             let allItem = []
             if (upItem.status === "Pending") {
-                const editedData = {
-                    status: "Deliverd"
-                }
-                upItem.status = "Deliverd";
-                allItem.push(upItem)
-                axios.put(`http://localhost:5000/order/update/${upItem._id}`, editedData)
-                    .then(data => {
-                        if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
-                            upItem.status = "Deliverd";
-                            allItem.push(upItem)
+
+                //         // upItem.status = "Deliverd";
+                //         // allItem.push(upItem)
+                axios.get(`https://portal.steadfast.com.bd/api/v1/status_by_cid/${upItem.bookingID}`, {
+                    headers: {
+                        'Api-Key': `${process.env.REACT_APP_MF_Api_Key}`,
+                        'Secret-Key': `${process.env.REACT_APP_MF_Secret_Key}`
+                    }
+                }).then(data => {
+                    if (data.data.status === 200) {
+                        // status = data.data.delivery_status
+                        if (data.data.delivery_status === "delivered" || data.data.delivery_status === "cancelled") {
+                            const editedData = {
+                                status: data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
+                            }
+                            axios.put(`https://poristhan-fashion-server.onrender.com/order/update/${upItem._id}`, editedData)
+                                .then(data => {
+                                    if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
+                                        upItem.status = data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
+                                        allItem.push(upItem)
+                                    }
+                                    else {
+                                        allItem.push(upItem)
+                                    }
+                                })
                         }
-                        else {
-                            allItem.push(upItem)
-                        }
-                    })
+                    }
+                }).catch(res => {
+                    if (res.response.status) {
+                        axios.get(`https://portal.steadfast.com.bd/api/v1/status_by_cid/${upItem.bookingID}`, {
+                            headers: {
+                                'Api-Key': `${process.env.REACT_APP_F_Api_Key}`,
+                                'Secret-Key': `${process.env.REACT_APP_F_Secret_Key}`
+                            }
+                        }).then(data => {
+                            if (data.data.status === 200) {
+                                // status = data.data.delivery_status
+                                if (data.data.delivery_status === "delivered" || data.data.delivery_status === "cancelled") {
+                                    const editedData = {
+                                        status: data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
+                                    }
+                                    axios.put(`https://poristhan-fashion-server.onrender.com/order/update/${upItem._id}`, editedData)
+                                        .then(data => {
+                                            if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
+                                                upItem.status = data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
+                                                allItem.push(upItem)
+                                            }
+                                            else {
+                                                allItem.push(upItem)
+                                            }
+                                        })
+                                }
+                            }
+                        }).catch(res => {
+                            // console.log(res.response.status);
+                        })
+                    }
+                })
+
+
             }
             else {
                 allItem.push(upItem)
@@ -142,7 +191,6 @@ export default function ViewBookingData() {
         })
         setOrders(updatedItems);
     }
-    // console.log(orders);
 
     if (isLoading) {
         return <Loader></Loader>
@@ -151,13 +199,13 @@ export default function ViewBookingData() {
     return (
         <div className='mt-[65px]'>
 
-            <div className='text-center w-[80%] mx-auto'>
+            <div className='text-center w-[85%] mx-auto'>
 
                 <div className="join mb-5">
                     <div>
                         <div>
                             <DatePicker
-                                className=' rounded-l-md w-32 text-center h-[3rem] border-[1px] select-bordered'
+                                className=' rounded-l-md w-[110px] sm:w-32 text-center h-[3rem] border-[1px] select-bordered'
                                 selected={startDate}
                                 onChange={(date) => setStartDate(date)}
                                 required
@@ -170,7 +218,7 @@ export default function ViewBookingData() {
                         </div>
                     </div>
                     <form onSubmit={(e) => hangleSearch(e)} id="external-form">
-                        <select className="select select-bordered join-item capitalize">
+                        <select className="select select-bordered join-item capitalize w-[95px] ">
                             {
                                 sellerNames.map((sellerName, i) => {
                                     return <option className='capitalize'>{sellerName}</option>
@@ -187,46 +235,46 @@ export default function ViewBookingData() {
 
             <div className=''>
                 {
-                    orders === undefined ? <p className='text-gray-500'>Please pick a date and seller name and hit the Search Button.</p>
+                    orders === undefined ? <p className='text-gray-500 px-10'>Please pick a date and seller name and hit the Search Button.</p>
                         :
                         orders.length > 0 ?
                             loading ? <Loader />
                                 :
-                                <div className='flex'>
-                                    <div className='w-[85%] sm:px-6 px-2 pb-5'>
+                                <div className='flex flex-col-reverse justify-center sm:flex-row'>
+                                    <div className='w-[95%] mx-auto  sm:w-[85%] sm:px-6 px-2 pb-5'>
 
                                         <div className="relative  overflow-x-auto shadow-md sm:rounded-lg">
                                             <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
                                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                                     <tr>
-                                                        <th scope="col" className="py-2  sm:py-3">
+                                                        <th scope="col" className="py-2 sm:text-[12px] text-[9px]  sm:py-3">
 
                                                         </th>
-                                                        <th scope="col" className="py-2 sm:py-3">
+                                                        <th scope="col" className="py-2 sm:text-[12px] text-[9px] sm:py-3">
                                                             Seller Name
                                                         </th>
-                                                        <th scope="col" className="py-2  sm:py-3">
+                                                        <th scope="col" className="py-2 sm:text-[12px] text-[9px]  sm:py-3">
                                                             Memo
                                                         </th>
-                                                        <th scope="col" className="py-2 text-center sm:py-3">
+                                                        <th scope="col" className="py-2 sm:text-[12px] text-[9px] text-center sm:py-3">
                                                             ID
                                                         </th>
-                                                        <th scope="col" className="py-2 text-center sm:py-3">
+                                                        <th scope="col" className="py-2 sm:text-[12px] text-[9px] text-center sm:py-3 hidden sm:block">
                                                             Item
                                                         </th>
-                                                        <th scope="col" className="py-2 text-center sm:py-3">
+                                                        <th scope="col" className="py-2 sm:text-[12px] text-[9px] text-center sm:py-3">
                                                             QTY
                                                         </th>
-                                                        <th scope="col" className="py-2 text-center sm:py-3">
+                                                        <th scope="col" className="py-2 sm:text-[12px] text-[9px] text-center sm:py-3">
                                                             D. CH.
                                                         </th>
-                                                        <th scope="col" className="py-2 text-center sm:py-3">
+                                                        <th scope="col" className="py-2 sm:text-[12px] text-[9px] text-center sm:py-3">
                                                             Advance
                                                         </th>
-                                                        <th scope="col" className="py-2 text-center sm:py-3">
+                                                        <th scope="col" className="py-2 sm:text-[12px] text-[9px] text-center sm:py-3">
                                                             Amount
                                                         </th>
-                                                        <th scope="col" className="py-2 sm:pr-4 text-center sm:py-3">
+                                                        <th scope="col" className="py-2 sm:text-[12px] text-[9px] sm:pr-4 text-center sm:py-3">
                                                             Status
                                                         </th>
 
@@ -260,15 +308,15 @@ export default function ViewBookingData() {
 
                                     </div >
 
-                                    <div className='mr-1'>
-                                        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                    <div className='mr-1 sm:mr-4 mb-8'>
+                                        <div className="relative w-[60%] mx-auto sm:w-full overflow-x-auto shadow-md sm:rounded-lg">
                                             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
                                                     <tr>
-                                                        <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                                        <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
                                                             P name
                                                         </th>
-                                                        <th scope="col" className="px-6 py-3">
+                                                        <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px]">
                                                             QTY
                                                         </th>
                                                     </tr>
@@ -280,10 +328,10 @@ export default function ViewBookingData() {
 
                                                             return (
                                                                 <tr>
-                                                                    <th scope="row" className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                                    <th scope="row" className="px-6 py-2 text-[11px] sm:text-[12px] font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
                                                                         {pi}
                                                                     </th>
-                                                                    <td className="px-6 py-2">
+                                                                    <td className="px-6 py-2 text-[11px] sm:text-[12px]">
                                                                         {pItem[`${pi}`]}
                                                                     </td>
                                                                 </tr>

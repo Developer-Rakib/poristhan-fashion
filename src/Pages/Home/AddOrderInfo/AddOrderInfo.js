@@ -15,7 +15,7 @@ import DatePicker from "react-datepicker";
 
 export default function AddOrderInfo() {
   const { isLoading, error, data: memo } = useQuery('memo', () =>
-    axios.get('http://localhost:5000/memo')
+    axios.get('https://poristhan-fashion-server.onrender.com/memo')
   )
   const [startDate, setStartDate] = useState(new Date());
 
@@ -26,15 +26,51 @@ export default function AddOrderInfo() {
   // console.log(memo.data[0]);
 
   let qtyCount = 1;
-  let memoSerials = {
-    jakir: [1, 901, 2101, 501],
-    alamgir: [2601, 4301, 2501, 2701, 3801, 2001, 401, 1001, 1601],
-    amir: [201, 1801, 2401, 4501, 701, 4401],
-    sohail: [3601, 3901, 1701, 1501, 2301],
-    arafat: [1901, 1201],
-    rakib: [1101],
+  let itemName = [
+    "BLC",
+    "BLC",
+    "BLS",
+    "DBLS",
+    "BLP",
+    "BLF",
+    "HPC",
+    "HPS",
+    "HPP",
+    "HPF",
+    "SKC",
+    "SKS",
+    "SSKS",
+    "SKP",
+    "SKF",
+    "EMC",
+    "EMS",
+    "EMP",
+    "EMF",
+    "CHC",
+    "CHS",
+    "CHP",
+    "CHF",
+    "CMC",
+    "CMS",
+    "CMP",
+    "CMF",
+    "RMC",
+    "RMS",
+    "RMP",
+    "RMF",
+    "OCC",
+    "OCS",
+    "OCP",
+    "OCF",
+    "NPC",
+    "NPS",
+    "NPP",
+    "NPF",
+  ]
+  let itemString = itemName.map(itSt => `<option>${itSt}</option>`,)
+  let itemInner = itemName.map(itSt => <option>{itSt}</option>,)
 
-  }
+
 
   function handleClear(e) {
     e.target.form.reset();
@@ -64,24 +100,7 @@ export default function AddOrderInfo() {
                   <label for="item" class="block text-sm font-medium leading-6 text-gray-900">ITEM</label>
                   <div class="">
                     <select id="item" name="item${qtyCount}" autocomplete="item-name" class="bg-white block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                      <option>BLC</option>
-                      <option>BLS</option>
-                      <option>BLP</option>
-                      <option>HPC</option>
-                      <option>HPS</option>
-                      <option>HPP</option>
-                      <option>SKC</option>
-                      <option>SKS</option>
-                      <option>SKP</option>
-                      <option>EMC</option>
-                      <option>EMS</option>
-                      <option>EMP</option>
-                      <option>CHC</option>
-                      <option>CHS</option>
-                      <option>CHP</option>
-                      <option>NPC</option>
-                      <option>NPS</option>
-                      <option>NPP</option>
+                      ${itemString}
                     </select>
                   </div>
                 </div>
@@ -183,7 +202,7 @@ export default function AddOrderInfo() {
       note: ""
     }
     // console.log(finalData);
-    axios.post(`http://localhost:5000/orders`, finalData).then(data => {
+    axios.post(`https://poristhan-fashion-server.onrender.com/orders`, finalData).then(data => {
       // console.log(data.data.success);
       // console.log(data.data);
       if (data.data.success) {
@@ -204,7 +223,7 @@ export default function AddOrderInfo() {
   }
 
   return (
-    <div>
+    <div className='mb-8 '>
       {/* <div className='text-right'>
         <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/viewOrder"}>View Order</NavLink>
       </div> */}
@@ -213,7 +232,7 @@ export default function AddOrderInfo() {
       <form onSubmit={(e) => hangleSubmit(e)} className='w-4/6 mx-auto' >
         <div class="">
 
-          <h2 class="text-base font-semibold leading-7 text-gray-900 mb-12">Booking Information</h2>
+          <h2 class="text-base font-semibold leading-7 text-gray-900 mb-8 sm:mb-12">Booking Information</h2>
           {/* <p class="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p> */}
 
           <DatePicker
@@ -251,10 +270,10 @@ export default function AddOrderInfo() {
                 <input required type="number" id='memo' name="memo" class="block text-center w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
-            <div class="w-full my-2 sm:w-[120px]  mx-2">
+            <div class="w-full my-2 sm:w-[150px]  mx-2">
               <label for="bookingID" class="block text-sm font-medium leading-6 text-gray-900">ID NO</label>
               <div class="">
-                <input required type="number" name="bookingID" id="bookingID" min={7} class="block w-full text-center rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <input required type="number" name="bookingID" id="bookingID" min={7} class="block w-full text-center rounded-md border-0 tracking-wider p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
 
@@ -264,24 +283,7 @@ export default function AddOrderInfo() {
                   <label for="item" class="block text-sm font-medium leading-6 text-gray-900">ITEM</label>
                   <div class="">
                     <select id="item" name={`item${qtyCount}`} autocomplete="item-name" class="bg-white block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                      <option>BLC</option>
-                      <option>BLS</option>
-                      <option>BLP</option>
-                      <option>HPC</option>
-                      <option>HPS</option>
-                      <option>HPP</option>
-                      <option>SKC</option>
-                      <option>SKS</option>
-                      <option>SKP</option>
-                      <option>EMC</option>
-                      <option>EMS</option>
-                      <option>EMP</option>
-                      <option>CHC</option>
-                      <option>CHS</option>
-                      <option>CHP</option>
-                      <option>NPC</option>
-                      <option>NPS</option>
-                      <option>NPP</option>
+                      {itemInner}
                     </select>
                   </div>
                 </div>

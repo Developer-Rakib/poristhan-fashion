@@ -44,6 +44,8 @@ function App() {
         <Route path='/searchByDate' element={<ViewBookingData />}></Route>
         <Route path='/singleSearch' element={<SingleSearch />}></Route>
         <Route path='/addMemo' element={<AddMemo />}></Route>
+        <Route path='/login' element={<Login></Login>} ></Route>
+        <Route path='/signUp' element={<SignUp></SignUp>} ></Route>
         {/* <Route path='/purchase/:id' element={<RequireAuth><Purchase></Purchase></RequireAuth>} ></Route>
         <Route path='/payment/:id' element={<RequireAuth><Payment></Payment></RequireAuth>} ></Route>
         <Route path='/dashboard' element={<RequireAuth><Dashboard></Dashboard></RequireAuth>}>

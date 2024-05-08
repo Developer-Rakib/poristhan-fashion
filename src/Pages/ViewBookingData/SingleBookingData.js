@@ -22,19 +22,19 @@ const SingleBookingData = ({ order, handleDelete, i }) => {
 
     return (
         <tr key={singleEntry._id} className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
-            <th scope="row" className="pl-2 pr-1 sm:pr-0 sm:pl-5 py-2  sm:py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-[13px]">
+            <th scope="row" className="pl-2 pr-1 sm:pr-0 sm:pl-5 py-2  sm:py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-[9px] sm:text-[13px] ">
                 {i + 1}
             </th>
-            <td className="py-2 text-[12px] sm:text-[13px] sm:py-4 capitalize">
+            <td className="py-2 text-[9px] sm:text-[13px]  sm:py-4 capitalize">
                 {singleEntry.sellerName}
             </td>
-            <td className="py-2   text-[12px] sm:text-[13px] sm:py-4">
+            <td className="py-2   text-[9px] sm:text-[13px]  sm:py-4">
                 {singleEntry.memo}
             </td>
-            <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
+            <td className="py-2 text-[9px] sm:text-[13px]   text-center sm:py-4">
                 {singleEntry.bookingID}
             </td>
-            <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
+            <td className="py-2 text-[8px] sm:text-[13px]   text-center sm:py-4">
                 <div className={`${singleEntry.status === "Pertial Return" && "border-b"}`}>
                     {singleEntry.item.map((item, b) => {
 
@@ -61,16 +61,16 @@ const SingleBookingData = ({ order, handleDelete, i }) => {
                     })
                 }
             </td>
-            <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
+            <td className="py-2 text-[9px] sm:text-[13px]   text-center sm:py-4 sm:block hidden">
                 {totalItemQty}
             </td>
-            <td className="py-2 text-[12px] sm:text-F[13px]  text-center sm:py-4">
+            <td className="py-2 text-[9px] sm:text-F[13px]  text-center sm:py-4">
                 {singleEntry.d_ch}
             </td>
-            <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
+            <td className="py-2 text-[9px] sm:text-[13px]   text-center sm:py-4">
                 {singleEntry.advance}
             </td>
-            <td className="py-2 text-[12px] sm:text-[13px]  text-center sm:py-4">
+            <td className="py-2 text-[9px] sm:text-[13px]   text-center sm:py-4">
                 <p className={`${singleEntry.status === "Pertial Return" && "line-through border-b"}`}>{singleEntry.amount}</p>
                 {
                     singleEntry.status === "Pertial Return" &&
@@ -79,7 +79,7 @@ const SingleBookingData = ({ order, handleDelete, i }) => {
                     </p>
                 }
             </td>
-            <td className="py-2 text-[12px] sm:text-[13px] text-center sm:py-4 relative ">
+            <td className="py-2 text-[9px] sm:text-[13px]  text-center sm:py-4 relative ">
 
 
                 {/* modal btn  */}
@@ -117,7 +117,7 @@ const SingleBookingData = ({ order, handleDelete, i }) => {
             singleEntry.shipped && <p className='text-green-700'>Paid</p>
         } */}
                 <span onClick={() => handleDelete(order)} className='cursor-pointer'>
-                    <RiDeleteBack2Line className='text-red-600 absolute text-[15px] top-6  right-0' />
+                    <RiDeleteBack2Line className='text-red-600 absolute text-[10px] sm:text-[15px] sm:top-6 bottom-0  right-0' />
                 </span>
             </td>
 

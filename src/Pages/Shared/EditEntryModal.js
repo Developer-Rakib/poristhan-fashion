@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
 import SingleSearch from '../SingleSearch/SingleSearch';
 import axios from 'axios';
@@ -7,9 +7,58 @@ import toast from 'react-hot-toast';
 
 function EditEntryModal({ order, setEditModal, setOrder }) {
     const { isLoading, error, data: memo } = useQuery('memo', () =>
-        axios.get('http://localhost:5000/memo')
+        axios.get('https://poristhan-fashion-server.onrender.com/memo')
     )
+
     const [status, setSatus] = useState(null)
+
+    useEffect(() => {
+        setSatus(order.status)
+    }, [order])
+
+
+    let itemName = [
+        "BLC",
+        "BLC",
+        "BLS",
+        "DBLS",
+        "BLP",
+        "BLF",
+        "HPC",
+        "HPS",
+        "HPP",
+        "HPF",
+        "SKC",
+        "SKS",
+        "SSKS",
+        "SKP",
+        "SKF",
+        "EMC",
+        "EMS",
+        "EMP",
+        "EMF",
+        "CHC",
+        "CHS",
+        "CHP",
+        "CHF",
+        "CMC",
+        "CMS",
+        "CMP",
+        "CMF",
+        "RMC",
+        "RMS",
+        "RMP",
+        "RMF",
+        "OCC",
+        "OCS",
+        "OCP",
+        "OCF",
+        "NPC",
+        "NPS",
+        "NPP",
+        "NPF",
+    ]
+    let itemInner = itemName.map(itSt => <option>{itSt}</option>,)
 
     function handleInfoSave(e) {
         e.preventDefault();
@@ -83,10 +132,10 @@ function EditEntryModal({ order, setEditModal, setOrder }) {
             note: bookingData.note || order.note
         }
 
-        // console.log(EditedData);
+        console.log(editedData);
 
 
-        axios.put(`http://localhost:5000/order/update/${order._id}`, editedData)
+        axios.put(`https://poristhan-fashion-server.onrender.com/order/update/${order._id}`, editedData)
             .then(data => {
                 console.log(data.data);
                 if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
@@ -174,8 +223,13 @@ function EditEntryModal({ order, setEditModal, setOrder }) {
                                                     {order.item.map((item, index) => {
 
                                                         return <div className='flex mx-2' key={index}>
-                                                            <input defaultValue={Object.keys(item)} type="text" readOnly id="item" name={`item${index}`} className="text-center mt-1 block w-[100px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                                            />
+
+                                                            <select defaultValue={Object.keys(item)} type="text" id="item" name={`item${index}`} class="bg-white text-center mt-1 block w-[100px]  rounded-md border-0 py-2 px-2  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                                                {itemInner}
+                                                            </select>
+
+
+
                                                             <input defaultValue={Object.values(item)} type="text" id="item" name={`qty${index}`} className="text-center mt-1 block w-[60px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                                             />
                                                         </div>

@@ -51,7 +51,7 @@ const SignUp = () => {
             navigate(from, { replace: true });
             toast.success('Sign Up Successfully!', { id: "social_login" })
         }
-    }, [ token, from, navigate])
+    }, [token, from, navigate])
 
     const onSubmit = async data => {
         await createUserWithEmailAndPassword(data.email, data.password);
@@ -109,10 +109,10 @@ const SignUp = () => {
                     </label>
 
                     <input
-                     style={{fontFamily:'Open Sans, sans-serif', letterSpacing:'2px'}}  className='font-semibold bg-primary text-white border border-primary hover:bg-white hover:text-gray-700  transition-all cursor-pointer rounded-md py-3 ' value={"SIGN UP"} type="submit" />
+                        style={{ fontFamily: 'Open Sans, sans-serif', letterSpacing: '2px' }} className='font-semibold bg-[#f15048] text-white border border-[#f15048] hover:bg-white hover:text-gray-700  transition-all cursor-pointer rounded-md py-3 ' value={"SIGN UP"} type="submit" />
                 </form>
                 <div className='w-9/12 mx-auto'>
-                    <small className='mt-4 mx-2 inline-block'>Aleady Have Account ? <Link className='text-primary font-semibold' to={"/login"}>Log in</Link></small>
+                    <small className='mt-4 mx-2 inline-block'>Aleady Have Account ? <Link className='text-[#f15048] font-semibold' to={"/login"}>Log in</Link></small>
                     <div className="divider">OR</div>
                     <SocialLogin></SocialLogin>
                 </div>

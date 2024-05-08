@@ -24,7 +24,7 @@ function SingleSearch() {
 
 
         // console.log(value);
-        axios.get(`http://localhost:5000/order/${value}`).then(res => {
+        axios.get(`https://poristhan-fashion-server.onrender.com/order/${value}`).then(res => {
             // console.log(res);
             if (res.data.success) {
                 setSingleEntry(res.data.result);
@@ -53,7 +53,7 @@ function SingleSearch() {
         }).then((result) => {
             if (result.isConfirmed) {
                 // console.log(order._id);
-                axios.delete(`http://localhost:5000/order/${order._id}`)
+                axios.delete(`https://poristhan-fashion-server.onrender.com/order/${order._id}`)
                     .then(data => {
                         // console.log(data);
                         if (data.data.deletedCount > 0) {
@@ -79,7 +79,7 @@ function SingleSearch() {
 
             <form onSubmit={hangleSearch} className="join mb-6" id='searcheForm'>
                 <input type='number' required className="input h-[40px] input-bordered join-item" placeholder="Memo No / ID" />
-                <button type='submit' className="btn  h-[40px] min-h-[40px] px-6 join-item rounded-r-full border-[1px]">Search</button>
+                <button type='submit' className="btn  bg-teal-600 text-white h-[40px] min-h-[40px] px-6 join-item rounded-r-full border-[1px] border-teal-600 ">Search</button>
             </form>
 
             {
@@ -87,16 +87,16 @@ function SingleSearch() {
                     :
                     setSingleEntry.length > 0 ?
                         <section className=" py-1 bg-blueGray-50">
-                            <div className="w-full lg:w-10/12 px-4 mx-auto mt-6">
-                                <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+                            <div className="w-full lg:w-10/12 sm:px-12 px-6 mx-auto mt-2">
+                                <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border pt-6">
 
                                     <div className="rounded-t bg-white mb-0 px-6 pt-2">
                                         <div className="text-center flex justify-between">
 
-                                            <p>{singleEntry.bookingDate}</p>
+                                            <p className='text-gray-600'>{singleEntry.bookingDate}</p>
                                             <div>
                                                 <div>
-                                                    <button onClick={() => handleDelete(singleEntry)} className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                                                    <button onClick={() => handleDelete(singleEntry)} className="bg-orange-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
                                                         Delete
                                                     </button>
                                                     {/* modal  */}
@@ -115,7 +115,7 @@ function SingleSearch() {
                                                     }
 
                                                 </div>
-                                                <p className={`${singleEntry.status === "Pending" ? "bg-yellow-600" : singleEntry.status === "Deliverd" ? "bg-green-600" : singleEntry.status === "Cancel" ? "bg-red-600" : singleEntry.status === "Return" ? "bg-red-600" : singleEntry.status === "Pertial Return" ? "bg-green-500" : "bg-green-600"
+                                                <p className={`${singleEntry.status === "Pending" ? "bg-yellow-600" : singleEntry.status === "Deliverd" ? "bg-green-500" : singleEntry.status === "Cancel" ? "bg-red-500" : singleEntry.status === "Return" ? "bg-red-500" : singleEntry.status === "Pertial Return" ? "bg-green-500" : "bg-green-500"
                                                     } font-semibold  border-0 text-white text-center px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded-full text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150 mt-1`}>{singleEntry.status}</p>
                                             </div>
                                         </div>
@@ -125,88 +125,105 @@ function SingleSearch() {
                                         <form id='dataForm'>
 
                                             <div className="flex flex-wrap justify-center">
-                                                <div className="w-full lg:w-3/12 px-4">
+                                                <div className="w-full lg:w-[20%] px-4">
                                                     <div className="relative w-full mb-3">
-                                                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                                                        <label className="text-teal-900 block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                                             Seller Name
                                                         </label>
-                                                        <input type="text" className="border-0 text-center capitalize px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry?.sellerName} />
+                                                        <input type="text" className="border border-gray-300 text-center capitalize px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white text-gray-00 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry?.sellerName} />
                                                     </div>
                                                 </div>
                                                 <div className="w-full lg:w-2/12 px-4">
                                                     <div className="relative w-full mb-3">
-                                                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                                                        <label className="text-teal-900 block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                                             Memo
                                                         </label>
-                                                        <input type="email" className="border-0 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.memo} />
+                                                        <input type="email" className="border border-gray-300 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white text-gray-00 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.memo} />
                                                     </div>
                                                 </div>
-                                                <div className="w-full lg:w-3/12 px-4">
+                                                <div className="w-full lg:w-[20%] px-4">
                                                     <div className="relative w-full mb-3">
-                                                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                                                        <label className="text-teal-900 block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                                             Booking ID
                                                         </label>
-                                                        <input type="text" className="border-0 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.bookingID} />
+                                                        <input type="text" className="border border-gray-300 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white text-gray-00 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.bookingID} />
                                                     </div>
                                                 </div>
                                                 <div className="w-full lg:w-2/12 px-4">
                                                     <div className="relative w-full mb-3">
-                                                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                                                        <label className="text-teal-900 block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                                             D. CH.
                                                         </label>
-                                                        <input type="text" className="border-0 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.d_ch} />
+                                                        <input type="text" className="border border-gray-300 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white text-gray-00 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.d_ch} />
                                                     </div>
                                                 </div>
                                                 <div className="w-full lg:w-2/12 px-4">
                                                     <div className="relative w-full mb-3">
-                                                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                                                        <label className="text-teal-900 block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                                             Advance
                                                         </label>
-                                                        <input type="text" className="border-0 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.advance} />
+                                                        <input type="text" className="border border-gray-300 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white text-gray-00 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.advance} />
                                                     </div>
                                                 </div>
 
 
                                                 <div className="w-full lg:w-2/12 px-4">
                                                     <div className="relative w-full mb-3">
-                                                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                                                        <label className="text-teal-900 block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                                             Exchange
                                                         </label>
-                                                        <input type="text" className="border-0 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.exchange ? "Yes" : "No"} />
+                                                        <input type="text" className="border border-gray-300 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white text-gray-00 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.exchange ? "Yes" : "No"} />
                                                     </div>
                                                 </div>
 
 
                                                 <div className="w-full lg:w-2/12 px-4">
                                                     <div className="relative w-full mb-3">
-                                                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                                                        <label className="text-teal-900 block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                                             Amount
                                                         </label>
-                                                        <input type="text" className="border-0 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.amount} />
+                                                        <input type="text" className="border border-gray-300 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white text-gray-00 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.amount} />
                                                     </div>
                                                 </div>
                                                 <div className="w-full lg:w-2/12 px-2">
-                                                    <div className="relative w-full mb-3">
-                                                        <label className="block uppercase text-blueGray-600 text-xs font-bold mb-1" htmlfor="grid-password">
+                                                    <div className="relative w-full mb-3 text-center">
+                                                        <label className="text-teal-900 block uppercase text-blueGray-600 text-xs font-bold mb-1" htmlfor="grid-password">
                                                             Item
                                                         </label>
 
-                                                        <div className=" flex justify-center">
-                                                            <div className='flex flex-col'>
-                                                                {singleEntry.item.map((item, index) => {
-
-                                                                    return <div className='flex mx-2' key={index}>
-                                                                        <input defaultValue={Object.keys(item)} type="text" id="item" name={`item${index}`} disabled className="text-center mt-1 block w-[100px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                                                        />
-                                                                        <input defaultValue={Object.values(item)} type="text" id="item" name={`qty${index}`} className="text-center mt-1 block w-[60px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                                                            disabled
-                                                                        />
-                                                                    </div>
-                                                                })}
+                                                        <div className='flex'>
+                                                            <div className=" flex justify-center">
+                                                                <div className='flex flex-col'>
+                                                                    {singleEntry.item.map((item, index) => {
+                                                                        return <div className='flex ml-2 mr-1' key={index}>
+                                                                            <input defaultValue={Object.keys(item)} type="text" id="item" name={`item${index}`} disabled className={`${singleEntry.status === "Pertial Return" && "line-through border-red-400 text-red-500"} text-center thro mt-1 block w-[80px] py-2 px-3 border  bg-white text-gray-00 rounded-l-md shadow focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                                                                            />
+                                                                            <input defaultValue={Object.values(item)} type="text" id="item" name={`qty${index}`} className={`${singleEntry.status === "Pertial Return" && "line-through border-red-400 text-red-500"} text-center mt-1 block w-[40px] py-2 px-3 border border-l-0   bg-white text-gray-00 rounded-r-md shadow focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+                                                                                disabled
+                                                                            />
+                                                                        </div>
+                                                                    })}
+                                                                </div>
                                                             </div>
+                                                            {
+                                                                singleEntry.status === "Pertial Return" &&
+                                                                <div className=" flex justify-center border-l-2">
+                                                                    <div className='flex flex-col'>
+                                                                        {singleEntry.partial.PItem.map((item, index) => {
+
+                                                                            return <div className='flex mx-1 text-green-600' key={index}>
+                                                                                <input defaultValue={Object.keys(item)} type="text" id="item" name={`item${index}`} disabled className="text-center thro mt-1 block w-[80px] py-2 px-3 border text-green-600 border-green-400 bg-white font-semibold text-gray-00 rounded-l-md shadow focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                                />
+                                                                                <input defaultValue={Object.values(item)} type="text" id="item" name={`qty${index}`} className="text-center mt-1 block w-[40px]  border-l-0 py-2 px-3 border border-green-400 bg-white font-semibold text-gray-00 rounded-r-md shadow focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                                    disabled
+                                                                                />
+                                                                            </div>
+                                                                        })}
+                                                                    </div>
+                                                                </div>
+                                                            }
                                                         </div>
 
-                                                        {/* <input type="text" className="border-0 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.status} /> */}
                                                     </div>
 
                                                 </div>
@@ -218,7 +235,7 @@ function SingleSearch() {
                                             <div className="flex flex-wrap">
                                                 <div className="w-full lg:w-12/12 px-4 mt-2">
                                                     <div className="relative w-full mb-3 text-left">
-                                                        <textarea type="text" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled rows="4">{singleEntry.note ? singleEntry.note : "No note..."}</textarea>
+                                                        <textarea type="text" className="px-3 py-3 border border-gray-300 placeholder-blueGray-300 text-blueGray-600 bg-white text-gray-00 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled rows="4">{singleEntry.note ? singleEntry.note : "No note..."}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
