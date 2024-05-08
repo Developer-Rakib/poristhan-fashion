@@ -83,7 +83,7 @@ function SingleSearch() {
             </form>
 
             {
-                singleEntry === undefined ? <p className='text-gray-500'>Please enter a memo no or booking ID and hit the Search Button.</p>
+                singleEntry === undefined ? <p className='text-gray-500 px-8'>Please enter a memo no or booking ID and hit the Search Button.</p>
                     :
                     setSingleEntry.length > 0 ?
                         <section className=" py-1 bg-blueGray-50">

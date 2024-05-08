@@ -51,8 +51,9 @@ export default function ViewBookingData() {
         // startDate.moment().format("MMM DD yyyy")
         let bookingDate = moment(startDate).format('MMM DD yyyy');
         let sName = e.target[1].value;
+        // console.log(sN);
         pItem = {}
-        axios.get(`https://poristhan-fashion-server.onrender.com/orders/${sName}?bookingDate=${bookingDate}`).then(res => {
+        axios.get(`http://localhost:5000/orders/${sName}?bookingDate=${bookingDate}`).then(res => {
             // console.log(res.data);
             setOrders(res.data);
             setLoading(false)
@@ -121,7 +122,7 @@ export default function ViewBookingData() {
         // console.log(key);
 
         const updatedItems = orders.map(upItem => {
-            let allItem = []
+            // let allItem = []
             if (upItem.status === "Pending") {
 
                 //         // upItem.status = "Deliverd";
@@ -142,10 +143,10 @@ export default function ViewBookingData() {
                                 .then(data => {
                                     if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
                                         upItem.status = data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
-                                        allItem.push(upItem)
+                                        // allItem.push(upItem)
                                     }
                                     else {
-                                        allItem.push(upItem)
+                                        // allItem.push(upItem)
                                     }
                                 })
                         }
@@ -168,10 +169,10 @@ export default function ViewBookingData() {
                                         .then(data => {
                                             if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
                                                 upItem.status = data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
-                                                allItem.push(upItem)
+                                                // allItem.push(upItem)
                                             }
                                             else {
-                                                allItem.push(upItem)
+                                                // allItem.push(upItem)
                                             }
                                         })
                                 }
@@ -185,11 +186,11 @@ export default function ViewBookingData() {
 
             }
             else {
-                allItem.push(upItem)
+                // allItem.push(upItem)
             }
             return upItem
         })
-        setOrders(updatedItems);
+        // setOrders(updatedItems);
     }
 
     if (isLoading) {
@@ -218,7 +219,8 @@ export default function ViewBookingData() {
                         </div>
                     </div>
                     <form onSubmit={(e) => hangleSearch(e)} id="external-form">
-                        <select className="select select-bordered join-item capitalize w-[95px] ">
+                        <select className="select select-bordered join-item capitalize w-[95px] ">\
+                            <option className='capitalize'>all</option>
                             {
                                 sellerNames.map((sellerName, i) => {
                                     return <option className='capitalize'>{sellerName}</option>
@@ -344,7 +346,7 @@ export default function ViewBookingData() {
                                             </table>
                                         </div>
                                         <button onClick={handleReceive} className="mt-4 bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
-                                            Receive All
+                                            update All
                                         </button>
                                     </div>
                                 </div>
