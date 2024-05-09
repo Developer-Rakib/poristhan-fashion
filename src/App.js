@@ -26,6 +26,7 @@ import AddOrderInfo from './Pages/Home/AddOrderInfo/AddOrderInfo';
 import ViewBookingData from './Pages/ViewBookingData/ViewBookingData';
 import SingleSearch from './Pages/SingleSearch/SingleSearch';
 import AddMemo from './Pages/AddMemo/AddMemo';
+import CreateOrder from './Pages/CreateOrder/CreateOrder';
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
       <Toaster></Toaster>
       <Routes>
         <Route path='/' element={<Home></Home>} ></Route>
+        <Route path='/createOrder' element={<CreateOrder />}></Route>
         <Route path='/searchByDate' element={<ViewBookingData />}></Route>
         <Route path='/singleSearch' element={<SingleSearch />}></Route>
         <Route path='/addMemo' element={<AddMemo />}></Route>
