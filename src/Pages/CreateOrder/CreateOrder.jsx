@@ -68,7 +68,7 @@ function CreateOrder() {
     let itemString = itemName.map(itSt => `<option>${itSt}</option>`,)
     let itemInner = itemName.map(itSt => <option>{itSt}</option>,)
 
-    console.log(qtyCount);
+    // console.log(qtyCount);
 
     function mobileHandle(e) {
         if (!/^\d{11}$/.test(e.target.value)) {
@@ -209,59 +209,68 @@ function CreateOrder() {
 
         // console.log(steadfastData);
         let netAmount = (parseInt(bookingData.advance) + parseInt(bookingData.cod)) - bookingData.d_ch;
-        let finalData = {
-            sellerName: sellerName,
-            memo: bookingMemo,
-            // bookingID: data.data.consignment.consignment_id,
-            d_ch: parseInt(bookingData.d_ch),
-            item: itemQty,
-            amount: netAmount,
-            advance: parseInt(bookingData.advance),
-            partial: { PAmount: null, PItem: [] },
-            exchange: bookingData.exchange === "No" ? false : true,
-            status: "Pending",
-            bookingDate: moment().format('MMM DD yyyy'),
-            note: bookingData.note
-        }
-        console.log(finalData);
-
-        // axios.post(`https://portal.steadfast.com.bd/api/v1/create_order`, steadfastData, {
-        //     headers: {
-        //         'Api-Key': `${process.env.REACT_APP_MF_Api_Key}`,
-        //         'Secret-Key': `${process.env.REACT_APP_MF_Secret_Key}`
-        //     }
-        // }).then(data => {
-        //     console.log(data.data);
-        //     if (data.data.status === 200) {
 
 
-        //     }
-        // })
+        // console.log(finalData);
+
+        axios.post(`https://portal.steadfast.com.bd/api/v1/create_order`, steadfastData, {
+            headers: {
+                'Api-Key': `${process.env.REACT_APP_MF_Api_Key}`,
+                'Secret-Key': `${process.env.REACT_APP_MF_Secret_Key}`
+            }
+        }).then(data => {
+            console.log(data.data.consignment);
+            if (data.data.status === 200) {
+                Swal.fire({
+                    icon: "success",
+                    title: `Wow...`,
+                    html: `
+                    <p>${data.data.message}</p>
+                    <p>Order id is <b>${data.data.consignment.consignment_id}</b></p>`,
+                });
+
+
+                let finalData = {
+                    sellerName: sellerName,
+                    memo: bookingMemo,
+                    bookingID: data.data.consignment.consignment_id,
+                    d_ch: parseInt(bookingData.d_ch),
+                    item: itemQty,
+                    amount: netAmount,
+                    advance: parseInt(bookingData.advance),
+                    partial: { PAmount: null, PItem: [] },
+                    exchange: bookingData.exchange === "No" ? false : true,
+                    status: "Pending",
+                    bookingDate: moment().format('MMM DD yyyy'),
+                    note: bookingData.note ? bookingData.note : "",
+                }
+
+                axios.post(`https://poristhan-fashion-server.onrender.com/orders`, finalData).then(data => {
+                    // console.log(data.data.success);
+                    // console.log(data.data);
+                    if (data.data.success) {
+                        toast.success(`${data.data.message}`)
+                        e.target.reset();
+                        let allQtyClear = document.getElementsByClassName('addMoreChild');
+                        for (const [key, value] of Object.entries(allQtyClear)) {
+                            value.remove()
+                        }
+                        setQtyCount(1)
+                    }
+                    else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: `${data.data.message}`,
+                        });
+                        // toast.error(`${data.data.message}`)
+                    }
+                })
 
 
 
-
-
-
-
-
-
-        // axios.post(`https://poristhan-fashion-server.onrender.com/orders`, finalData).then(data => {
-        //     // console.log(data.data.success);
-        //     // console.log(data.data);
-        //     if (data.data.success) {
-        //         toast.success(`${data.data.message}`)
-        //         e.target.reset();
-        //     }
-        //     else {
-        //         Swal.fire({
-        //             icon: "error",
-        //             title: "Oops...",
-        //             text: `${data.data.message}`,
-        //         });
-        //         // toast.error(`${data.data.message}`)
-        //     }
-        // })
+            }
+        })
 
 
     }

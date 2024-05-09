@@ -64,7 +64,7 @@ const SingleBookingData = ({ order, handleDelete, i }) => {
             <td className="py-2 text-[9px] sm:text-[13px]   text-center sm:py-4 sm:block hidden">
                 {totalItemQty}
             </td>
-            <td className="py-2 text-[9px] sm:text-F[13px]  text-center sm:py-4">
+            <td className="py-2 text-[9px] sm:text-[13px]  text-center sm:py-4">
                 {singleEntry.d_ch}
             </td>
             <td className="py-2 text-[9px] sm:text-[13px]   text-center sm:py-4">

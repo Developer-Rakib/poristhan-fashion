@@ -18,6 +18,7 @@ export default function AddOrderInfo() {
     axios.get('https://poristhan-fashion-server.onrender.com/memo')
   )
   const [startDate, setStartDate] = useState(new Date());
+  const [qtyCount, setQtyCount] = useState(1);
 
 
   if (isLoading) {
@@ -25,7 +26,7 @@ export default function AddOrderInfo() {
   }
   // console.log(memo.data[0]);
 
-  let qtyCount = 1;
+  // let qtyCount = 1;
   let itemName = [
     "BLC",
     "BLC",
@@ -78,7 +79,7 @@ export default function AddOrderInfo() {
     for (const [key, value] of Object.entries(allQtyClear)) {
       value.remove()
     }
-    qtyCount = 1
+    setQtyCount(1)
 
   }
   function deleteAddMoreBtn(e) {
@@ -90,7 +91,7 @@ export default function AddOrderInfo() {
   }
 
   function addMoreFunction() {
-    qtyCount++;
+    setQtyCount(qtyCount + 1)
     let addMoreParent = document.querySelector('#addMoreConteiner');
     // console.log(qtyCount);
     let addMoreCreate = document.createElement("div");
@@ -208,6 +209,11 @@ export default function AddOrderInfo() {
       if (data.data.success) {
         toast.success(`${data.data.message}`)
         e.target.reset();
+        let allQtyClear = document.getElementsByClassName('addMoreChild');
+        for (const [key, value] of Object.entries(allQtyClear)) {
+          value.remove()
+        }
+        setQtyCount(1)
       }
       else {
         Swal.fire({
@@ -291,7 +297,7 @@ export default function AddOrderInfo() {
                   <div class="w-full my-2 sm:w-[100px]  mx-2">
                     <label for="qty" class="block text-sm font-medium leading-6 text-gray-900">QTY</label>
                     <div class="flex items-center">
-                      <input required type="number" name="qty1" id="qty" autocomplete="address-level2" class="block w-full sm:w-[80px] rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                      <input required type="number" name={`qty${qtyCount}`} id="qty" autocomplete="address-level2" class="block w-full sm:w-[80px] rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                       <button onClick={addMoreFunction} className='ml-1 addMore' type='button'><FaPlusCircle className='text-xl'></FaPlusCircle></button>
 
                     </div>
