@@ -208,7 +208,7 @@ function CreateOrder() {
         }
 
         // console.log(steadfastData);
-        let netAmount = (parseInt(bookingData.advance) + parseInt(bookingData.cod)) - bookingData.d_ch;
+
 
 
         // console.log(finalData);
@@ -229,11 +229,11 @@ function CreateOrder() {
                     <p>Order id is <b>${data.data.consignment.consignment_id}</b></p>`,
                 });
 
-
+                let netAmount = (parseInt(bookingData.advance) + parseInt(bookingData.cod)) - parseInt(bookingData.d_ch)
                 let finalData = {
                     sellerName: sellerName,
                     memo: bookingMemo,
-                    bookingID: data.data.consignment.consignment_id,
+                    bookingID: data.data.consignment.consignment_id.toString(),
                     d_ch: parseInt(bookingData.d_ch),
                     item: itemQty,
                     amount: netAmount,

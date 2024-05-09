@@ -219,7 +219,7 @@ export default function ViewBookingData() {
                         </div>
                     </div>
                     <form onSubmit={(e) => hangleSearch(e)} id="external-form">
-                        <select className="select select-bordered join-item capitalize w-[95px] ">\
+                        <select className="select select-bordered join-item capitalize w-[95px] sm:w-[110px]">
                             <option className='capitalize'>all</option>
                             {
                                 sellerNames.map((sellerName, i) => {
