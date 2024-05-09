@@ -15,6 +15,7 @@ function CreateOrder() {
     )
     // const [startDate, setStartDate] = useState(new Date());
     const [mobileErr, setMobileErr] = useState(null);
+    const [qtyCount, setQtyCount] = useState(1);
 
 
     if (isLoading) {
@@ -22,7 +23,7 @@ function CreateOrder() {
     }
     // console.log(memo.data[0]);
 
-    let qtyCount = 1;
+    // let qtyCount = 1;
     let itemName = [
         "BLC",
         "BLC",
@@ -67,7 +68,7 @@ function CreateOrder() {
     let itemString = itemName.map(itSt => `<option>${itSt}</option>`,)
     let itemInner = itemName.map(itSt => <option>{itSt}</option>,)
 
-
+    console.log(qtyCount);
 
     function mobileHandle(e) {
         if (!/^\d{11}$/.test(e.target.value)) {
@@ -83,7 +84,7 @@ function CreateOrder() {
         for (const [key, value] of Object.entries(allQtyClear)) {
             value.remove()
         }
-        qtyCount = 1
+        setQtyCount(1)
 
     }
     function deleteAddMoreBtn(e) {
@@ -91,11 +92,12 @@ function CreateOrder() {
         if (e.target.id === "deleteQty") {
             e.target.parentNode.parentNode.parentNode.parentNode.remove()
         }
+        // setQtyCount(qtyCount - 1)
         // let deleteBtn = document.getElementById()
     }
 
     function addMoreFunction() {
-        qtyCount++;
+        setQtyCount(qtyCount + 1)
         let addMoreParent = document.querySelector('#addMoreConteiner');
         // console.log(qtyCount);
         let addMoreCreate = document.createElement("div");
@@ -154,14 +156,15 @@ function CreateOrder() {
             }
             bookingData = obj
         })
-        if (bookingData.bookingID.toString().length !== 8) {
+        if (bookingData.mobile.toString().length !== 11) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Invalid ID !",
+                text: "Invalid mmobile!",
             });
             return;
         }
+        console.log(qtyCount);
 
         let itemQty = []
         for (let i = 1; i <= qtyCount; i++) {
@@ -192,38 +195,73 @@ function CreateOrder() {
         }
         // const date = Date()
         // console.log(date);
+        // console.log(bookingData);
 
+
+        let steadfastData = {
+            invoice: bookingMemo.toString(),
+            recipient_name: bookingData.name.toString(),
+            recipient_phone: bookingData.mobile.toString(),
+            recipient_address: bookingData.adress.toString(),
+            cod_amount: parseInt(bookingData.cod),
+            note: bookingData.note ? bookingData.note.toString() : (bookingData.exchange === "Yes" ? "exchane hobe" : ""),
+        }
+
+        // console.log(steadfastData);
+        let netAmount = (parseInt(bookingData.advance) + parseInt(bookingData.cod)) - bookingData.d_ch;
         let finalData = {
             sellerName: sellerName,
             memo: bookingMemo,
-            bookingID: bookingData.bookingID,
+            // bookingID: data.data.consignment.consignment_id,
             d_ch: parseInt(bookingData.d_ch),
             item: itemQty,
-            amount: parseInt(bookingData.amount),
+            amount: netAmount,
             advance: parseInt(bookingData.advance),
             partial: { PAmount: null, PItem: [] },
             exchange: bookingData.exchange === "No" ? false : true,
             status: "Pending",
             bookingDate: moment().format('MMM DD yyyy'),
-            note: ""
+            note: bookingData.note
         }
-        // console.log(finalData);
-        axios.post(`https://poristhan-fashion-server.onrender.com/orders`, finalData).then(data => {
-            // console.log(data.data.success);
-            // console.log(data.data);
-            if (data.data.success) {
-                toast.success(`${data.data.message}`)
-                e.target.reset();
-            }
-            else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: `${data.data.message}`,
-                });
-                // toast.error(`${data.data.message}`)
-            }
-        })
+        console.log(finalData);
+
+        // axios.post(`https://portal.steadfast.com.bd/api/v1/create_order`, steadfastData, {
+        //     headers: {
+        //         'Api-Key': `${process.env.REACT_APP_MF_Api_Key}`,
+        //         'Secret-Key': `${process.env.REACT_APP_MF_Secret_Key}`
+        //     }
+        // }).then(data => {
+        //     console.log(data.data);
+        //     if (data.data.status === 200) {
+
+
+        //     }
+        // })
+
+
+
+
+
+
+
+
+
+        // axios.post(`https://poristhan-fashion-server.onrender.com/orders`, finalData).then(data => {
+        //     // console.log(data.data.success);
+        //     // console.log(data.data);
+        //     if (data.data.success) {
+        //         toast.success(`${data.data.message}`)
+        //         e.target.reset();
+        //     }
+        //     else {
+        //         Swal.fire({
+        //             icon: "error",
+        //             title: "Oops...",
+        //             text: `${data.data.message}`,
+        //         });
+        //         // toast.error(`${data.data.message}`)
+        //     }
+        // })
 
 
     }
@@ -286,7 +324,7 @@ function CreateOrder() {
                                 <div class=" my-2  mx-2">
                                     <label for="qty" class="block text-sm font-medium leading-6 text-gray-900">QTY</label>
                                     <div class="flex items-center">
-                                        <input required type="number" name="qty1" id="qty" autocomplete="address-level2" class="block w-full sm:w-[80px] rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                        <input required type="number" name={`qty${qtyCount}`} autocomplete="address-level2" class="block w-full sm:w-[80px] rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
 
                                         <button onClick={addMoreFunction} className='ml-1 addMore' type='button'><FaPlusCircle className='text-xl'></FaPlusCircle></button>
 
