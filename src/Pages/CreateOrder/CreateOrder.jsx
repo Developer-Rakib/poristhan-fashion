@@ -226,7 +226,7 @@ function CreateOrder() {
                     title: `Wow...`,
                     html: `
                     <p>${data.data.message}</p>
-                    <p>Order id is <b>${data.data.consignment.consignment_id}</b></p>`,
+                    <p>Order id : <b class="tracking-wide text-2xl">${data.data.consignment.consignment_id}</b></p>`,
                 });
 
                 let netAmount = (parseInt(bookingData.advance) + parseInt(bookingData.cod)) - parseInt(bookingData.d_ch)
@@ -352,31 +352,35 @@ function CreateOrder() {
 
 
 
-                        <div class="w-full my-2 sm:w-[28%]  mx-2">
-                            <label for="d_ch" class="block text-sm font-medium leading-6 text-gray-900">D. CH.</label>
-                            <div class="">
-                                <input required type="number" name="d_ch" id="d_ch" autocomplete="address-level2" class="block w-full rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                        <div className='w-full sm:w-[28%] flex justify-between'>
+                            <div class=" my-2 w-[50%]  mr-1 ">
+                                <label for="d_ch" class="block text-sm font-medium leading-6 text-gray-900">D. CH.</label>
+                                <div class="">
+                                    <input required type="number" name="d_ch" id="d_ch" autocomplete="address-level2" class="block w-full rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder='ডেলিভারি চার্জ' />
+                                </div>
+                            </div>
+
+                            <div class=" my-2 w-[50%]  ml-1 ">
+                                <label for="advance" class="block text-sm font-medium leading-6 text-gray-900">Advance</label>
+                                <div class="">
+                                    <input required type="number" name="advance" id="advance" autocomplete="address-level2" class="block w-full rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder='এডভান্স' />
+                                </div>
                             </div>
                         </div>
 
-                        <div class="w-full my-2 sm:w-[28%]  mx-2">
-                            <label for="advance" class="block text-sm font-medium leading-6 text-gray-900">Advance</label>
-                            <div class="">
-                                <input required type="number" name="advance" id="advance" autocomplete="address-level2" class="block w-full rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
-                        </div>
+                        <div className='w-full sm:w-[28%] flex justify-between'>
 
-
-                        <div class="w-full my-2 sm:w-[28%]  mx-2">
-                            <label for="cod" class="block text-sm font-medium leading-6 text-gray-900">COD</label>
-                            <div class="">
-                                <input required type="number" name="cod" id="cod" autocomplete="address-level2" class="block w-full rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                            <div class="my-2 w-[50%]  mr-1 ">
+                                <label for="cod" class="block text-sm font-medium leading-6 text-gray-900">COD</label>
+                                <div class="">
+                                    <input required type="number" name="cod" id="cod" autocomplete="address-level2" class="block w-full rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder='COD' />
+                                </div>
                             </div>
-                        </div>
-                        <div class="w-full my-2 sm:w-[28%]  mx-2">
-                            <label for="memo" class="block text-sm font-medium leading-6 text-gray-900">Memo</label>
-                            <div class="">
-                                <input required type="number" name="memo" id="memo" autocomplete="address-level2" class="block w-full rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                            <div class="my-2 w-[50%]  ml-1 ">
+                                <label for="memo" class="block text-sm font-medium leading-6 text-gray-900">Memo</label>
+                                <div class="">
+                                    <input required type="number" name="memo" id="memo" autocomplete="address-level2" class="block w-full rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder='মেমো নং' />
+                                </div>
                             </div>
                         </div>
 
@@ -404,9 +408,9 @@ function CreateOrder() {
 
                 </div>
 
-                <div class="mt-6 flex items-center justify-center gap-x-6">
-                    <button id='submitBtn' type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Submit</button>
-                    <button onClick={(e) => handleClear(e)} type="button" class="text-sm font-semibold leading-6 text-gray-900">Clear</button>
+                <div class="mt-4 flex items-center flex-col justify-center">
+                    <button id='submitBtn' type="submit" class="rounded-md bg-[#f15048] border border-[#f15048] w-[170px] py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#ce3b33]">Submit</button>
+                    <button onClick={(e) => handleClear(e)} type="button" class=" mt-2 rounded-md border text-slate-900 border-[#f15048] w-[170px] py-3 text-sm font-semibold  shadow-sm hover:bg-[#ce3b33] hover:text-white">Clear</button>
                 </div>
             </form>
         </div>
