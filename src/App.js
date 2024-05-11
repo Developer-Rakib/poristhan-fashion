@@ -27,6 +27,7 @@ import ViewBookingData from './Pages/ViewBookingData/ViewBookingData';
 import SingleSearch from './Pages/SingleSearch/SingleSearch';
 import AddMemo from './Pages/AddMemo/AddMemo';
 import CreateOrder from './Pages/CreateOrder/CreateOrder';
+import ManageUsers from './Pages/ManageUsers/ManageUsers';
 
 
 function App() {
@@ -42,10 +43,42 @@ function App() {
       <Toaster></Toaster>
       <Routes>
         <Route path='/' element={<Home></Home>} ></Route>
-        <Route path='/createOrder' element={<CreateOrder />}></Route>
-        <Route path='/searchByDate' element={<ViewBookingData />}></Route>
-        <Route path='/singleSearch' element={<SingleSearch />}></Route>
-        <Route path='/addMemo' element={<AddMemo />}></Route>
+
+        <Route path='/bookingEntry' element={
+          <RequireAuth>
+            <RequireAdmin>
+              <AddOrderInfo />
+            </RequireAdmin>
+          </RequireAuth>
+        } ></Route>
+
+        <Route path='/createOrder' element={
+          <RequireAuth>
+            <RequireAdmin>
+              <CreateOrder />
+            </RequireAdmin>
+          </RequireAuth>
+        }></Route>
+
+        <Route path='/searchByDate' element={<RequireAuth><ViewBookingData /></RequireAuth>}></Route>
+        <Route path='/singleSearch' element={<RequireAuth><SingleSearch /></RequireAuth>}></Route>
+
+        <Route path='/addMemo' element={
+          <RequireAuth>
+            <RequireAdmin>
+              <AddMemo />
+            </RequireAdmin>
+          </RequireAuth>
+        }></Route>
+
+        <Route path='/manageUsers' element={
+          <RequireAuth>
+            <RequireAdmin>
+              <ManageUsers />
+            </RequireAdmin>
+          </RequireAuth>
+        }></Route>
+
         <Route path='/login' element={<Login></Login>} ></Route>
         <Route path='/signUp' element={<SignUp></SignUp>} ></Route>
         {/* <Route path='/purchase/:id' element={<RequireAuth><Purchase></Purchase></RequireAuth>} ></Route>

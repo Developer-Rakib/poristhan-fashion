@@ -10,7 +10,9 @@ import AddOrderInfo from './AddOrderInfo/AddOrderInfo';
 const Home = () => {
     return (
         <div className='mt-[70px]'>
-            <AddOrderInfo />
+            <p>Welcome to</p>
+            <h1 className='text-4xl text-[#f15048]'>Poristhan Fashion</h1>
+            <p>Some features will be added soon</p>
             {/* <Banner></Banner>
             <Parts></Parts>
             <BussinesSummury></BussinesSummury>

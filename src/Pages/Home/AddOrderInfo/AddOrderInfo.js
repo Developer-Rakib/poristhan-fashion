@@ -229,11 +229,11 @@ export default function AddOrderInfo() {
   }
 
   return (
-    <div className='mb-8 '>
+    <div className='mb-8 mt-[70px]'>
       {/* <div className='text-right'>
         <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/viewOrder"}>View Order</NavLink>
       </div> */}
-      <h1 className='mt-10 text-4xl text-[#f15048]'>Poristhan Fashion</h1>
+      {/* <h1 className='mt-10 text-4xl text-[#f15048]'>Poristhan Fashion</h1> */}
       <h1 className='mt-1 text-lg'>Entry Form</h1>
       <form onSubmit={(e) => hangleSubmit(e)} className='w-4/6 mx-auto' >
         <div class="">

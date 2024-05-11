@@ -22,7 +22,7 @@ const Login = () => {
         loading,
         error,
     ] = useSignInWithEmailAndPassword(auth);
-    const [token, setToken] = useToken(user)
+    useToken(user)
     // console.log(token);
 
     let from = location.state?.from?.pathname || "/";
@@ -50,11 +50,11 @@ const Login = () => {
     }, [error])
 
     useEffect(() => {
-        if (token) {
+        if (user) {
             navigate(from, { replace: true });
             toast.success('Login Successfully!', { id: "social_login" })
         }
-    }, [token, from, navigate])
+    }, [user, from, navigate])
 
     if (loading) {
         return <Loader></Loader>;
@@ -132,12 +132,12 @@ const Login = () => {
                         {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                     </label>
 
-                    <input style={{ fontFamily: 'Open Sans, sans-serif', letterSpacing: '2px' }} className='font-semibold bg-primary text-white border border-primary hover:bg-white hover:text-gray-700  transition-all cursor-pointer rounded-md py-3 ' value={"LOGIN"} type="submit" />
+                    <input style={{ fontFamily: 'Open Sans, sans-serif', letterSpacing: '2px' }} className='font-semibold bg-[#f15048] text-white border border-[#f15048] hover:bg-white hover:text-gray-700  transition-all cursor-pointer rounded-md py-3 ' value={"LOGIN"} type="submit" />
                 </form>
                 <div className='w-9/12 mx-auto'>
-                    <small className='mt-4 mx-2 inline-block'>New to Doctors Portal ? <Link className='text-primary font-semibold' to={"/signUp"}>Create new Account</Link></small>
+                    <small className='mt-4 mx-2 inline-block'>New to Doctors Portal ? <Link className='text-[#f15048] font-semibold' to={"/signUp"}>Create new Account</Link></small>
                     <small className='mx-2 inline-block'>Forget Password ? <button
-                        className='text-primary font-semibold'
+                        className='text-[#f15048] font-semibold'
                         onClick={handleForgetPass}
                     >Click Here</button></small>
                     <div className="divider">OR</div>

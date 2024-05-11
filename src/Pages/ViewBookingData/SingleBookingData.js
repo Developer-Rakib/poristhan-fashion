@@ -4,11 +4,17 @@ import toast from 'react-hot-toast';
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBack2Line } from "react-icons/ri";
 import EditEntryModal from '../Shared/EditEntryModal';
+import auth from '../../firebase.init';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import useRole from '../../Hooks/useRole';
+import Loader from '../Shared/Loader';
 
 const SingleBookingData = ({ order, handleDelete, i }) => {
     // states 
     const [editModal, setEditModal] = useState(null)
     const [singleEntry, setSingleEntry] = useState(order)
+    let [user, loading, error] = useAuthState(auth)
+    let [role, roleLoading] = useRole(user)
 
 
     let totalItemQty = 0;
@@ -19,7 +25,9 @@ const SingleBookingData = ({ order, handleDelete, i }) => {
 
 
 
-
+    if (loading || roleLoading) {
+        return <Loader />
+    }
     return (
         <tr key={singleEntry._id} className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
             <th scope="row" className="pl-2 pr-1 sm:pr-0 sm:pl-5 py-2  sm:py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-[9px] sm:text-[13px] ">
@@ -83,10 +91,13 @@ const SingleBookingData = ({ order, handleDelete, i }) => {
 
 
                 {/* modal btn  */}
-                <label onClick={() => setEditModal(true)} for="my-modal-4" class="">
-                    <FaRegEdit
-                        className='absolute right-0 top-0 text-yellow-600 cursor-pointer'></FaRegEdit>
-                </label>
+                {
+                    role === "admin" &&
+                    <label onClick={() => setEditModal(true)} for="my-modal-4" class="">
+                        <FaRegEdit
+                            className='absolute right-0 top-0 text-yellow-600 cursor-pointer'></FaRegEdit>
+                    </label>
+                }
 
                 {/* modal  */}
                 {
@@ -116,9 +127,12 @@ const SingleBookingData = ({ order, handleDelete, i }) => {
         {
             singleEntry.shipped && <p className='text-green-700'>Paid</p>
         } */}
-                <span onClick={() => handleDelete(order)} className='cursor-pointer'>
-                    <RiDeleteBack2Line className='text-red-600 absolute text-[10px] sm:text-[15px] sm:top-6 bottom-0  right-0' />
-                </span>
+                {
+                    role === 'admin' &&
+                    <span onClick={() => handleDelete(order)} className='cursor-pointer'>
+                        <RiDeleteBack2Line className='text-red-600 absolute text-[10px] sm:text-[15px] sm:top-6 bottom-0  right-0' />
+                    </span>
+                }
             </td>
 
 

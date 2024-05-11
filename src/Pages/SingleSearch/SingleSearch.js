@@ -5,10 +5,17 @@ import { FaRegEdit } from 'react-icons/fa';
 import { RiDeleteBack2Line } from 'react-icons/ri';
 import Swal from 'sweetalert2';
 import EditEntryModal from '../Shared/EditEntryModal';
+import auth from '../../firebase.init';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import useRole from '../../Hooks/useRole';
+import Loader from '../Shared/Loader';
 
 function SingleSearch() {
     const [singleEntry, setSingleEntry] = useState(undefined)
     const [editModal, setEditModal] = useState(null)
+    let [user, loading, error] = useAuthState(auth)
+    let [role, roleLoading] = useRole(user)
+
     // states 
     // let totalItemQty = 0;
 
@@ -74,6 +81,10 @@ function SingleSearch() {
             }
         })
     }
+
+    if (loading || roleLoading) {
+        return <Loader />
+    }
     return (
         <div className='mt-[65px]'>
 
@@ -95,28 +106,31 @@ function SingleSearch() {
 
                                             <p className='text-gray-600'>{singleEntry.bookingDate}</p>
                                             <div>
-                                                <div>
-                                                    <button onClick={() => handleDelete(singleEntry)} className="bg-orange-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
-                                                        Delete
-                                                    </button>
-                                                    {/* modal  */}
-                                                    <label onClick={() => setEditModal(true)} for="my-modal-4" id='modalBtn' className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 cursor-pointer">
-                                                        Edit
-                                                    </label>
+                                                {
+                                                    role === "admin" &&
+                                                    <div>
+                                                        <button onClick={() => handleDelete(singleEntry)} className="bg-orange-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                                                            Delete
+                                                        </button>
+                                                        {/* modal  */}
+                                                        <label onClick={() => setEditModal(true)} for="my-modal-4" id='modalBtn' className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 cursor-pointer">
+                                                            Edit
+                                                        </label>
 
-                                                    {/* modal  */}
-                                                    {
-                                                        editModal &&
-                                                        <EditEntryModal
-                                                            order={singleEntry}
-                                                            setOrder={setSingleEntry}
-                                                            setEditModal={setEditModal}
-                                                        />
-                                                    }
+                                                        {/* modal  */}
+                                                        {
+                                                            editModal &&
+                                                            <EditEntryModal
+                                                                order={singleEntry}
+                                                                setOrder={setSingleEntry}
+                                                                setEditModal={setEditModal}
+                                                            />
+                                                        }
 
-                                                </div>
+                                                    </div>
+                                                }
                                                 <p className={`${singleEntry.status === "Pending" ? "bg-yellow-600" : singleEntry.status === "Deliverd" ? "bg-green-500" : singleEntry.status === "Cancel" ? "bg-red-500" : singleEntry.status === "Return" ? "bg-red-500" : singleEntry.status === "Pertial Return" ? "bg-green-500" : "bg-green-500"
-                                                    } font-semibold  border-0 text-white text-center px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded-full text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150 mt-1`}>{singleEntry.status}</p>
+                                                    } font-semibold  border-0 text-white text-center px-4 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded-full text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150 mt-1`}>{singleEntry.status}</p>
                                             </div>
                                         </div>
                                     </div>

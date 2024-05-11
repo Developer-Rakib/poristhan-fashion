@@ -9,10 +9,13 @@ import toast from 'react-hot-toast';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init'
 import Loader from './Loader';
+import useRole from '../../Hooks/useRole';
 
 const Header = () => {
     let [toggle, setToggle] = useState(false);
     const [user, loading] = useAuthState(auth);
+    let [role, roleLoading] = useRole(user)
+
     let navigat = useNavigate();
 
     // console.log(user);
@@ -29,13 +32,13 @@ const Header = () => {
             })
     }
 
-    if (loading) {
+    if (loading || roleLoading) {
         return <Loader></Loader>
     }
     return (
         <div className='header-container py-[12px] fixed top-0 w-full'>
             <nav
-                className='flex justify-center items-start  md:justify-between md:px-32 px-5 md:items-center'
+                className='flex justify-center items-start  md:justify-between md:px-28 px-5 md:items-center'
             >
                 {/* {
                     user &&
@@ -54,10 +57,26 @@ const Header = () => {
 
                         </>
                     } */}
-                    <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/createOrder"}>Create Order</NavLink>
+                    {
+                        role === "admin" &&
+                        <>
+                            <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/createOrder"}>Create Order</NavLink>
+                            <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/bookingEntry"}>Entry</NavLink>
+                        </>
+                    }
+
+
                     <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/searchByDate"}>Search by Date</NavLink>
                     <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/singleSearch"}>Search by ID</NavLink>
-                    <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/addMemo"}>Add Memo</NavLink>
+
+
+                    {
+                        role === "admin" &&
+                        <>
+                            <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/addMemo"}>Add Memo</NavLink>
+                            <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/manageUsers"}>Manage Users</NavLink>
+                        </>
+                    }
 
                     {user ?
                         <button onClick={handleLogout} className='uppercase my-0.5 md:my-0 text-left   mx-auto md:mx-0 md:pb-0.5' >LogOut</button>

@@ -19,7 +19,7 @@ const SignUp = () => {
         loading,
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
-    const [token, setToken] = useToken(user)
+    useToken(user)
     // console.log(token);
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     let from = location.state?.from?.pathname || "/";
@@ -47,11 +47,11 @@ const SignUp = () => {
     }, [error, updateError])
 
     useEffect(() => {
-        if (token) {
+        if (user) {
             navigate(from, { replace: true });
             toast.success('Sign Up Successfully!', { id: "social_login" })
         }
-    }, [token, from, navigate])
+    }, [user, from, navigate])
 
     const onSubmit = async data => {
         await createUserWithEmailAndPassword(data.email, data.password);
