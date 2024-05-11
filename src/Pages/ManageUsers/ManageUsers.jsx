@@ -21,7 +21,7 @@ function ManageUsers() {
         return <Loader />
     }
     return (
-        <div className='w-[60%]  mx-auto pb-5 mt-[80px]'>
+        <div className='w-[95%] sm:w-[60%]  mx-auto pb-5 mt-[80px]'>
             {/* <h5 className="text-lg text-center font-bold  mb-2 text-primary">Make Admin</h5> */}
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">

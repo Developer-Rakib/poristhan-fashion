@@ -301,6 +301,7 @@ export default function ViewBookingData() {
                                                                 order={order}
                                                                 handleDelete={handleDelete}
                                                                 i={i}
+                                                                role={role}
                                                             />
                                                         }
                                                         )

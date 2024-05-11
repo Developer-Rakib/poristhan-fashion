@@ -9,12 +9,12 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import useRole from '../../Hooks/useRole';
 import Loader from '../Shared/Loader';
 
-const SingleBookingData = ({ order, handleDelete, i }) => {
+const SingleBookingData = ({ order, handleDelete, i, role }) => {
     // states 
     const [editModal, setEditModal] = useState(null)
     const [singleEntry, setSingleEntry] = useState(order)
-    let [user, loading, error] = useAuthState(auth)
-    let [role, roleLoading] = useRole(user)
+    // let [user, loading, error] = useAuthState(auth)
+    // let [role, roleLoading] = useRole(user)
 
 
     let totalItemQty = 0;
@@ -25,9 +25,7 @@ const SingleBookingData = ({ order, handleDelete, i }) => {
 
 
 
-    if (loading || roleLoading) {
-        return <Loader />
-    }
+
     return (
         <tr key={singleEntry._id} className="border-b dark:bg-gray-800 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-800 even:dark:bg-gray-700">
             <th scope="row" className="pl-2 pr-1 sm:pr-0 sm:pl-5 py-2  sm:py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-[9px] sm:text-[13px] ">

@@ -54,7 +54,7 @@ function SingelUser({ singleUser, i, refetch }) {
                 </button> */}
                 <label
                     onClick={() => setRoleModal(true)}
-                    for="my_modal_10" className="h-5 sm:h-6  sm:px-3 bg-cyan-600 border-none hover:bg-cyan-700 rounded-full text-white cursor-pointer">
+                    for="my_modal_10" className="h-6 sm:h-6 text-[10px] sm:text-[13px] px-2 sm:px-3 bg-cyan-600 border-none hover:bg-cyan-700 rounded-full text-white cursor-pointer">
                     Edit
                 </label>
 
