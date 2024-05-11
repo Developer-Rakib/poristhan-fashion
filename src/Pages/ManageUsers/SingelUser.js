@@ -42,7 +42,7 @@ function SingelUser({ singleUser, i, refetch }) {
             </td>
             <td className="py-2 text-[11px] sm:text-[13px] sm:py-4">
                 {
-                    singleUser?.role ? singleUser.role : "Visitors"
+                    singleUser?.role ? singleUser.role : "visitor"
                 }
             </td>
             <td
