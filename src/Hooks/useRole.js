@@ -6,11 +6,11 @@ const useRole = (user) => {
     const [roleLoading, setRoleLoading] = useState(true)
     // console.log(user);
     if (user) {
-        axios.get(`https://poristhan-fashion-server.onrender.com/role/${user?.email}`)
+        axios.get(`http://65.0.95.143:5000/role/${user?.email}`)
             .then(data => {
-                // console.log(data.data.role);
-                setRole(data.data.role)
+                console.log(data.data?.role);
                 setRoleLoading(false)
+                setRole(data.data?.role)
             })
     }
 

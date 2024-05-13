@@ -15,7 +15,7 @@ import DatePicker from "react-datepicker";
 
 export default function AddOrderInfo() {
   const { isLoading, error, data: memo } = useQuery('memo', () =>
-    axios.get('https://poristhan-fashion-server.onrender.com/memo')
+    axios.get('http://65.0.95.143:5000/memo')
   )
   const [startDate, setStartDate] = useState(new Date());
   const [qtyCount, setQtyCount] = useState(1);
@@ -203,7 +203,7 @@ export default function AddOrderInfo() {
       note: ""
     }
     // console.log(finalData);
-    axios.post(`https://poristhan-fashion-server.onrender.com/orders`, finalData).then(data => {
+    axios.post(`http://65.0.95.143:5000/orders`, finalData).then(data => {
       // console.log(data.data.success);
       // console.log(data.data);
       if (data.data.success) {

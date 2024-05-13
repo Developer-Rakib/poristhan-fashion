@@ -15,10 +15,10 @@ import useRole from '../../Hooks/useRole'
 // let key = process.env.REACT_APP_MF_Api_Key
 export default function ViewBookingData() {
     // const { isLoading: isLoading2, error: err, data: orders } = useQuery('orders', () =>
-    //     axios.get('https://poristhan-fashion-server.onrender.com/orders')
+    //     axios.get('http://65.0.95.143:5000/orders')
     // )
     const { isLoading, error, data: memo } = useQuery('memo', () =>
-        axios.get('https://poristhan-fashion-server.onrender.com/memo')
+        axios.get('http://65.0.95.143:5000/memo')
     )
     let [sellerNames, setSellerNames] = useState([])
     let [orders, setOrders] = useState(undefined)
@@ -58,7 +58,7 @@ export default function ViewBookingData() {
         let sName = e.target[1].value;
         // console.log(sN);
         pItem = {}
-        axios.get(`https://poristhan-fashion-server.onrender.com/orders/${sName}?bookingDate=${bookingDate}`).then(res => {
+        axios.get(`http://65.0.95.143:5000/orders/${sName}?bookingDate=${bookingDate}`).then(res => {
             // console.log(res.data);
             setOrders(res.data);
             setLoading(false)
@@ -101,7 +101,7 @@ export default function ViewBookingData() {
         }).then((result) => {
             if (result.isConfirmed) {
                 // console.log(order._id);
-                axios.delete(`https://poristhan-fashion-server.onrender.com/order/${order._id}`)
+                axios.delete(`http://65.0.95.143:5000/order/${order._id}`)
                     .then(data => {
                         // console.log(data);
                         if (data.data.deletedCount > 0) {
@@ -144,7 +144,7 @@ export default function ViewBookingData() {
                             const editedData = {
                                 status: data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
                             }
-                            axios.put(`https://poristhan-fashion-server.onrender.com/order/update/${upItem._id}`, editedData)
+                            axios.put(`http://65.0.95.143:5000/order/update/${upItem._id}`, editedData)
                                 .then(data => {
                                     if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
                                         upItem.status = data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
@@ -170,7 +170,7 @@ export default function ViewBookingData() {
                                     const editedData = {
                                         status: data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
                                     }
-                                    axios.put(`https://poristhan-fashion-server.onrender.com/order/update/${upItem._id}`, editedData)
+                                    axios.put(`http://65.0.95.143:5000/order/update/${upItem._id}`, editedData)
                                         .then(data => {
                                             if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
                                                 upItem.status = data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"

@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 function EditEntryModal({ order, setEditModal, setOrder }) {
     const { isLoading, error, data: memo } = useQuery('memo', () =>
-        axios.get('https://poristhan-fashion-server.onrender.com/memo')
+        axios.get('http://65.0.95.143:5000/memo')
     )
 
     const [status, setSatus] = useState(null)
@@ -135,7 +135,7 @@ function EditEntryModal({ order, setEditModal, setOrder }) {
         console.log(editedData);
 
 
-        axios.put(`https://poristhan-fashion-server.onrender.com/order/update/${order._id}`, editedData)
+        axios.put(`http://65.0.95.143:5000/order/update/${order._id}`, editedData)
             .then(data => {
                 console.log(data.data);
                 if ((data.data.matchedCount || data.data.upsertedCount) > 0) {

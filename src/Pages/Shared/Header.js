@@ -32,7 +32,7 @@ const Header = () => {
             })
     }
 
-    if (loading || roleLoading) {
+    if (loading) {
         return <Loader></Loader>
     }
     return (
@@ -66,8 +66,12 @@ const Header = () => {
                     }
 
 
-                    <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/searchByDate"}>Search by Date</NavLink>
-                    <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/singleSearch"}>Search by ID</NavLink>
+                    {
+                        user && <>
+                            <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/searchByDate"}>Search by Date</NavLink>
+                            <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/singleSearch"}>Search by ID</NavLink>
+                        </>
+                    }
 
 
                     {
