@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 
 function AddMemo() {
     const { isLoading, error, data: memos, refetch } = useQuery('memo', () =>
-        axios.get('http://65.0.95.143:5000/memo')
+        axios.get('http://13.235.246.2:5000/memo')
     )
     const [modalError, setModalError] = useState("")
 
@@ -41,7 +41,7 @@ function AddMemo() {
         const editedData = {
             [sName]: totalMemo
         }
-        axios.put(`http://65.0.95.143:5000/addMemo/${id}`, editedData)
+        axios.put(`http://13.235.246.2:5000/addMemo/${id}`, editedData)
             .then(data => {
                 console.log(data.data);
                 if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
@@ -65,7 +65,7 @@ function AddMemo() {
 
 
     return (
-        <div className='mt-[65px] w-6/12 mx-auto'>
+        <div className='mt-[65px] w-6/12 mx-auto min-h-screen'>
             <h1 className='text-xl mb-6'>All Memos</h1>
             <div className='text-center sm:text-right'>
                 <button onClick={() => document.getElementById('my_modal_5').showModal()} className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">

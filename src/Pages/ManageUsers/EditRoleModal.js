@@ -9,7 +9,7 @@ function EditRoleModal({ editRole, SingelUser, setRoleModal }) {
     //     // const updatedRole = {
     //     //     role: e.target[0].value
     //     // }
-    //     // axios.put(`http://65.0.95.143:5000/user/editRole/${singleUser?.email}`, updatedRole)
+    //     // axios.put(`http://13.235.246.2:5000/user/editRole/${singleUser?.email}`, updatedRole)
     //     //     .then(data => {
     //     //         console.log(data.data);
     //     //         if (data?.data.acknowledged) {

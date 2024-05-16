@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import smallLogo from '../../img/smallLogo.png';
 
 const Footer = () => {
     return (
         <>
             <footer className="footer  p-10 bg-neutral text-neutral-content">
                 <div className='mx-auto sm:mx-0'>
-                    <img src={smallLogo} alt="" />
-                    <p>Computer Village<br />A Shop of Parts of Computer</p>
+                    {/* <img src={smallLogo} alt="" /> */}
+                    <p>Poristhan Fashion<br />A Shop of Shari Panjabi</p>
                 </div>
                 <div className=''>
                     <span className="footer-title">Services</span>
@@ -32,8 +31,8 @@ const Footer = () => {
                 </div>
             </footer>
             <footer className="footer px-10 py-4 border-t bg-neutral text-neutral-content border-base-300 ">
-            <p className='mx-auto flex flex-col  sm:flex-row'>Copyright © 2022 - All right reserved by <a className='text-primary hover:underline hover:tracking-wide transition-all  ' href="https://github.com/Developer-Rakib">Developer Rakib</a></p>
-                
+                <p className='mx-auto flex flex-col  sm:flex-row'>Copyright © 2022 - All right reserved by <a className='text-primary hover:underline hover:tracking-wide transition-all  ' href="https://github.com/Developer-Rakib">Developer Rakib</a></p>
+
             </footer>
         </>
     );

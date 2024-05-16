@@ -10,7 +10,7 @@ import SingelUser from './SingelUser';
 
 function ManageUsers() {
     const { isLoading, error, data: users, refetch } = useQuery('users', () =>
-        axios.get(`http://65.0.95.143:5000/users`)
+        axios.get(`http://13.235.246.2:5000/users`)
     )
     let [user, loading] = useAuthState(auth)
 
@@ -21,7 +21,7 @@ function ManageUsers() {
         return <Loader />
     }
     return (
-        <div className='w-[95%] sm:w-[60%]  mx-auto pb-5 mt-[80px]'>
+        <div className='w-[95%] sm:w-[60%]  mx-auto pb-5 mt-[80px] min-h-screen'>
             {/* <h5 className="text-lg text-center font-bold  mb-2 text-primary">Make Admin</h5> */}
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">

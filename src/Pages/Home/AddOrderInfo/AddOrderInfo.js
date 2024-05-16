@@ -15,7 +15,7 @@ import DatePicker from "react-datepicker";
 
 export default function AddOrderInfo() {
   const { isLoading, error, data: memo } = useQuery('memo', () =>
-    axios.get('http://65.0.95.143:5000/memo')
+    axios.get('http://13.235.246.2:5000/memo')
   )
   const [startDate, setStartDate] = useState(new Date());
   const [qtyCount, setQtyCount] = useState(1);
@@ -203,7 +203,7 @@ export default function AddOrderInfo() {
       note: ""
     }
     // console.log(finalData);
-    axios.post(`http://65.0.95.143:5000/orders`, finalData).then(data => {
+    axios.post(`http://13.235.246.2:5000/orders`, finalData).then(data => {
       // console.log(data.data.success);
       // console.log(data.data);
       if (data.data.success) {
@@ -229,7 +229,7 @@ export default function AddOrderInfo() {
   }
 
   return (
-    <div className='mb-8 mt-[70px]'>
+    <div className='mb-8 mt-[70px] min-h-screen'>
       {/* <div className='text-right'>
         <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/viewOrder"}>View Order</NavLink>
       </div> */}

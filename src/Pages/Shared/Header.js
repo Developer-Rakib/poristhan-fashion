@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '../Style/Style.css'
-import logo from '../../img/logo.png'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { GoThreeBars } from 'react-icons/go';
 import { MdDashboardCustomize, MdOutlineClose } from 'react-icons/md';

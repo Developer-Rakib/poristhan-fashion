@@ -7,7 +7,7 @@ const useToken = (user) => {
         if (user) {
             if (user) {
                 // console.log(user?.user.email);
-                axios.put(`http://65.0.95.143:5000/user/${user.user.email}`, user?.user.email)
+                axios.put(`http://13.235.246.2:5000/user/${user.user.email}`, user?.user.email)
                     .then(data => {
                         // console.log(data.data);
                         // if (data.data.token) {

@@ -31,7 +31,7 @@ function SingleSearch() {
 
 
         // console.log(value);
-        axios.get(`http://65.0.95.143:5000/order/${value}`).then(res => {
+        axios.get(`http://13.235.246.2:5000/order/${value}`).then(res => {
             // console.log(res);
             if (res.data.success) {
                 setSingleEntry(res.data.result);
@@ -60,7 +60,7 @@ function SingleSearch() {
         }).then((result) => {
             if (result.isConfirmed) {
                 // console.log(order._id);
-                axios.delete(`http://65.0.95.143:5000/order/${order._id}`)
+                axios.delete(`http://13.235.246.2:5000/order/${order._id}`)
                     .then(data => {
                         // console.log(data);
                         if (data.data.deletedCount > 0) {
@@ -86,7 +86,7 @@ function SingleSearch() {
         return <Loader />
     }
     return (
-        <div className='mt-[65px]'>
+        <div className='mt-[65px] min-h-screen'>
 
             <form onSubmit={hangleSearch} className="join mb-6" id='searcheForm'>
                 <input type='number' required className="input h-[40px] input-bordered join-item" placeholder="Memo No / ID" />

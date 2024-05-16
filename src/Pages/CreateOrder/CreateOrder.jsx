@@ -11,7 +11,7 @@ import Loader from '../Shared/Loader';
 
 function CreateOrder() {
     const { isLoading, error, data: memo } = useQuery('memo', () =>
-        axios.get('http://65.0.95.143:5000/memo')
+        axios.get('http://13.235.246.2:5000/memo')
     )
     // const [startDate, setStartDate] = useState(new Date());
     const [mobileErr, setMobileErr] = useState(null);
@@ -245,7 +245,7 @@ function CreateOrder() {
                     note: bookingData.note ? bookingData.note : "",
                 }
 
-                axios.post(`http://65.0.95.143:5000/orders`, finalData).then(data => {
+                axios.post(`http://13.235.246.2:5000/orders`, finalData).then(data => {
                     // console.log(data.data.success);
                     // console.log(data.data);
                     if (data.data.success) {
@@ -276,7 +276,7 @@ function CreateOrder() {
     }
 
     return (
-        <div className='mb-8 mt-[60px] sm:mt-[80px]'>
+        <div className='mb-20 mt-[60px] sm:mt-[80px]'>
             <h1 className='mt-1 text-2xl sm:text-2xl text-green-600 mx-8'>Create Order with Steadfast Courier</h1>
             <form onSubmit={(e) => hangleSubmit(e)} className='w-4/6 mx-auto' >
                 <div class="">
