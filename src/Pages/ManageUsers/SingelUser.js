@@ -15,7 +15,7 @@ function SingelUser({ singleUser, i, refetch }) {
         const updatedRole = {
             role: e.target[0].value
         }
-        axios.put(`http://13.235.246.2:5000/user/editRole/${singleUser?.email}`, updatedRole)
+        axios.put(`https://poristhan-fashion-server.onrender.com/user/editRole/${singleUser?.email}`, updatedRole)
             .then(data => {
                 console.log(data.data);
                 if (data?.data.acknowledged) {

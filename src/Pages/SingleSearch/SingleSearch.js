@@ -31,7 +31,7 @@ function SingleSearch() {
 
 
         // console.log(value);
-        axios.get(`http://13.235.246.2:5000/order/${value}`).then(res => {
+        axios.get(`https://poristhan-fashion-server.onrender.com/order/${value}`).then(res => {
             // console.log(res);
             if (res.data.success) {
                 setSingleEntry(res.data.result);
@@ -60,7 +60,7 @@ function SingleSearch() {
         }).then((result) => {
             if (result.isConfirmed) {
                 // console.log(order._id);
-                axios.delete(`http://13.235.246.2:5000/order/${order._id}`)
+                axios.delete(`https://poristhan-fashion-server.onrender.com/order/${order._id}`)
                     .then(data => {
                         // console.log(data);
                         if (data.data.deletedCount > 0) {

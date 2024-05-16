@@ -10,7 +10,7 @@ import SingelUser from './SingelUser';
 
 function ManageUsers() {
     const { isLoading, error, data: users, refetch } = useQuery('users', () =>
-        axios.get(`http://13.235.246.2:5000/users`)
+        axios.get(`https://poristhan-fashion-server.onrender.com/users`)
     )
     let [user, loading] = useAuthState(auth)
 
