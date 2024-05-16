@@ -26,7 +26,10 @@ export default function ViewBookingData() {
     let [pItem, setPItem] = useState([])
     let [user] = useAuthState(auth)
     let [role, roleLoading] = useRole(user)
-    // let pItem = {}
+    let [totalQtyCount, setTotalQtyCount] = useState(0)
+    let count = 0
+    // console.log(totalQtyCount);
+
 
 
     useEffect(() => {
@@ -60,9 +63,29 @@ export default function ViewBookingData() {
         pItem = {}
         axios.get(`https://server.poristhan-fashion.xyz/orders/${sName}?bookingDate=${bookingDate}`).then(res => {
             // console.log(res.data);
+
+            // const tqc = order.item.map((item) => {
+
+
+            //     const tqc2 = Object.values(item).map(i => {
+            //         return count = count + Object.values(item)[0];
+            //     })
+            //     return tqc2
+
+
+            // })
             setOrders(res.data);
             setLoading(false)
             res.data.forEach(order => {
+
+                const tqc = order.item.map((item) => {
+                    const tqc2 = Object.values(item).map(i => {
+                        return count = count + Object.values(item)[0];
+                    })
+                    return tqc2
+                })
+                setTotalQtyCount(tqc[0][0]);
+
                 if (order.status === "Deliverd") {
                     order?.item.forEach(itm => {
                         if (pItem[Object.keys(itm)[0]]) {
@@ -297,6 +320,9 @@ export default function ViewBookingData() {
                                                             // if (order.status === "Deliverd") {
 
                                                             // }
+
+
+                                                            // console.log(count);
                                                             return <SingleBookingData
                                                                 order={order}
                                                                 handleDelete={handleDelete}
@@ -317,9 +343,18 @@ export default function ViewBookingData() {
                                     </div >
 
                                     <div className='mr-1 sm:mr-4 mb-8'>
+                                        {/* <p>Total qty: <span>{totalQtyCount}</span></p> */}
                                         <div className="relative w-[60%] mx-auto sm:w-full overflow-x-auto shadow-md sm:rounded-lg">
                                             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
+                                                    <tr>
+                                                        <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
+                                                            Total QTY
+                                                        </th>
+                                                        <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px]">
+                                                            {totalQtyCount}
+                                                        </th>
+                                                    </tr>
                                                     <tr>
                                                         <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
                                                             P name

@@ -249,7 +249,8 @@ function SingleSearch() {
                                             <div className="flex flex-wrap">
                                                 <div className="w-full lg:w-12/12 px-4 mt-2">
                                                     <div className="relative w-full mb-3 text-left">
-                                                        <textarea type="text" className="px-3 py-3 border border-gray-300 placeholder-blueGray-300 text-blueGray-600 bg-white text-gray-00 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled rows="4">{singleEntry.note ? singleEntry.note : "No note..."}</textarea>
+                                                        <textarea defaultValue={singleEntry.note ? singleEntry.note : "No note..."} type="text" className="px-3 py-3 border border-gray-300 placeholder-blueGray-300 text-blueGray-600 bg-white text-gray-00 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled rows="4">
+                                                        </textarea>
                                                     </div>
                                                 </div>
                                             </div>
