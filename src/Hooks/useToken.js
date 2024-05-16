@@ -7,7 +7,7 @@ const useToken = (user) => {
         if (user) {
             if (user) {
                 // console.log(user?.user.email);
-                axios.put(`https://poristhan-fashion-server.onrender.com/user/${user.user.email}`, user?.user.email)
+                axios.put(`https://server.poristhan-fashion.xyz/user/${user.user.email}`, user?.user.email)
                     .then(data => {
                         // console.log(data.data);
                         // if (data.data.token) {

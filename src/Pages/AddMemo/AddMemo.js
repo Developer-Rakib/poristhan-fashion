@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 
 function AddMemo() {
     const { isLoading, error, data: memos, refetch } = useQuery('memo', () =>
-        axios.get('https://poristhan-fashion-server.onrender.com/memo')
+        axios.get('https://server.poristhan-fashion.xyz/memo')
     )
     const [modalError, setModalError] = useState("")
 
@@ -41,7 +41,7 @@ function AddMemo() {
         const editedData = {
             [sName]: totalMemo
         }
-        axios.put(`https://poristhan-fashion-server.onrender.com/addMemo/${id}`, editedData)
+        axios.put(`https://server.poristhan-fashion.xyz/addMemo/${id}`, editedData)
             .then(data => {
                 console.log(data.data);
                 if ((data.data.matchedCount || data.data.upsertedCount) > 0) {

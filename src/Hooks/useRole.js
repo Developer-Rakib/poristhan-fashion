@@ -6,7 +6,7 @@ const useRole = (user) => {
     const [roleLoading, setRoleLoading] = useState(true)
     // console.log(user);
     if (user) {
-        axios.get(`https://poristhan-fashion-server.onrender.com/role/${user?.email}`)
+        axios.get(`https://server.poristhan-fashion.xyz/role/${user?.email}`)
             .then(data => {
                 // console.log(data.data?.role);
                 setRoleLoading(false)

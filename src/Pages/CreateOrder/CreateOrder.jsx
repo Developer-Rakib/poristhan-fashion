@@ -11,7 +11,7 @@ import Loader from '../Shared/Loader';
 
 function CreateOrder() {
     const { isLoading, error, data: memo } = useQuery('memo', () =>
-        axios.get('https://poristhan-fashion-server.onrender.com/memo')
+        axios.get('https://server.poristhan-fashion.xyz/memo')
     )
     // const [startDate, setStartDate] = useState(new Date());
     const [mobileErr, setMobileErr] = useState(null);
@@ -245,7 +245,7 @@ function CreateOrder() {
                     note: bookingData.note ? bookingData.note : "",
                 }
 
-                axios.post(`https://poristhan-fashion-server.onrender.com/orders`, finalData).then(data => {
+                axios.post(`https://server.poristhan-fashion.xyz/orders`, finalData).then(data => {
                     // console.log(data.data.success);
                     // console.log(data.data);
                     if (data.data.success) {
