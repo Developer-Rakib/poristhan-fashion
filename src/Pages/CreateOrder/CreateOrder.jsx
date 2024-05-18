@@ -33,6 +33,7 @@ function CreateOrder() {
         "BLF",
         "HPC",
         "HPS",
+        "SHPS",
         "HPP",
         "HPF",
         "SKC",
@@ -298,7 +299,7 @@ function CreateOrder() {
 
                     <div className='flex  justify-center items-center  flex-col  sm:justify-center flex-wrap'>
 
-                        <div class="w-full my-2 sm:w-[28%]  mx-2">
+                        <div class="w-full my-2 sm:w-[28%]  sm:mx-2">
                             <label for="mobile" class="block text-sm font-medium leading-6 text-gray-900">Mobile</label>
                             <div class="">
                                 <input onChange={(e) => mobileHandle(e)} required type="number" name="mobile" id="mobile" class="block w-full rounded-md border-0 tracking-wider p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder='প্রাপকের নাম্বার' pattern="(09)[0-9]{11}" />
@@ -307,13 +308,13 @@ function CreateOrder() {
                                 }
                             </div>
                         </div>
-                        <div class="w-full my-2 sm:w-[28%]  mx-2">
+                        <div class="w-full my-2 sm:w-[28%]  sm:mx-2">
                             <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
                             <div class="">
                                 <input required type="text" id='name' name="name" class="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder='প্রাপকের নাম' />
                             </div>
                         </div>
-                        <div class="w-full my-2 sm:w-[28%]  mx-2">
+                        <div class="w-full my-2 sm:w-[28%]  sm:mx-2">
                             <label for="adress" class="block text-sm font-medium leading-6 text-gray-900">Adress</label>
                             <div class="">
                                 <textarea required type="text" name="adress" id="adress" class="min-h-[36px]  block w-full rounded-md border-0 tracking-wider p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" rows={3} placeholder='প্রাপকের ঠিকানা' ></textarea>
@@ -330,10 +331,10 @@ function CreateOrder() {
                                         </select>
                                     </div>
                                 </div>
-                                <div class=" my-2  mx-2">
+                                <div class="my-2  sm:mx-2">
                                     <label for="qty" class="block text-sm font-medium leading-6 text-gray-900">QTY</label>
                                     <div class="flex items-center">
-                                        <input required type="number" name={`qty${qtyCount}`} autocomplete="address-level2" class="block w-full sm:w-[80px] rounded-md border-0 text-center p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                        <input required type="number" name={`qty${qtyCount}`} autocomplete="address-level2" class="block w-full sm:w-[80px] rounded-md border-0 text-center p-1.5 pb-2 sm:pb-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
 
                                         <button onClick={addMoreFunction} className='ml-1 addMore' type='button'><FaPlusCircle className='text-xl'></FaPlusCircle></button>
 
@@ -384,7 +385,7 @@ function CreateOrder() {
                             </div>
                         </div>
 
-                        <div class="w-full my-2 sm:w-[28%]  mx-2">
+                        <div class="w-full my-2 sm:w-[28%]  sm:mx-2">
                             <label for="exchange" class="block text-sm font-medium leading-6 text-gray-900">Exchange</label>
                             <div class="">
                                 <select id="exchange" name="exchange" autocomplete="exchange" class="bg-white block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
@@ -395,7 +396,7 @@ function CreateOrder() {
                             </div>
                         </div>
 
-                        <div class="w-full my-2 sm:w-[28%]  mx-2">
+                        <div class="w-full my-2 sm:w-[28%]  sm:mx-2">
                             <label for="note" class="block text-sm font-medium leading-6 text-gray-900">Note</label>
                             <div class="">
                                 <textarea type="text" name="note" id="note" class="min-h-[36px]  block w-full rounded-md border-0 tracking-wider p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" rows={4} placeholder='Note.' ></textarea>
@@ -409,8 +410,8 @@ function CreateOrder() {
                 </div>
 
                 <div class="mt-4 flex items-center flex-col justify-center">
-                    <button id='submitBtn' type="submit" class="rounded-md bg-[#f15048] border border-[#f15048] w-[170px] py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#ce3b33]">Submit</button>
-                    <button onClick={(e) => handleClear(e)} type="button" class=" mt-2 rounded-md border text-slate-900 border-[#f15048] w-[170px] py-3 text-sm font-semibold  shadow-sm hover:bg-[#ce3b33] hover:text-white">Clear</button>
+                    <button id='submitBtn' type="submit" class="rounded-md bg-[#f15048] border border-[#f15048] w-full sm:w-[28%] py-4 text-base sm:text-sm font-semibold text-white shadow-sm hover:bg-[#ce3b33]">Submit</button>
+                    <button onClick={(e) => handleClear(e)} type="button" class=" mt-3 rounded-md border text-slate-900 border-[#f15048] w-full sm:w-[28%] py-3 text-sm font-semibold  shadow-sm hover:bg-[#ce3b33] hover:text-white">Clear</button>
                 </div>
             </form>
         </div>

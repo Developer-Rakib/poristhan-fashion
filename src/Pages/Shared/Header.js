@@ -34,8 +34,9 @@ const Header = () => {
     if (loading) {
         return <Loader></Loader>
     }
+    // console.log(role);
     return (
-        <div className='header-container py-[12px] fixed top-0 w-full'>
+        <div className='header-container py-4 sm:py-[12px] fixed top-0 w-full'>
             <nav
                 className='flex justify-center items-start  md:justify-between md:px-28 px-5 md:items-center'
             >
@@ -46,9 +47,11 @@ const Header = () => {
                     </label>
                 } */}
                 {/* <img className='sm:w-52 w-48' src={logo} alt="" /> */}
-                <h2 className='w-[150px] text-[#f15048] tracking-wide'>Poristhan Fashion</h2>
-                <span onClick={navBtnHndle} className='md:hidden absolute right-6  top-[22px]'>{toggle ? <MdOutlineClose></MdOutlineClose> : <GoThreeBars></GoThreeBars>}</span>
-                <ul onClick={navBtnHndle} className={`flex flex-col text-center md:justify-end z-10  md:flex-row md:top-0 left-0 w-full md:relative md:opacity-100  absolute  py-4 md:py-0 duration-500 ${toggle ? " opacity-100  top-14" : " top-[-250px] opacity-0"}`}>
+                <h2 className='w-[150px] text-[#f15048] tracking-wide headerLogo'>Poristhan Fashion</h2>
+
+                <span onClick={navBtnHndle} className='md:hidden cursor-pointer absolute right-6 text-xl top-[20px]'>{toggle ? <MdOutlineClose></MdOutlineClose> : <GoThreeBars></GoThreeBars>}</span>
+
+                <ul onClick={navBtnHndle} className={`flex flex-col text-center md:justify-end z-10  md:flex-row md:top-0 left-0 w-full md:relative md:opacity-100  absolute  py-4 md:py-0 duration-500 ${toggle ? " opacity-100 visible  top-14" : " top-[-250px] opacity-0 invisible"} sm:visible`}>
                     <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/"}>Home</NavLink>
                     {/* {
                         user && <>
@@ -56,33 +59,40 @@ const Header = () => {
 
                         </>
                     } */}
-                    {
-                        role === "admin" &&
-                        <>
-                            <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/createOrder"}>Create Order</NavLink>
-                            <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/bookingEntry"}>Entry</NavLink>
-                        </>
-                    }
+
 
 
                     {
                         user && <>
+
+
+                            {
+                                role === "admin" &&
+                                <>
+                                    <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/createOrder"}>Create Order</NavLink>
+                                    <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/bookingEntry"}>Entry</NavLink>
+                                </>
+                            }
+
                             <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/searchByDate"}>Search by Date</NavLink>
                             <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/singleSearch"}>Search by ID</NavLink>
+
+                            {
+                                role === "admin" &&
+                                <>
+                                    <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/addMemo"}>Add Memo</NavLink>
+                                    <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/manageUsers"}>Manage Users</NavLink>
+                                </>
+                            }
                         </>
                     }
 
 
-                    {
-                        role === "admin" &&
-                        <>
-                            <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/addMemo"}>Add Memo</NavLink>
-                            <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/manageUsers"}>Manage Users</NavLink>
-                        </>
-                    }
+
 
                     {user ?
-                        <button onClick={handleLogout} className='uppercase my-0.5 md:my-0 text-left   mx-auto md:mx-0 md:pb-0.5' >LogOut</button>
+                        // <button onClick={handleLogout} className='uppercase my-0.5 md:my-0 text-left   mx-auto md:mx-0 md:pb-0.5' >LogOut</button>
+                        <NavLink onClick={handleLogout} className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/login"}>LogOut</NavLink>
                         :
                         <NavLink className={({ isActive }) => (isActive ? 'activeLink' : 'navLink')} to={"/login"}>Login</NavLink>
                     }

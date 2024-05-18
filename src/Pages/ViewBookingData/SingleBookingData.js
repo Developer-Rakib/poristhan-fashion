@@ -1,13 +1,13 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, { useState } from 'react'
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBack2Line } from "react-icons/ri";
 import EditEntryModal from '../Shared/EditEntryModal';
-import auth from '../../firebase.init';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import useRole from '../../Hooks/useRole';
-import Loader from '../Shared/Loader';
+// import auth from '../../firebase.init';
+// import { useAuthState } from 'react-firebase-hooks/auth';
+// import useRole from '../../Hooks/useRole';
+// import Loader from '../Shared/Loader';
 
 const SingleBookingData = ({ order, handleDelete, i, role }) => {
     // states 

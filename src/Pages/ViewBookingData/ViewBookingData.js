@@ -347,11 +347,11 @@ export default function ViewBookingData() {
                                         <div className="relative w-[60%] mx-auto sm:w-full overflow-x-auto shadow-md sm:rounded-lg">
                                             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                 <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
-                                                    <tr>
+                                                    <tr className='border-b'>
                                                         <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
                                                             Total QTY
                                                         </th>
-                                                        <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px]">
+                                                        <th scope="col" className="px-6 text-center py-2 text-[11px] sm:text-[12px]">
                                                             {totalQtyCount}
                                                         </th>
                                                     </tr>
@@ -359,7 +359,7 @@ export default function ViewBookingData() {
                                                         <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
                                                             P name
                                                         </th>
-                                                        <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px]">
+                                                        <th scope="col" className="px-6 py-2 text-center text-[11px] sm:text-[12px]">
                                                             QTY
                                                         </th>
                                                     </tr>
@@ -367,14 +367,14 @@ export default function ViewBookingData() {
                                                 <tbody>
 
                                                     {
-                                                        Object.keys(pItem).map(pi => {
+                                                        Object.keys(pItem).map((pi, i) => {
 
                                                             return (
-                                                                <tr>
+                                                                <tr key={i}>
                                                                     <th scope="row" className="px-6 py-2 text-[11px] sm:text-[12px] font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
                                                                         {pi}
                                                                     </th>
-                                                                    <td className="px-6 py-2 text-[11px] sm:text-[12px]">
+                                                                    <td className="px-6 text-center py-2 text-[11px] sm:text-[12px]">
                                                                         {pItem[`${pi}`]}
                                                                     </td>
                                                                 </tr>

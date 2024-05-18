@@ -11,7 +11,7 @@ const Home = () => {
     return (
         <div className='mt-[50px]'>
 
-            <Banner></Banner>
+            {/* <Banner></Banner> */}
 
             {/* <Parts></Parts> */}
             <BussinesSummury></BussinesSummury>

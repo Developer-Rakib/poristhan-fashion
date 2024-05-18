@@ -36,6 +36,7 @@ export default function AddOrderInfo() {
     "BLF",
     "HPC",
     "HPS",
+    "SHPS",
     "HPP",
     "HPF",
     "SKC",

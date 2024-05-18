@@ -13,6 +13,10 @@ const useRole = (user) => {
                 setRole(data.data?.role)
             })
     }
+    // else {
+    //     // setRoleLoading(false)
+    //     setRole(undefined)
+    // }
 
     return [role, roleLoading]
 }

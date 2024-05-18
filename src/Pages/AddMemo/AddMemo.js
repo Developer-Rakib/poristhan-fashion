@@ -83,7 +83,7 @@ function AddMemo() {
             <div className='flex flex-row items-start justify-between flex-wrap  mx-auto'>
                 <div>
                     {
-                        sellerNames.map(sellerName => {
+                        sellerNames.map((sellerName, i) => {
                             let memoArr = [];
                             if (sellerName !== "_id") {
                                 for (let i = 0; i < memos?.data[0][`${sellerName}`].length; i++) {
@@ -92,7 +92,7 @@ function AddMemo() {
                             }
                             // console.log(memoArr);
                             return (
-                                <div className='text-gray-600'>
+                                <div key={i} className='text-gray-600'>
                                     {sellerName !== "_id" &&
                                         <div className='flex  flex-col sm:flex-row sm:items-center my-4'>
                                             <h1 className='text-xl sm:text-left capitalize min-w-[8rem] text-green-700'>{sellerName} :</h1>
