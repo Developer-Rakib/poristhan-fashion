@@ -62,18 +62,6 @@ export default function ViewBookingData() {
         // console.log(sN);
         pItem = {}
         axios.get(`https://server.poristhan-fashion.xyz/orders/${sName}?bookingDate=${bookingDate}`).then(res => {
-            // console.log(res.data);
-
-            // const tqc = order.item.map((item) => {
-
-
-            //     const tqc2 = Object.values(item).map(i => {
-            //         return count = count + Object.values(item)[0];
-            //     })
-            //     return tqc2
-
-
-            // })
             setOrders(res.data);
             setLoading(false)
             res.data.forEach(order => {
@@ -84,7 +72,9 @@ export default function ViewBookingData() {
                     })
                     return tqc2
                 })
-                setTotalQtyCount(tqc[0][0]);
+
+                setTotalQtyCount(tqc[tqc.length - 1][0]);
+
 
                 if (order.status === "Deliverd") {
                     order?.item.forEach(itm => {

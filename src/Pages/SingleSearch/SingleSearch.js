@@ -104,7 +104,13 @@ function SingleSearch() {
                                     <div className="rounded-t bg-white mb-0 px-6 pt-2">
                                         <div className="text-center flex justify-between">
 
-                                            <p className='text-gray-600'>{singleEntry.bookingDate}</p>
+                                            <div>
+                                                <p className='text-gray-600 mb-1'>{singleEntry.bookingDate}</p>
+                                                {
+                                                    singleEntry?.tracking_code &&
+                                                    <a className="bg-teal-500  text-white active:bg-teal-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" href={`https://steadfast.com.bd/t/${singleEntry.tracking_code}`} rel="noreferrer" target='_blank'>Track</a>
+                                                }
+                                            </div>
                                             <div>
                                                 {
                                                     role === "admin" &&

@@ -220,7 +220,7 @@ function CreateOrder() {
                 'Secret-Key': `${process.env.REACT_APP_MF_Secret_Key}`
             }
         }).then(data => {
-            console.log(data.data.consignment);
+            // console.log(data.data.consignment);
             if (data.data.status === 200) {
                 Swal.fire({
                     icon: "success",
@@ -243,6 +243,8 @@ function CreateOrder() {
                     exchange: bookingData.exchange === "No" ? false : true,
                     status: "Pending",
                     bookingDate: moment().format('MMM DD yyyy'),
+                    tracking_code: data.data.consignment.tracking_code.toString(),
+                    recipient_phone: data.data.consignment.recipient_phone.toString(),
                     note: bookingData.note ? bookingData.note : "",
                 }
 
