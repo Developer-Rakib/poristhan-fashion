@@ -129,6 +129,8 @@ function EditEntryModal({ order, setEditModal, setOrder }) {
             exchange: order.exchange,
             status: bookingData.status,
             bookingDate: order.bookingDate,
+            tracking_code: bookingData.tracking_code,
+            recipient_phone: bookingData.recipient_phone,
             note: bookingData.note || order.note
         }
 
@@ -238,14 +240,14 @@ function EditEntryModal({ order, setEditModal, setOrder }) {
                                                 <div className="w-[140px]">
 
                                                     <label htmlFor="partial_amount" className="block text-sm font-medium text-gray-700">Partial Amount</label>
-                                                    <input type={"number"} id="partial_amount" name="partial_amount" autocomplete="country-name" className="text-center mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                    <input required type={"number"} id="partial_amount" name="partial_amount" autocomplete="country-name" className="text-center mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                                     />
                                                 </div>
                                             </>
                                         }
                                     </div>
 
-                                    <textarea name='note' id='note' className="col-span-6 sm:col-span-6 textarea textarea-bordered" placeholder="Note"></textarea>
+                                    <textarea defaultValue={order.note} name='note' id='note' className="col-span-6 sm:col-span-6 textarea textarea-bordered" placeholder="Note"></textarea>
 
                                 </div>
                             </div>

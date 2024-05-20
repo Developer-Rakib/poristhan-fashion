@@ -138,13 +138,17 @@ export default function ViewBookingData() {
 
     function handleReceive() {
         // console.log(key);
+        // console.log("object");
 
         const updatedItems = orders.map(upItem => {
             // let allItem = []
-            if (upItem.status === "Pending") {
+            if (upItem.status === "Pending" && upItem.exchange === false) {
+                setLoading(true);
 
-                //         // upItem.status = "Deliverd";
-                //         // allItem.push(upItem)
+                // console.log(upItem.exchange);
+
+                // upItem.status = "Deliverd";
+                // allItem.push(upItem)
                 axios.get(`https://portal.steadfast.com.bd/api/v1/status_by_cid/${upItem.bookingID}`, {
                     headers: {
                         'Api-Key': `${process.env.REACT_APP_MF_Api_Key}`,
@@ -160,11 +164,15 @@ export default function ViewBookingData() {
                             axios.put(`https://server.poristhan-fashion.xyz/order/update/${upItem._id}`, editedData)
                                 .then(data => {
                                     if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
-                                        upItem.status = data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
+                                        // upItem.status = data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
                                         // allItem.push(upItem)
+                                        setLoading(false);
+
+
                                     }
                                     else {
                                         // allItem.push(upItem)
+                                        setLoading(false);
                                     }
                                 })
                         }
@@ -178,6 +186,7 @@ export default function ViewBookingData() {
                             }
                         }).then(data => {
                             if (data.data.status === 200) {
+                                // setLoading(false);
                                 // status = data.data.delivery_status
                                 if (data.data.delivery_status === "delivered" || data.data.delivery_status === "cancelled") {
                                     const editedData = {
@@ -186,26 +195,29 @@ export default function ViewBookingData() {
                                     axios.put(`https://server.poristhan-fashion.xyz/order/update/${upItem._id}`, editedData)
                                         .then(data => {
                                             if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
-                                                upItem.status = data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
+                                                // upItem.status = data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
                                                 // allItem.push(upItem)
+                                                setLoading(false);
                                             }
                                             else {
                                                 // allItem.push(upItem)
+                                                setLoading(false);
                                             }
                                         })
                                 }
                             }
                         }).catch(res => {
                             // console.log(res.response.status);
+                            setLoading(false);
                         })
                     }
                 })
 
 
             }
-            else {
-                // allItem.push(upItem)
-            }
+            // else {
+            // allItem.push(upItem)
+            // }
             return upItem
         })
         // setOrders(updatedItems);
