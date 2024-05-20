@@ -40,7 +40,7 @@ const SingleBookingData = ({ order, handleDelete, i, role }) => {
             <td className="py-2 text-[9px] sm:text-[13px]   text-center sm:py-4">
                 {singleEntry.bookingID}
             </td>
-            <td className="py-2 text-[8px] sm:text-[13px]   text-center sm:py-4">
+            <td className="py-2 text-[7px] sm:text-[13px]   text-center sm:py-4">
                 <div className={`${singleEntry.status === "Pertial Return" && "border-b"}`}>
                     {singleEntry.item.map((item, b) => {
 
@@ -67,9 +67,9 @@ const SingleBookingData = ({ order, handleDelete, i, role }) => {
                     })
                 }
             </td>
-            <td className="py-2 text-[9px] sm:text-[13px]   text-center sm:py-4 sm:block hidden">
-                {totalItemQty}
-            </td>
+            {/* <td className=" text-[9px] sm:text-[13px]   text-center sm:py-4 hidden   h-full">
+                <span className='grow h-full'>{totalItemQty}</span>
+            </td> */}
             <td className="py-2 text-[9px] sm:text-[13px]  text-center sm:py-4">
                 {singleEntry.d_ch}
             </td>
