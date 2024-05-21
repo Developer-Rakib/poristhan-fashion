@@ -137,8 +137,6 @@ export default function ViewBookingData() {
 
 
     function handleReceive() {
-        // console.log(key);
-        // console.log("object");
 
         const updatedItems = orders.map(upItem => {
             // let allItem = []
@@ -155,9 +153,14 @@ export default function ViewBookingData() {
                         'Secret-Key': `${process.env.REACT_APP_MF_Secret_Key}`
                     }
                 }).then(data => {
+
                     if (data.data.status === 200) {
+                        setLoading(false);
+                        // console.log(data.data.delivery_status);
+
                         // status = data.data.delivery_status
                         if (data.data.delivery_status === "delivered" || data.data.delivery_status === "cancelled") {
+                            // console.log(data.data);
                             const editedData = {
                                 status: data.data.delivery_status === "delivered" ? "Deliverd" : "Cancel"
                             }
@@ -176,6 +179,9 @@ export default function ViewBookingData() {
                                     }
                                 })
                         }
+                        // else if (data.data.delivery_status === "partial_delivered") {
+                        //     console.log(data.data.delivery_status);
+                        // }
                     }
                 }).catch(res => {
                     if (res.response.status) {
@@ -185,6 +191,7 @@ export default function ViewBookingData() {
                                 'Secret-Key': `${process.env.REACT_APP_F_Secret_Key}`
                             }
                         }).then(data => {
+                            setLoading(false);
                             if (data.data.status === 200) {
                                 // setLoading(false);
                                 // status = data.data.delivery_status
@@ -222,6 +229,47 @@ export default function ViewBookingData() {
         })
         // setOrders(updatedItems);
     }
+
+
+
+    async function handleReturn() {
+
+        let rtnMemo = []
+        const rtnItem = await rtnMemo.map(rtn => {
+            axios.get(`https://server.poristhan-fashion.xyz/order/${rtn}`)
+                .then(data => {
+                    if (data.data.result.status === 'Cancel') {
+                        console.log(data.data.result._id);
+                        const editedData = {
+                            status: 'Return'
+                        }
+                        axios.put(`https://server.poristhan-fashion.xyz/order/update/${data.data.result._id}`, editedData)
+                            .then(data => {
+
+                                console.log(data.data);
+                                // if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
+
+                                // }
+                            })
+                    }
+
+                })
+        })
+    }
+    async function handleExport() {
+
+
+        // const XLSX = await import("https://cdn.sheetjs.com/xlsx-0.19.2/package/xlsx.mjs");
+
+        // const worksheet = XLSX.utils.json_to_sheet(orders)
+
+        // const workbook = XLSX.utils.book_new();
+        // XLSX.utils.book_append_sheet(workbook, worksheet, "Employees");
+
+        // XLSX.writeFile(workbook, "Employee Lists.xlsx", { compression: true });
+    }
+
+
 
     if (isLoading || roleLoading) {
         return <Loader></Loader>
@@ -392,9 +440,19 @@ export default function ViewBookingData() {
                                             {
                                                 role === "admin" &&
 
-                                                <button onClick={handleReceive} className="mt-4 bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
-                                                    Update All
-                                                </button>
+                                                <>
+                                                    <button onClick={handleReceive} className="mt-4 bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                                                        Update All
+                                                    </button>
+
+                                                    {/* <button onClick={handleExport} className="mt-3 bg-orange-500 text-white active:bg-orange-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                                                        Update RTN
+                                                    </button> */}
+
+                                                    {/* <button onClick={handleExport} className="mt-3 bg-fuchsia-500 text-white active:bg-fuchsia-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                                                        Export Data
+                                                    </button> */}
+                                                </>
                                             }
                                         </div>
                                     </div>
