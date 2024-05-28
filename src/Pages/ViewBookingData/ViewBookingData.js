@@ -232,26 +232,51 @@ export default function ViewBookingData() {
 
 
 
-    async function handleReturn() {
+
+    function handleReturn() {
 
         let rtnMemo = []
-        const rtnItem = await rtnMemo.map(rtn => {
+        // console.log(rtnMemo.length);
+        rtnMemo.map(rtn => {
             axios.get(`https://server.poristhan-fashion.xyz/order/${rtn}`)
                 .then(data => {
-                    if (data.data.result.status === 'Cancel') {
-                        console.log(data.data.result._id);
-                        const editedData = {
-                            status: 'Return'
-                        }
-                        axios.put(`https://server.poristhan-fashion.xyz/order/update/${data.data.result._id}`, editedData)
-                            .then(data => {
+                    // console.log(data?.data?.result?.status, " ", rtn);
 
-                                console.log(data.data);
-                                // if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
+                    if (data.data.result.status === 'Pending') {
+                        console.log(data.data.result.status, " ", data.data.result.memo);
+                        // const editedData = {
+                        //     status: 'Return'
+                        // }
+                        // axios.put(`https://server.poristhan-fashion.xyz/order/update/${data.data.result._id}`, editedData)
+                        //     .then(data => {
 
-                                // }
-                            })
+                        //         console.log(data.data);
+                        //         // if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
+
+                        //         // }
+                        //     })
                     }
+                    // else {
+                    // console.log(data.data.result.status, " ", data.data.result.memo);
+                    // }
+
+                    // if (data.data.result.status === 'Cancel') {
+                    //     console.log(data.data.result._id);
+                    //     const editedData = {
+                    //         status: 'Return'
+                    //     }
+                    //     axios.put(`https://server.poristhan-fashion.xyz/order/update/${data.data.result._id}`, editedData)
+                    //         .then(data => {
+
+                    //             console.log(data.data);
+                    //             // if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
+
+                    //             // }
+                    //         })
+                    // }
+
+
+
 
                 })
         })
@@ -445,9 +470,9 @@ export default function ViewBookingData() {
                                                         Update All
                                                     </button>
 
-                                                    {/* <button onClick={handleExport} className="mt-3 bg-orange-500 text-white active:bg-orange-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                                                    <button onClick={handleReturn} className="mt-3 bg-orange-500 text-white active:bg-orange-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
                                                         Update RTN
-                                                    </button> */}
+                                                    </button>
 
                                                     {/* <button onClick={handleExport} className="mt-3 bg-fuchsia-500 text-white active:bg-fuchsia-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
                                                         Export Data
