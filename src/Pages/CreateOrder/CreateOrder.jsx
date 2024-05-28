@@ -26,15 +26,16 @@ function CreateOrder() {
     // let qtyCount = 1;
     let itemName = [
         "BLC",
-        "BLC",
         "BLS",
         "DBLS",
         "BLP",
+        "BLB",
         "BLF",
         "HPC",
         "HPS",
         "SHPS",
         "HPP",
+        "HPB",
         "HPF",
         "SKC",
         "SKS",
