@@ -4,7 +4,7 @@ import { FaPlusCircle } from "react-icons/fa";
 import { useQuery } from 'react-query';
 import { NavLink } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import moment from 'moment';
+import moment, { fn } from 'moment';
 import toast from 'react-hot-toast';
 // import DatePicker from "react-datepicker";
 import Loader from '../Shared/Loader';
@@ -13,12 +13,17 @@ function CreateOrder() {
     const { isLoading, error, data: memo } = useQuery('memo', () =>
         axios.get('https://server.poristhan-fashion.xyz/memo')
     )
+    const { isLoading: isLoading2, error: error2, data: marchentName, refetch } = useQuery('marchentName', () =>
+        axios.get('https://server.poristhan-fashion.xyz/marchentName')
+    )
     // const [startDate, setStartDate] = useState(new Date());
     const [mobileErr, setMobileErr] = useState(null);
     const [qtyCount, setQtyCount] = useState(1);
 
+    // console.log(marchentName.data[0].marchentName);
 
-    if (isLoading) {
+
+    if (isLoading || isLoading2) {
         return <Loader></Loader>
     }
     // console.log(memo.data[0]);
@@ -166,7 +171,7 @@ function CreateOrder() {
             });
             return;
         }
-        console.log(qtyCount);
+        // console.log(qtyCount);
 
         let itemQty = []
         for (let i = 1; i <= qtyCount; i++) {
@@ -211,14 +216,26 @@ function CreateOrder() {
 
         // console.log(steadfastData);
 
-
+        // console.log(marchentName.data[0].marchentName);
+        // console.log(bookingData.marchentName);
+        let apiKey;
+        let secretKey;
+        if (bookingData.marchentName === 'mehbooba fashion') {
+            apiKey = `${process.env.REACT_APP_MF_Api_Key}`
+            secretKey = `${process.env.REACT_APP_MF_Secret_Key}`
+        }
+        else {
+            apiKey = `${process.env.REACT_APP_F_Api_Key}`
+            secretKey = `${process.env.REACT_APP_F_Secret_Key}`
+        }
+        // console.log(apiKey, " ", secretKey);
 
         // console.log(finalData);
 
         axios.post(`https://portal.steadfast.com.bd/api/v1/create_order`, steadfastData, {
             headers: {
-                'Api-Key': `${process.env.REACT_APP_MF_Api_Key}`,
-                'Secret-Key': `${process.env.REACT_APP_MF_Secret_Key}`
+                'Api-Key': apiKey,
+                'Secret-Key': secretKey
             }
         }).then(data => {
             // console.log(data.data.consignment);
@@ -279,6 +296,25 @@ function CreateOrder() {
 
     }
 
+    function handleMarchent(e, id) {
+        const marchent = e.target.value;
+        // console.log(marchent);
+        const editedData = {
+            marchentName: marchent
+        }
+        // console.log(id);
+        axios.put(`https://server.poristhan-fashion.xyz/changeMarchentName/${id}`, editedData)
+            .then(data => {
+                if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
+                    toast.success(`${marchent} successfully selelected`)
+                    refetch()
+                }
+                else {
+                    toast.error('Somting is wrong!')
+                }
+            })
+    }
+    // console.log(marchentName.data[0].marchentName);
     return (
         <div className='mb-20 mt-[60px] sm:mt-[80px]'>
             <h1 className='mt-1 text-2xl sm:text-2xl text-green-600 mx-8'>Create Order with Steadfast Courier</h1>
@@ -300,7 +336,30 @@ function CreateOrder() {
                         scrollableYearDropdown
                     /> */}
 
+
+
                     <div className='flex  justify-center items-center  flex-col  sm:justify-center flex-wrap'>
+
+                        <div class="w-full my-2 sm:w-[28%]  sm:mx-2">
+                            <label for="marchentName" class="block text-sm font-medium leading-6 text-gray-900">Marchent Name</label>
+                            <div class="">
+                                <select onChange={(e) => handleMarchent(e, marchentName.data[0]._id)} id="marchentName" name="marchentName" autocomplete="marchentName" class="bg-white capitalize block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value="rakib">
+                                    {
+                                        marchentName.data[0].marchentName === 'mehbooba fashion' ?
+                                            <>
+                                                <option selected className='capitalize'>mehbooba fashion</option>
+                                                <option className='capitalize'>fashion</option>
+                                            </>
+                                            :
+                                            <>
+                                                <option selected className='capitalize'>fashion</option>
+                                                <option className='capitalize'>mehbooba fashion</option>
+                                            </>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
 
                         <div class="w-full my-2 sm:w-[28%]  sm:mx-2">
                             <label for="mobile" class="block text-sm font-medium leading-6 text-gray-900">Mobile</label>

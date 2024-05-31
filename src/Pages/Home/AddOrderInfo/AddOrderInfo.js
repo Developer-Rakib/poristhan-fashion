@@ -202,6 +202,7 @@ export default function AddOrderInfo() {
       exchange: bookingData.exchange === "No" ? false : true,
       status: "Pending",
       bookingDate: moment(startDate).format('MMM DD yyyy'),
+      recipient_phone: bookingData.mobile.toString(),
       note: ""
     }
     // console.log(finalData);
@@ -237,7 +238,7 @@ export default function AddOrderInfo() {
       </div> */}
       {/* <h1 className='mt-10 text-4xl text-[#f15048]'>Poristhan Fashion</h1> */}
       <h1 className='mt-1 text-lg'>Entry Form</h1>
-      <form onSubmit={(e) => hangleSubmit(e)} className='w-4/6 mx-auto' >
+      <form onSubmit={(e) => hangleSubmit(e)} className='w-4/6  mx-auto' >
         <div class="">
 
           <h2 class="text-base font-semibold leading-7 text-gray-900 mb-8 sm:mb-12">Booking Information</h2>
@@ -282,6 +283,12 @@ export default function AddOrderInfo() {
               <label for="bookingID" class="block text-sm font-medium leading-6 text-gray-900">ID NO</label>
               <div class="">
                 <input required type="number" name="bookingID" id="bookingID" min={7} class="block w-full text-center rounded-md border-0 tracking-wider p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+              </div>
+            </div>
+            <div class="w-full my-2 sm:w-[180px]  mx-2">
+              <label for="mobile" class="block text-sm font-medium leading-6 text-gray-900">Mobile</label>
+              <div class="">
+                <input required type="number" name="mobile" id="mobile" min={7} class="block w-full text-center rounded-md border-0 tracking-wider p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
               </div>
             </div>
 
