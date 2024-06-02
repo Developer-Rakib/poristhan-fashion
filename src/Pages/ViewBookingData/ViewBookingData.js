@@ -235,8 +235,10 @@ export default function ViewBookingData() {
 
     function handleReturn() {
 
+
+
         let rtnMemo = []
-        // console.log(rtnMemo.length);
+        console.log(rtnMemo.length);
         rtnMemo.map(rtn => {
             axios.get(`https://server.poristhan-fashion.xyz/order/${rtn}`)
                 .then(data => {
@@ -280,6 +282,21 @@ export default function ViewBookingData() {
 
                 })
         })
+
+        // get cancel by month
+        // for (let i = 1; i < 24; i++) {
+        //     const date = `May ${i} 2024`;
+        //     axios.get(`https://server.poristhan-fashion.xyz/orders/all?bookingDate=${date}`)
+        //         .then(res => {
+        //             // console.log(res.data);
+        //             res.data.map(dt => {
+        //                 if (dt.status === 'Cancel') {
+        //                     console.log(dt.status, ' ', dt.memo)
+        //                 }
+        //             })
+
+        //         })
+        // }
     }
     async function handleExport() {
 
@@ -471,7 +488,7 @@ export default function ViewBookingData() {
                                                     </button>
 
                                                     {/* <button onClick={handleReturn} className="mt-3 bg-orange-500 text-white active:bg-orange-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
-                                                        Update RTN
+                                                        Check
                                                     </button> */}
 
                                                     {/* <button onClick={handleExport} className="mt-3 bg-fuchsia-500 text-white active:bg-fuchsia-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
