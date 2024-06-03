@@ -89,13 +89,13 @@ function AddMemo() {
     return (
         <div className='mt-[65px] w-6/12 mx-auto min-h-screen'>
             <h1 className='text-xl mb-6'>All Memos</h1>
-            <div className='flex justify-end'>
+            <div className='flex sm:justify-end flex-wrap justify-center'>
 
-                <div class="flex flex-row items-center mr-4">
+                <div class="flex sm:flex-row flex-col items-center mr-4 mb-2">
                     <label className='mr-1'>Marchent</label>
                     <select onChange={(e) => handleMarchent(e, marchentName.data[0]._id)} id="marchentName" name="marchentName" autocomplete="marchentName" class="bg-white capitalize block  rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value="rakib">
                         {
-                            marchentName.data[0].marchentName === 'mehbooba fashion' ?
+                            marchentName?.data[0]?.marchentName === 'mehbooba fashion' ?
                                 <>
                                     <option selected className='capitalize'>mehbooba fashion</option>
                                     <option className='capitalize'>fashion</option>
