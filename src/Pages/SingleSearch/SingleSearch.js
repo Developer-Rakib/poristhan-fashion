@@ -15,7 +15,11 @@ function SingleSearch() {
     // console.log(singleEntry?.status);
     function hangleSearch(e) {
         e.preventDefault();
-        let value = e.target[0].value;
+
+        const toEn = n => n.replace(/[০-৯]/g, d => "০১২৩৪৫৬৭৮৯".indexOf(d));
+        let value = toEn(e.target[0].value)
+        console.log(value);
+
         if (document.getElementById('dataForm')) {
             document.getElementById('dataForm').reset()
         }
@@ -45,7 +49,7 @@ function SingleSearch() {
         <div className='mt-[65px] min-h-screen'>
 
             <form onSubmit={hangleSearch} className="join mb-6" id='searcheForm'>
-                <input type='number' required className="input h-[40px] input-bordered join-item" placeholder="Phone/ ID/ Memo No" />
+                <input type='text' required className="input h-[40px] input-bordered join-item" placeholder="Phone/ ID/ Memo No" />
                 <button type='submit' className="btn  bg-teal-600 text-white h-[40px] min-h-[40px] px-6 join-item rounded-r-full border-[1px] border-teal-600 ">Search</button>
             </form>
 
