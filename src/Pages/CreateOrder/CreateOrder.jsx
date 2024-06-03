@@ -296,24 +296,7 @@ function CreateOrder() {
 
     }
 
-    function handleMarchent(e, id) {
-        const marchent = e.target.value;
-        // console.log(marchent);
-        const editedData = {
-            marchentName: marchent
-        }
-        // console.log(id);
-        axios.put(`https://server.poristhan-fashion.xyz/changeMarchentName/${id}`, editedData)
-            .then(data => {
-                if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
-                    toast.success(`${marchent} successfully selelected`)
-                    refetch()
-                }
-                else {
-                    toast.error('Somting is wrong!')
-                }
-            })
-    }
+
     // console.log(marchentName.data[0].marchentName);
     return (
         <div className='mb-20 mt-[60px] sm:mt-[80px]'>
@@ -343,19 +326,10 @@ function CreateOrder() {
                         <div class="w-full my-2 sm:w-[28%]  sm:mx-2">
                             <label for="marchentName" class="block text-sm font-medium leading-6 text-gray-900">Marchent Name</label>
                             <div class="">
-                                <select onChange={(e) => handleMarchent(e, marchentName.data[0]._id)} id="marchentName" name="marchentName" autocomplete="marchentName" class="bg-white capitalize block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value="rakib">
-                                    {
-                                        marchentName.data[0].marchentName === 'mehbooba fashion' ?
-                                            <>
-                                                <option selected className='capitalize'>mehbooba fashion</option>
-                                                <option className='capitalize'>fashion</option>
-                                            </>
-                                            :
-                                            <>
-                                                <option selected className='capitalize'>fashion</option>
-                                                <option className='capitalize'>mehbooba fashion</option>
-                                            </>
-                                    }
+                                <select disabled id="marchentName" name="marchentName" autocomplete="marchentName" class="bg-gray-100 capitalize block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value="rakib">
+
+                                    <option selected className='capitalize'>{marchentName.data[0].marchentName}</option>
+
                                 </select>
                             </div>
                         </div>

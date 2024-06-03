@@ -10,10 +10,32 @@ function AddMemo() {
     const { isLoading, error, data: memos, refetch } = useQuery('memo', () =>
         axios.get('https://server.poristhan-fashion.xyz/memo')
     )
+    const { isLoading: isLoading2, error: error2, data: marchentName, refetch: refetch2 } = useQuery('marchentName', () =>
+        axios.get('https://server.poristhan-fashion.xyz/marchentName')
+    )
     const [modalError, setModalError] = useState("")
 
 
     let selllerArr = [];
+
+    function handleMarchent(e, id) {
+        const marchent = e.target.value;
+        // console.log(marchent);
+        const editedData = {
+            marchentName: marchent
+        }
+        // console.log(id);
+        axios.put(`https://server.poristhan-fashion.xyz/changeMarchentName/${id}`, editedData)
+            .then(data => {
+                if ((data.data.matchedCount || data.data.upsertedCount) > 0) {
+                    toast.success(`${marchent} successfully selelected`)
+                    refetch2()
+                }
+                else {
+                    toast.error('Somting is wrong!')
+                }
+            })
+    }
 
     if (isLoading) {
         return <Loader></Loader>
@@ -67,19 +89,42 @@ function AddMemo() {
     return (
         <div className='mt-[65px] w-6/12 mx-auto min-h-screen'>
             <h1 className='text-xl mb-6'>All Memos</h1>
-            <div className='text-center sm:text-right'>
-                <button onClick={() => document.getElementById('my_modal_5').showModal()} className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
-                    Add Memo
-                </button>
-                {/* add memo modal  */}
-                <AddMemoModal
-                    sellerNames={sellerNames}
-                    memo={memos.data[0]}
-                    addMemoFanction={addMemoFanction}
-                    modalError={modalError}
-                />
+            <div className='flex justify-end'>
+
+                <div class="flex flex-row items-center mr-4">
+                    <label className='mr-1'>Marchent</label>
+                    <select onChange={(e) => handleMarchent(e, marchentName.data[0]._id)} id="marchentName" name="marchentName" autocomplete="marchentName" class="bg-white capitalize block  rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" value="rakib">
+                        {
+                            marchentName.data[0].marchentName === 'mehbooba fashion' ?
+                                <>
+                                    <option selected className='capitalize'>mehbooba fashion</option>
+                                    <option className='capitalize'>fashion</option>
+                                </>
+                                :
+                                <>
+                                    <option selected className='capitalize'>fashion</option>
+                                    <option className='capitalize'>mehbooba fashion</option>
+                                </>
+                        }
+                    </select>
+                </div>
+
+                <div className='text-center sm:text-right'>
+                    <button onClick={() => document.getElementById('my_modal_5').showModal()} className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                        Add Memo
+                    </button>
+                    {/* add memo modal  */}
+                    <AddMemoModal
+                        sellerNames={sellerNames}
+                        memo={memos.data[0]}
+                        addMemoFanction={addMemoFanction}
+                        modalError={modalError}
+                    />
+
+                </div>
 
             </div>
+
             <div className='flex flex-row items-start justify-between flex-wrap  mx-auto'>
                 <div>
                     {
