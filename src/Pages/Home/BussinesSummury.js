@@ -7,7 +7,7 @@ import { GiClothes } from "react-icons/gi";
 
 const BussinesSummury = () => {
     return (
-        <div className='flex pt-16 justify-evenly flex-wrap sm:flex-nowrap Container'>
+        <div className='flex pt-5 justify-evenly flex-wrap sm:flex-nowrap Container'>
             <div style={{ fontFamily: 'Open Sans', boxShadow: '#f15048 0px 1px 4px' }} className='flex w-9/12 sm:w-[370px] h-18 px-4 sm:h-auto sm:px-6 py-5 sm:py-6 rounded-xl m-3 sm:m-2 justify-center items-center'>
                 <GiClothes className='text-[#f15048] text-2xl sm:text-5xl'></GiClothes >
                 <h1 className="text-2xl sm:text-3xl ml-3">100+ Products</h1>

@@ -46,6 +46,7 @@ function CreateOrder() {
         "SKS",
         "SSKS",
         "SKP",
+        "SKB",
         "SKF",
         "EMC",
         "EMS",
@@ -147,7 +148,7 @@ function CreateOrder() {
     // }
 
 
-    function hangleSubmit(e) {
+    async function hangleSubmit(e) {
         e.preventDefault();
 
         const formData = new FormData(e.target);
@@ -204,95 +205,105 @@ function CreateOrder() {
         // console.log(date);
         // console.log(bookingData);
 
-
-        let steadfastData = {
-            invoice: bookingMemo.toString(),
-            recipient_name: bookingData.name.toString(),
-            recipient_phone: bookingData.mobile.toString(),
-            recipient_address: bookingData.adress.toString(),
-            cod_amount: parseInt(bookingData.cod),
-            note: bookingData.note ? bookingData.note.toString() : (bookingData.exchange === "Yes" ? "exchane hobe" : ""),
-        }
-
-        // console.log(steadfastData);
-
-        // console.log(marchentName.data[0].marchentName);
-        // console.log(bookingData.marchentName);
-        let apiKey;
-        let secretKey;
-        if (bookingData.marchentName === 'mehbooba fashion') {
-            apiKey = `${process.env.REACT_APP_MF_Api_Key}`
-            secretKey = `${process.env.REACT_APP_MF_Secret_Key}`
-        }
-        else {
-            apiKey = `${process.env.REACT_APP_F_Api_Key}`
-            secretKey = `${process.env.REACT_APP_F_Secret_Key}`
-        }
-        // console.log(apiKey, " ", secretKey);
-
-        // console.log(finalData);
-
-        axios.post(`https://portal.steadfast.com.bd/api/v1/create_order`, steadfastData, {
-            headers: {
-                'Api-Key': apiKey,
-                'Secret-Key': secretKey
-            }
-        }).then(data => {
-            // console.log(data.data.consignment);
-            if (data.data.status === 200) {
+        await axios.get(`https://server.poristhan-fashion.xyz/order/${bookingMemo}`).then(res => {
+            // console.log(res.data);
+            if (res.data.success) {
+                // setSingleEntry(res.data.result);
                 Swal.fire({
-                    icon: "success",
-                    title: `Wow...`,
-                    html: `
-                    <p>${data.data.message}</p>
-                    <p>Order id : <b class="tracking-wide text-2xl">${data.data.consignment.consignment_id}</b></p>`,
+                    icon: "error",
+                    title: "Oops...",
+                    text: `${bookingMemo} no memo aleady exists!`,
                 });
+            }
+            else {
 
-                let netAmount = (parseInt(bookingData.advance) + parseInt(bookingData.cod)) - parseInt(bookingData.d_ch)
-                let finalData = {
-                    sellerName: sellerName,
-                    memo: bookingMemo,
-                    bookingID: data.data.consignment.consignment_id.toString(),
-                    d_ch: parseInt(bookingData.d_ch),
-                    item: itemQty,
-                    amount: netAmount,
-                    advance: parseInt(bookingData.advance),
-                    partial: { PAmount: null, PItem: [] },
-                    exchange: bookingData.exchange === "No" ? false : true,
-                    status: "Pending",
-                    bookingDate: moment().format('MMM DD yyyy'),
-                    tracking_code: data.data.consignment.tracking_code.toString(),
-                    recipient_phone: data.data.consignment.recipient_phone.toString(),
-                    note: bookingData.note ? bookingData.note : "",
+                let steadfastData = {
+                    invoice: bookingMemo.toString(),
+                    recipient_name: bookingData.name.toString(),
+                    recipient_phone: bookingData.mobile.toString(),
+                    recipient_address: bookingData.adress.toString(),
+                    cod_amount: parseInt(bookingData.cod),
+                    note: bookingData.note ? bookingData.note.toString() : (bookingData.exchange === "Yes" ? "exchane hobe" : ""),
                 }
 
-                axios.post(`https://server.poristhan-fashion.xyz/orders`, finalData).then(data => {
-                    // console.log(data.data.success);
-                    // console.log(data.data);
-                    if (data.data.success) {
-                        toast.success(`${data.data.message}`)
-                        e.target.reset();
-                        let allQtyClear = document.getElementsByClassName('addMoreChild');
-                        for (const [key, value] of Object.entries(allQtyClear)) {
-                            value.remove()
-                        }
-                        setQtyCount(1)
+                // console.log(steadfastData);
+
+                // console.log(marchentName.data[0].marchentName);
+                // console.log(bookingData.marchentName);
+                let apiKey;
+                let secretKey;
+                if (bookingData.marchentName === 'mehbooba fashion') {
+                    apiKey = `${process.env.REACT_APP_MF_Api_Key}`
+                    secretKey = `${process.env.REACT_APP_MF_Secret_Key}`
+                }
+                else {
+                    apiKey = `${process.env.REACT_APP_F_Api_Key}`
+                    secretKey = `${process.env.REACT_APP_F_Secret_Key}`
+                }
+
+
+                axios.post(`https://portal.steadfast.com.bd/api/v1/create_order`, steadfastData, {
+                    headers: {
+                        'Api-Key': apiKey,
+                        'Secret-Key': secretKey
                     }
-                    else {
+                }).then(data => {
+                    // console.log(data.data.consignment);
+                    if (data.data.status === 200) {
                         Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: `${data.data.message}`,
+                            icon: "success",
+                            title: `Wow...`,
+                            html: `
+                    <p>${data.data.message}</p>
+                    <p>Order id : <b class="tracking-wide text-2xl">${data.data.consignment.consignment_id}</b></p>`,
                         });
-                        // toast.error(`${data.data.message}`)
+
+                        let netAmount = (parseInt(bookingData.advance) + parseInt(bookingData.cod)) - parseInt(bookingData.d_ch)
+                        let finalData = {
+                            sellerName: sellerName,
+                            memo: bookingMemo,
+                            bookingID: data.data.consignment.consignment_id.toString(),
+                            d_ch: parseInt(bookingData.d_ch),
+                            item: itemQty,
+                            amount: netAmount,
+                            advance: parseInt(bookingData.advance),
+                            partial: { PAmount: null, PItem: [] },
+                            exchange: bookingData.exchange === "No" ? false : true,
+                            status: "Pending",
+                            bookingDate: moment().format('MMM DD yyyy'),
+                            tracking_code: data.data.consignment.tracking_code.toString(),
+                            recipient_phone: data.data.consignment.recipient_phone.toString(),
+                            note: bookingData.note ? bookingData.note : "",
+                        }
+
+                        axios.post(`https://server.poristhan-fashion.xyz/orders`, finalData).then(data => {
+                            // console.log(data.data.success);
+                            // console.log(data.data);
+                            if (data.data.success) {
+                                toast.success(`${data.data.message}`)
+                                e.target.reset();
+                                let allQtyClear = document.getElementsByClassName('addMoreChild');
+                                for (const [key, value] of Object.entries(allQtyClear)) {
+                                    value.remove()
+                                }
+                                setQtyCount(1)
+                            }
+                            else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: `${data.data.message}`,
+                                });
+                                // toast.error(`${data.data.message}`)
+                            }
+                        })
+
+
+
                     }
                 })
-
-
-
             }
         })
-
 
     }
 

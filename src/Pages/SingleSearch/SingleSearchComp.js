@@ -170,7 +170,13 @@ function SingleSearchComp({ singleEntry, setSingleEntry }) {
                                         <label className="text-teal-900 block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                             Amount
                                         </label>
-                                        <input type="text" className="border border-gray-300 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white text-gray-00 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.amount} />
+                                        <input type="text" className={`${singleEntry.status === "Pertial Return" && "line-through border-red-400 text-red-500"} border border-gray-300 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white text-gray-00 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150`} disabled value={singleEntry.amount} />
+
+                                        {
+                                            singleEntry.status === "Pertial Return" &&
+
+                                            <input type="text" className="border text-green-600 border-green-400 mt-1 text-center px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white text-gray-00 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" disabled value={singleEntry.partial.PAmount} />
+                                        }
                                     </div>
                                 </div>
                                 <div className="w-full lg:w-2/12 px-2">

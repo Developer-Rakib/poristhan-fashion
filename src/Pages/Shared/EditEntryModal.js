@@ -34,6 +34,7 @@ function EditEntryModal({ order, setEditModal, setOrder }) {
         "SKS",
         "SSKS",
         "SKP",
+        "SKB",
         "SKF",
         "EMC",
         "EMS",
@@ -131,12 +132,12 @@ function EditEntryModal({ order, setEditModal, setOrder }) {
             exchange: order.exchange,
             status: bookingData.status,
             bookingDate: order.bookingDate,
-            tracking_code: bookingData.tracking_code,
+            tracking_code: order.tracking_code,
             recipient_phone: bookingData.recipient_phone,
             note: bookingData.note || order.note
         }
 
-        console.log(editedData);
+        // console.log(editedData);
 
 
         axios.put(`https://server.poristhan-fashion.xyz/order/update/${order._id}`, editedData)
@@ -180,10 +181,16 @@ function EditEntryModal({ order, setEditModal, setOrder }) {
 
                                         />
                                     </div>
-                                    <div className="col-span-6 sm:col-span-4 ">
+                                    <div className="col-span-6 sm:col-span-2 ">
                                         <label htmlFor="bookingID" className="block text-sm font-medium text-gray-700">ID NO</label>
                                         <input type={"number"} id="bookingID" name="bookingID" autocomplete="country-name" defaultValue={order.bookingID} className="text-center mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         />
+                                    </div>
+                                    <div class="col-span-6 sm:col-span-2">
+                                        <label for="recipient_phone" class="block text-sm font-medium leading-6 text-gray-900">Mobile</label>
+                                        <div class="">
+                                            <input defaultValue={order.recipient_phone} type="number" name="recipient_phone" id="recipient_phone" min={7} class="block w-full text-center rounded-md border-0 tracking-wider p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                        </div>
                                     </div>
                                     <div className="col-span-6 sm:col-span-2">
                                         <label htmlFor="d_ch" className="block text-sm font-medium text-gray-700">D. CH.</label>
@@ -218,31 +225,51 @@ function EditEntryModal({ order, setEditModal, setOrder }) {
                                         </div>
                                     </div>
 
-                                    <div className="col-span-6 sm:col-span-6 flex justify-center items-end">
+                                    <div className="col-span-6 sm:col-span-6 flex sm:flex-row flex-col justify-center items-center sm:items-end">
                                         {
                                             status === "Pertial Return" &&
                                             <>
 
-                                                <div className='flex flex-col w-[50%]'>
-                                                    {order.item.map((item, index) => {
+                                                <div className='flex flex-col sm:w-[50%]'>
+                                                    {
+                                                        order.partial?.PItem.length > 0 ?
+                                                            order.partial.PItem.map((item, index) => {
 
-                                                        return <div className='flex mx-2' key={index}>
+                                                                return <div className='flex mx-2' key={index}>
 
-                                                            <select defaultValue={Object.keys(item)} type="text" id="item" name={`item${index}`} class="bg-white text-center mt-1 block w-[100px]  rounded-md border-0 py-2 px-2  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                                                {itemInner}
-                                                            </select>
+                                                                    <select defaultValue={Object.keys(item)} type="text" id="item" name={`item${index}`} class="bg-white text-center mt-1 block w-[100px]  rounded-md border-0 py-2 px-2  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                                                        {itemInner}
+                                                                    </select>
 
 
 
-                                                            <input defaultValue={Object.values(item)} type="text" id="item" name={`qty${index}`} className="text-center mt-1 block w-[60px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                                            />
-                                                        </div>
-                                                    })}
+                                                                    <input defaultValue={Object.values(item)} type="text" id="item" name={`qty${index}`} className="text-center mt-1 block w-[60px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                    />
+                                                                </div>
+                                                            })
+
+                                                            :
+
+                                                            order.item.map((item, index) => {
+
+                                                                return <div className='flex mx-2' key={index}>
+
+                                                                    <select defaultValue={Object.keys(item)} type="text" id="item" name={`item${index}`} class="bg-white text-center mt-1 block w-[100px]  rounded-md border-0 py-2 px-2  shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                                                        {itemInner}
+                                                                    </select>
+
+
+
+                                                                    <input defaultValue={Object.values(item)} type="text" id="item" name={`qty${index}`} className="text-center mt-1 block w-[60px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                                    />
+                                                                </div>
+                                                            })
+                                                    }
                                                 </div>
-                                                <div className="w-[140px]">
+                                                <div className=" sm:w-[140px] mt-1 sm:mt-0">
 
                                                     <label htmlFor="partial_amount" className="block text-sm font-medium text-gray-700">Partial Amount</label>
-                                                    <input required type={"number"} id="partial_amount" name="partial_amount" autocomplete="country-name" className="text-center mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                                    <input defaultValue={order?.partial?.PAmount} type={"number"} id="partial_amount" name="partial_amount" autocomplete="country-name" className="text-center mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                                     />
                                                 </div>
                                             </>

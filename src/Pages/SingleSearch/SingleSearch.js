@@ -18,7 +18,7 @@ function SingleSearch() {
 
         const toEn = n => n.replace(/[০-৯]/g, d => "০১২৩৪৫৬৭৮৯".indexOf(d));
         let value = toEn(e.target[0].value)
-        console.log(value);
+        // console.log(value);
 
         if (document.getElementById('dataForm')) {
             document.getElementById('dataForm').reset()
@@ -30,7 +30,7 @@ function SingleSearch() {
             // console.log(res);
             if (res.data.success) {
                 setSingleEntry(res.data.result);
-                console.log(res.data.result);
+                // console.log(res.data.result);
             }
             else {
                 Swal.fire({

@@ -12,12 +12,13 @@ const Home = () => {
         <div className='mt-[50px]'>
 
             {/* <Banner></Banner> */}
+            <p className='mt-16'>Welcome to</p>
+            <h1 className='text-4xl text-[#f15048]'>Poristhan Fashion</h1>
+            <p>Some features will be added soon</p>
 
             {/* <Parts></Parts> */}
             <BussinesSummury></BussinesSummury>
-            <p className='mt-6'>Welcome to</p>
-            <h1 className='text-4xl text-[#f15048]'>Poristhan Fashion</h1>
-            <p>Some features will be added soon</p>
+
             {/* <Reviews></Reviews> */}
             {/* <AdsSection></AdsSection> */}
             <NewsLetter></NewsLetter>
