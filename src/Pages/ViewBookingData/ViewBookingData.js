@@ -27,10 +27,15 @@ export default function ViewBookingData() {
     let [user] = useAuthState(auth)
     let [role, roleLoading] = useRole(user)
     let [totalQtyCount, setTotalQtyCount] = useState(0)
+    let [deliverQty, setDeliverQty] = useState(0)
+    let [cancelQty, setCancelQty] = useState(0)
     let count = 0
     // console.log(totalQtyCount);
 
 
+    useEffect(() => {
+        setCancelQty(totalQtyCount - deliverQty);
+    }, [totalQtyCount, deliverQty])
 
     useEffect(() => {
         if (memo?.data) {
@@ -98,6 +103,15 @@ export default function ViewBookingData() {
                 }
             })
             setPItem(pItem);
+            // console.log(pItem);
+            let deliveryCount = 0;
+            Object.values(pItem).forEach(pValue => {
+                // console.log(pValue);
+                deliveryCount = deliveryCount + parseInt(pValue)
+            })
+            setDeliverQty(deliveryCount);
+            // setCancelQty(totalQtyCount - deliveryCount);
+            // console.log(totalQtyCount);
         })
     }
     // console.log(Object.keys(pItem));
@@ -443,41 +457,55 @@ export default function ViewBookingData() {
                                                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                     <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
                                                         <tr className='border-b'>
-                                                            <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
+                                                            <th scope="col" className="pl-5 py-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
                                                                 Total QTY
                                                             </th>
-                                                            <th scope="col" className="px-6 text-center py-2 text-[11px] sm:text-[12px]">
+                                                            <th scope="col" className="px-5 text-center py-2 text-[11px] sm:text-[12px]">
                                                                 {totalQtyCount}
                                                             </th>
                                                         </tr>
+
                                                         <tr className='border-b'>
-                                                            <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
-                                                                Total Return
+                                                            <th scope="col" className="pl-5 py-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
+                                                                Deliverd
                                                             </th>
-                                                            <th scope="col" className="px-6 text-center py-2 text-[11px] sm:text-[12px]">
-                                                                {totalQtyCount}
-                                                            </th>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
-                                                                P name
-                                                            </th>
-                                                            <th scope="col" className="px-6 py-2 text-center text-[11px] sm:text-[12px]">
-                                                                QTY
+                                                            <th scope="col" className="px-5 text-center py-2 text-[11px] sm:text-[12px]">
+                                                                {deliverQty}
                                                             </th>
                                                         </tr>
+
+                                                        <tr className=''>
+                                                            <th scope="col" className="pl-5 py-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
+                                                                Cancel/Pending
+                                                            </th>
+                                                            <th scope="col" className="px-5 text-center py-2 text-[11px] sm:text-[12px]">
+                                                                {cancelQty}
+                                                            </th>
+                                                        </tr>
+                                                        {
+                                                            deliverQty > 0 &&
+                                                            <tr className='border-t'>
+                                                                <th scope="col" className="pl-5 pt-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
+                                                                    Item name
+                                                                </th>
+                                                                <th scope="col" className="px-5 pt-2 text-center text-[11px] sm:text-[12px]">
+                                                                    QTY
+                                                                </th>
+                                                            </tr>
+                                                        }
                                                     </thead>
                                                     <tbody>
 
                                                         {
                                                             Object.keys(pItem).map((pi, i) => {
+                                                                // console.log(pi);
 
                                                                 return (
-                                                                    <tr key={i}>
-                                                                        <th scope="row" className="px-6 py-2 text-[11px] sm:text-[12px] font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                                                    <tr key={i} >
+                                                                        <th scope="row" className="px-6 py-1 text-[11px] sm:text-[12px] font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
                                                                             {pi}
                                                                         </th>
-                                                                        <td className="px-6 text-center py-2 text-[11px] sm:text-[12px]">
+                                                                        <td className="px-6 text-center py-1 text-[11px] sm:text-[12px]">
                                                                             {pItem[`${pi}`]}
                                                                         </td>
                                                                     </tr>

@@ -62,17 +62,22 @@ function SingleSearchComp({ singleEntry, setSingleEntry }) {
                     <div className="rounded-t bg-white mb-0 px-6 pt-2">
                         <div className="text-center flex justify-between">
 
-                            <div>
-                                <p className='text-gray-600 mb-1'>{singleEntry.bookingDate}</p>
-                                {
-                                    singleEntry?.tracking_code &&
-                                    <a className="bg-teal-500  text-white active:bg-teal-600 font-bold uppercase text-xs px-4 mr-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" href={`https://steadfast.com.bd/t/${singleEntry.tracking_code}`} rel="noreferrer" target='_blank'>Track</a>
-                                }
-                                {
-                                    role === "admin" &&
-                                    <a className="bg-orange-500 text-white active:bg-orange-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" href={`https://old.steadfast.com.bd/consignment/${singleEntry.bookingID}`} rel="noreferrer" target='_blank'>Admin Track</a>
-                                }
+                            <div className='text-left'>
+
+                                <div className='flex flex-col sm:flex-row'>
+                                    {
+                                        singleEntry?.tracking_code &&
+                                        <a className="bg-teal-500 sm:mb-0 mb-1 text-white active:bg-teal-600 font-bold uppercase text-xs px-4 mr-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" href={`https://steadfast.com.bd/t/${singleEntry.tracking_code}`} rel="noreferrer" target='_blank'>Track</a>
+                                    }
+                                    {
+                                        role === "admin" &&
+                                        <a className="bg-orange-500 text-white active:bg-orange-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" href={`https://old.steadfast.com.bd/consignment/${singleEntry.bookingID}`} rel="noreferrer" target='_blank'>Admin Track</a>
+                                    }
+                                </div>
+                                <p className='text-gray-600 font-bold mb-1'>{singleEntry.bookingDate}</p>
+
                             </div>
+
                             <div>
                                 {
                                     role === "admin" &&
@@ -102,6 +107,8 @@ function SingleSearchComp({ singleEntry, setSingleEntry }) {
                             </div>
                         </div>
                     </div>
+
+
 
                     <div className="flex-auto px-4 lg:px-10 py-10 pt-6">
                         <form id='dataForm'>
