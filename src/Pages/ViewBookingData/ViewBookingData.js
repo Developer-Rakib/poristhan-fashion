@@ -149,8 +149,8 @@ export default function ViewBookingData() {
                 // allItem.push(upItem)
                 axios.get(`https://portal.steadfast.com.bd/api/v1/status_by_cid/${upItem.bookingID}`, {
                     headers: {
-                        'Api-Key': `${process.env.REACT_APP_MF_Api_Key}`,
-                        'Secret-Key': `${process.env.REACT_APP_MF_Secret_Key}`
+                        'Api-Key': `${process.env.REACT_APP_F_Api_Key}`,
+                        'Secret-Key': `${process.env.REACT_APP_F_Secret_Key}`
                     }
                 }).then(data => {
 
@@ -187,8 +187,8 @@ export default function ViewBookingData() {
                     if (res.response.status) {
                         axios.get(`https://portal.steadfast.com.bd/api/v1/status_by_cid/${upItem.bookingID}`, {
                             headers: {
-                                'Api-Key': `${process.env.REACT_APP_F_Api_Key}`,
-                                'Secret-Key': `${process.env.REACT_APP_F_Secret_Key}`
+                                'Api-Key': `${process.env.REACT_APP_MF_Api_Key}`,
+                                'Secret-Key': `${process.env.REACT_APP_MF_Secret_Key}`
                             }
                         }).then(data => {
                             setLoading(false);
@@ -238,11 +238,13 @@ export default function ViewBookingData() {
 
 
         let rtnMemo = []
-        console.log(rtnMemo.length);
+        // console.log(rtnMemo.length);
         rtnMemo.map(rtn => {
             axios.get(`https://server.poristhan-fashion.xyz/order/${rtn}`)
                 .then(data => {
-                    console.log(data?.data?.result?.status, " ", rtn);
+                    if (data?.data?.result?.status !== 'Deliverd') {
+                        console.log(data?.data?.result?.status, " ", rtn);
+                    }
 
                     // if (data.data.result.status === 'Pending') {
                     //     console.log(data.data.result.status, " ", data.data.result.memo);
@@ -448,6 +450,14 @@ export default function ViewBookingData() {
                                                                 {totalQtyCount}
                                                             </th>
                                                         </tr>
+                                                        <tr className='border-b'>
+                                                            <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
+                                                                Total Return
+                                                            </th>
+                                                            <th scope="col" className="px-6 text-center py-2 text-[11px] sm:text-[12px]">
+                                                                {totalQtyCount}
+                                                            </th>
+                                                        </tr>
                                                         <tr>
                                                             <th scope="col" className="px-6 py-2 text-[11px] sm:text-[12px] bg-gray-50 dark:bg-gray-800">
                                                                 P name
@@ -487,9 +497,9 @@ export default function ViewBookingData() {
                                                         Update All
                                                     </button>
 
-                                                    {/* <button onClick={handleReturn} className="mt-3 bg-orange-500 text-white active:bg-orange-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                                                    <button onClick={handleReturn} className="mt-3 bg-orange-500 text-white active:bg-orange-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
                                                         Check
-                                                    </button> */}
+                                                    </button>
 
                                                     {/* <button onClick={handleExport} className="mt-3 bg-fuchsia-500 text-white active:bg-fuchsia-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
                                                         Export Data

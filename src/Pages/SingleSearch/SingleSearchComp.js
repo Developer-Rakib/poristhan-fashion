@@ -7,6 +7,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import useRole from '../../Hooks/useRole';
 import Loader from '../Shared/Loader';
 import axios from 'axios';
+import SingleBookingData from '../ViewBookingData/SingleBookingData';
 
 function SingleSearchComp({ singleEntry, setSingleEntry }) {
 
@@ -65,7 +66,11 @@ function SingleSearchComp({ singleEntry, setSingleEntry }) {
                                 <p className='text-gray-600 mb-1'>{singleEntry.bookingDate}</p>
                                 {
                                     singleEntry?.tracking_code &&
-                                    <a className="bg-teal-500  text-white active:bg-teal-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" href={`https://steadfast.com.bd/t/${singleEntry.tracking_code}`} rel="noreferrer" target='_blank'>Track</a>
+                                    <a className="bg-teal-500  text-white active:bg-teal-600 font-bold uppercase text-xs px-4 mr-2 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" href={`https://steadfast.com.bd/t/${singleEntry.tracking_code}`} rel="noreferrer" target='_blank'>Track</a>
+                                }
+                                {
+                                    role === "admin" &&
+                                    <a className="bg-orange-500 text-white active:bg-orange-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150" href={`https://old.steadfast.com.bd/consignment/${singleEntry.bookingID}`} rel="noreferrer" target='_blank'>Admin Track</a>
                                 }
                             </div>
                             <div>
