@@ -256,9 +256,9 @@ export default function ViewBookingData() {
         rtnMemo.map(rtn => {
             axios.get(`https://server.poristhan-fashion.xyz/order/${rtn}`)
                 .then(data => {
-                    if (data?.data?.result?.status !== 'Deliverd') {
-                        console.log(data?.data?.result?.status, " ", rtn);
-                    }
+                    // if (data?.data?.result?.status !== 'Return') {
+                    // }
+                    console.log(data?.data?.result?.status, " ", rtn);
 
                     // if (data.data.result.status === 'Pending') {
                     //     console.log(data.data.result.status, " ", data.data.result.memo);
