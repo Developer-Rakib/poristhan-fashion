@@ -29,6 +29,7 @@ export default function ViewBookingData() {
     let [totalQtyCount, setTotalQtyCount] = useState(0)
     let [deliverQty, setDeliverQty] = useState(0)
     let [cancelQty, setCancelQty] = useState(0)
+    let [itemsTotal, setitemsTotal] = useState([])
     let count = 0
     // console.log(totalQtyCount);
 
@@ -66,6 +67,7 @@ export default function ViewBookingData() {
         let sName = e.target[1].value;
         // console.log(sN);
         pItem = {}
+        // console.log(bookingDate);
         axios.get(`https://server.poristhan-fashion.xyz/orders/${sName}?bookingDate=${bookingDate}`).then(res => {
             setOrders(res.data);
             setLoading(false)
@@ -247,18 +249,15 @@ export default function ViewBookingData() {
 
 
 
-    function handleReturn() {
-
-
-
+    async function handleReturn() {
         let rtnMemo = []
         // console.log(rtnMemo.length);
         rtnMemo.map(rtn => {
             axios.get(`https://server.poristhan-fashion.xyz/order/${rtn}`)
                 .then(data => {
-                    // if (data?.data?.result?.status !== 'Return') {
-                    // }
-                    console.log(data?.data?.result?.status, " ", rtn);
+                    if (data?.data?.result?.status !== 'Return') {
+                        console.log(data?.data?.result?.status, " ", rtn);
+                    }
 
                     // if (data.data.result.status === 'Pending') {
                     //     console.log(data.data.result.status, " ", data.data.result.memo);
@@ -299,20 +298,53 @@ export default function ViewBookingData() {
                 })
         })
 
+
+
         // get cancel by month
-        // for (let i = 1; i < 24; i++) {
-        //     const date = `May ${i} 2024`;
+        // let totaAmount = 0
+        // let totaAmountarr = []
+
+
+        // pItem = {}
+        // for (let i = 1; i < 13; i++) {
+        //     // Jun 01 2024
+        //     const date = `Jun ${i < 10 ? "0" : ""}${i} 2024`;
+
+        //     // console.log(date);
         //     axios.get(`https://server.poristhan-fashion.xyz/orders/all?bookingDate=${date}`)
         //         .then(res => {
-        //             // console.log(res.data);
-        //             res.data.map(dt => {
-        //                 if (dt.status === 'Cancel') {
-        //                     console.log(dt.status, ' ', dt.memo)
+        //             // console.log(i, res.data);
+        //             res.data.map((itm) => {
+        //                 if (itm.status === 'Cancel') {
+        //                     // itm?.item.forEach(singItm => {
+        //                     //     if (pItem[Object.keys(singItm)[0]]) {
+        //                     //         pItem[Object.keys(singItm)[0]] = pItem[Object.keys(singItm)[0]] + Object.values(singItm)[0];
+        //                     //     }
+        //                     //     else {
+        //                     //         pItem[Object.keys(singItm)[0]] = Object.values(singItm)[0];
+        //                     //     }
+        //                     // });
+        //                     // totaAmount = totaAmount + dt.amount;
+        //                     // totaAmountarr.push(dt.amount);
+        //                     itm?.item.forEach(singItm => {
+
+        //                         console.log(singItm);
+        //                     })
+        //                     // console.log(itm);
         //                 }
+
+
         //             })
 
         //         })
+
+
+
         // }
+        // setPItem(pItem);
+        // console.log(pItem);
+
+        // console.log(itemsTotal);
     }
     async function handleExport() {
 
@@ -525,9 +557,7 @@ export default function ViewBookingData() {
                                                         Update All
                                                     </button>
 
-                                                    <button onClick={handleReturn} className="mt-3 bg-orange-500 text-white active:bg-orange-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
-                                                        Check
-                                                    </button>
+
 
                                                     {/* <button onClick={handleExport} className="mt-3 bg-fuchsia-500 text-white active:bg-fuchsia-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
                                                         Export Data
@@ -542,7 +572,9 @@ export default function ViewBookingData() {
                     </div>
             }
 
-
+            <button onClick={handleReturn} className="mt-3 bg-orange-500 text-white active:bg-orange-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                Check
+            </button>
         </div >
     )
 }
